@@ -1,0 +1,8 @@
+prefix=/home/lucas/Sara_QT_work/devel
+
+Name: Sara_QT_Test1
+Description: Description of Sara_QT_Test1
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/lucas/Sara_QT_work/devel/lib 
+Requires: 

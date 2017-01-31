@@ -1,4 +1,2 @@
 # Hashes of file build rules.
-8890c0babe31eaf0c7b94843532cbf92 CMakeFiles/clean_test_results
-7c5efc554e7a6003ee4b5dc870415bd7 turtle_tutorial/src/moc_dialog.cpp
-8773679b5aa0cfe788091913196e0c78 turtle_tutorial/ui_dialog.h
+70ecfffb88ac2ec9a79984152bba7f91 CMakeFiles/clean_test_results

@@ -1,2 +1,2 @@
-turtle_tutorial
--DCATKIN_DEVEL_PREFIX=/home/lucas/ros/devel -DCMAKE_INSTALL_PREFIX=/home/lucas/ros/install -G Unix Makefiles
+sara_qt_test1
+-DCATKIN_DEVEL_PREFIX=/home/lucas/Sara_QT_work/devel -DCMAKE_INSTALL_PREFIX=/home/lucas/Sara_QT_work/install -G Unix Makefiles

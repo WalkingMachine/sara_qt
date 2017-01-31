@@ -1,8 +1,8 @@
-# Install script for directory: /home/lucas/ros/src
+# Install script for directory: /home/lucas/Sara_QT_work/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/lucas/ros/install")
+  set(CMAKE_INSTALL_PREFIX "/home/lucas/Sara_QT_work/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -44,80 +44,80 @@ endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/lucas/ros/install/_setup_util.py")
+   "/home/lucas/Sara_QT_work/install/_setup_util.py")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/lucas/ros/install" TYPE PROGRAM FILES "/home/lucas/ros/build/catkin_generated/installspace/_setup_util.py")
+file(INSTALL DESTINATION "/home/lucas/Sara_QT_work/install" TYPE PROGRAM FILES "/home/lucas/Sara_QT_work/build/catkin_generated/installspace/_setup_util.py")
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/lucas/ros/install/env.sh")
+   "/home/lucas/Sara_QT_work/install/env.sh")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/lucas/ros/install" TYPE PROGRAM FILES "/home/lucas/ros/build/catkin_generated/installspace/env.sh")
+file(INSTALL DESTINATION "/home/lucas/Sara_QT_work/install" TYPE PROGRAM FILES "/home/lucas/Sara_QT_work/build/catkin_generated/installspace/env.sh")
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/lucas/ros/install/setup.bash")
+   "/home/lucas/Sara_QT_work/install/setup.bash")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/lucas/ros/install" TYPE FILE FILES "/home/lucas/ros/build/catkin_generated/installspace/setup.bash")
+file(INSTALL DESTINATION "/home/lucas/Sara_QT_work/install" TYPE FILE FILES "/home/lucas/Sara_QT_work/build/catkin_generated/installspace/setup.bash")
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/lucas/ros/install/setup.sh")
+   "/home/lucas/Sara_QT_work/install/setup.sh")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/lucas/ros/install" TYPE FILE FILES "/home/lucas/ros/build/catkin_generated/installspace/setup.sh")
+file(INSTALL DESTINATION "/home/lucas/Sara_QT_work/install" TYPE FILE FILES "/home/lucas/Sara_QT_work/build/catkin_generated/installspace/setup.sh")
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/lucas/ros/install/setup.zsh")
+   "/home/lucas/Sara_QT_work/install/setup.zsh")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/lucas/ros/install" TYPE FILE FILES "/home/lucas/ros/build/catkin_generated/installspace/setup.zsh")
+file(INSTALL DESTINATION "/home/lucas/Sara_QT_work/install" TYPE FILE FILES "/home/lucas/Sara_QT_work/build/catkin_generated/installspace/setup.zsh")
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/lucas/ros/install/.rosinstall")
+   "/home/lucas/Sara_QT_work/install/.rosinstall")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/lucas/ros/install" TYPE FILE FILES "/home/lucas/ros/build/catkin_generated/installspace/.rosinstall")
+file(INSTALL DESTINATION "/home/lucas/Sara_QT_work/install" TYPE FILE FILES "/home/lucas/Sara_QT_work/build/catkin_generated/installspace/.rosinstall")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/lucas/ros/build/gtest/cmake_install.cmake")
-  include("/home/lucas/ros/build/turtle_tutorial/cmake_install.cmake")
+  include("/home/lucas/Sara_QT_work/build/gtest/cmake_install.cmake")
+  include("/home/lucas/Sara_QT_work/build/sara_qt_test1/cmake_install.cmake")
 
 endif()
 
@@ -129,5 +129,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/lucas/ros/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/lucas/Sara_QT_work/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
