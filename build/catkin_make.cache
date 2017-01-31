@@ -1,0 +1,2 @@
+turtle_tutorial
+-DCATKIN_DEVEL_PREFIX=/home/lucas/ros/devel -DCMAKE_INSTALL_PREFIX=/home/lucas/ros/install -G Unix Makefiles
