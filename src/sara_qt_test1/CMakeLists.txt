@@ -136,7 +136,7 @@ add_executable(sara_qt_try src/qt.cpp)
 ## Specify libraries to link a library or executable target against
 target_link_libraries(sara_qt_hello ${catkin_LIBRARIES})
 target_link_libraries(sara_qt_publisher ${catkin_LIBRARIES})
-target_link_libraries(sara_qt_try ${catkin_LIBRARIES})
+target_link_libraries(sara_qt_try ${catkin_LIBRARIES} Qt5::Widgets)
 
 #############
 ## Install ##
