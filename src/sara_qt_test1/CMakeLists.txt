@@ -125,16 +125,18 @@ include_directories(${Qt5Widgets_INCLUDE_DIRS})
 # add_dependencies(Sara_QT_Test1 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
-add_executable(turtle_tutorial_node src/hello.cpp)
-add_executable(turtle_tutorial_publisher src/publisher.cpp)
+add_executable(sara_qt_hello src/hello.cpp)
+add_executable(sara_qt_publisher src/publisher.cpp)
+add_executable(sara_qt_try src/qt.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
 # add_dependencies(Sara_QT_Test1_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(turtle_tutorial_node ${catkin_LIBRARIES})
-target_link_libraries(turtle_tutorial_publisher ${catkin_LIBRARIES})
+target_link_libraries(sara_qt_hello ${catkin_LIBRARIES})
+target_link_libraries(sara_qt_publisher ${catkin_LIBRARIES})
+target_link_libraries(sara_qt_try ${catkin_LIBRARIES})
 
 #############
 ## Install ##
