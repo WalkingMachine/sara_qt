@@ -42,7 +42,7 @@
   <buildtool_depend>catkin</buildtool_depend>
 
   <build_depend>geometry_msgs</build_depend>
-  <build_depend>turtlesim </build_depend>
+  <build_depend>turtlesim</build_depend>
   <build_depend>roscpp</build_depend>
   <build_depend>Qt5</build_depend>
 

@@ -66,18 +66,6 @@ list_install_components/fast: list_install_components
 
 .PHONY : list_install_components/fast
 
-# Special rule for the target install
-install: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install
-
-# Special rule for the target install
-install/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install/fast
-
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
@@ -133,6 +121,18 @@ install/local/fast: install/local
 
 .PHONY : install/local/fast
 
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
+
 # The main all target
 all: cmake_check_build_system
 	cd /home/lucas/Sara_QT_work/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/lucas/Sara_QT_work/build/CMakeFiles /home/lucas/Sara_QT_work/build/sara_qt_test1/CMakeFiles/progress.marks
@@ -179,21 +179,6 @@ std_msgs_generate_messages_py: sara_qt_test1/CMakeFiles/std_msgs_generate_messag
 std_msgs_generate_messages_py/fast:
 	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f sara_qt_test1/CMakeFiles/std_msgs_generate_messages_py.dir/build.make sara_qt_test1/CMakeFiles/std_msgs_generate_messages_py.dir/build
 .PHONY : std_msgs_generate_messages_py/fast
-
-# Convenience name for target.
-sara_qt_test1/CMakeFiles/turtle_tutorial_node.dir/rule:
-	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f CMakeFiles/Makefile2 sara_qt_test1/CMakeFiles/turtle_tutorial_node.dir/rule
-.PHONY : sara_qt_test1/CMakeFiles/turtle_tutorial_node.dir/rule
-
-# Convenience name for target.
-turtle_tutorial_node: sara_qt_test1/CMakeFiles/turtle_tutorial_node.dir/rule
-
-.PHONY : turtle_tutorial_node
-
-# fast build rule for target.
-turtle_tutorial_node/fast:
-	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f sara_qt_test1/CMakeFiles/turtle_tutorial_node.dir/build.make sara_qt_test1/CMakeFiles/turtle_tutorial_node.dir/build
-.PHONY : turtle_tutorial_node/fast
 
 # Convenience name for target.
 sara_qt_test1/CMakeFiles/roscpp_generate_messages_py.dir/rule:
@@ -254,51 +239,6 @@ roscpp_generate_messages_cpp: sara_qt_test1/CMakeFiles/roscpp_generate_messages_
 roscpp_generate_messages_cpp/fast:
 	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f sara_qt_test1/CMakeFiles/roscpp_generate_messages_cpp.dir/build.make sara_qt_test1/CMakeFiles/roscpp_generate_messages_cpp.dir/build
 .PHONY : roscpp_generate_messages_cpp/fast
-
-# Convenience name for target.
-sara_qt_test1/CMakeFiles/turtle_tutorial_publisher.dir/rule:
-	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f CMakeFiles/Makefile2 sara_qt_test1/CMakeFiles/turtle_tutorial_publisher.dir/rule
-.PHONY : sara_qt_test1/CMakeFiles/turtle_tutorial_publisher.dir/rule
-
-# Convenience name for target.
-turtle_tutorial_publisher: sara_qt_test1/CMakeFiles/turtle_tutorial_publisher.dir/rule
-
-.PHONY : turtle_tutorial_publisher
-
-# fast build rule for target.
-turtle_tutorial_publisher/fast:
-	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f sara_qt_test1/CMakeFiles/turtle_tutorial_publisher.dir/build.make sara_qt_test1/CMakeFiles/turtle_tutorial_publisher.dir/build
-.PHONY : turtle_tutorial_publisher/fast
-
-# Convenience name for target.
-sara_qt_test1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule:
-	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f CMakeFiles/Makefile2 sara_qt_test1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
-.PHONY : sara_qt_test1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-rosgraph_msgs_generate_messages_cpp: sara_qt_test1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
-
-.PHONY : rosgraph_msgs_generate_messages_cpp
-
-# fast build rule for target.
-rosgraph_msgs_generate_messages_cpp/fast:
-	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f sara_qt_test1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build.make sara_qt_test1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build
-.PHONY : rosgraph_msgs_generate_messages_cpp/fast
-
-# Convenience name for target.
-sara_qt_test1/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule:
-	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f CMakeFiles/Makefile2 sara_qt_test1/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
-.PHONY : sara_qt_test1/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-std_msgs_generate_messages_cpp: sara_qt_test1/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
-
-.PHONY : std_msgs_generate_messages_cpp
-
-# fast build rule for target.
-std_msgs_generate_messages_cpp/fast:
-	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f sara_qt_test1/CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make sara_qt_test1/CMakeFiles/std_msgs_generate_messages_cpp.dir/build
-.PHONY : std_msgs_generate_messages_cpp/fast
 
 # Convenience name for target.
 sara_qt_test1/CMakeFiles/roscpp_generate_messages_eus.dir/rule:
@@ -420,59 +360,146 @@ std_msgs_generate_messages_lisp/fast:
 	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f sara_qt_test1/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make sara_qt_test1/CMakeFiles/std_msgs_generate_messages_lisp.dir/build
 .PHONY : std_msgs_generate_messages_lisp/fast
 
-src/hello.o: src/hello.cpp.o
+# Convenience name for target.
+sara_qt_test1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule:
+	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f CMakeFiles/Makefile2 sara_qt_test1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
+.PHONY : sara_qt_test1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
 
-.PHONY : src/hello.o
+# Convenience name for target.
+rosgraph_msgs_generate_messages_cpp: sara_qt_test1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
+
+.PHONY : rosgraph_msgs_generate_messages_cpp
+
+# fast build rule for target.
+rosgraph_msgs_generate_messages_cpp/fast:
+	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f sara_qt_test1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build.make sara_qt_test1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build
+.PHONY : rosgraph_msgs_generate_messages_cpp/fast
+
+# Convenience name for target.
+sara_qt_test1/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule:
+	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f CMakeFiles/Makefile2 sara_qt_test1/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
+.PHONY : sara_qt_test1/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+std_msgs_generate_messages_cpp: sara_qt_test1/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
+
+.PHONY : std_msgs_generate_messages_cpp
+
+# fast build rule for target.
+std_msgs_generate_messages_cpp/fast:
+	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f sara_qt_test1/CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make sara_qt_test1/CMakeFiles/std_msgs_generate_messages_cpp.dir/build
+.PHONY : std_msgs_generate_messages_cpp/fast
+
+# Convenience name for target.
+sara_qt_test1/CMakeFiles/sara_qt_window.dir/rule:
+	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f CMakeFiles/Makefile2 sara_qt_test1/CMakeFiles/sara_qt_window.dir/rule
+.PHONY : sara_qt_test1/CMakeFiles/sara_qt_window.dir/rule
+
+# Convenience name for target.
+sara_qt_window: sara_qt_test1/CMakeFiles/sara_qt_window.dir/rule
+
+.PHONY : sara_qt_window
+
+# fast build rule for target.
+sara_qt_window/fast:
+	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f sara_qt_test1/CMakeFiles/sara_qt_window.dir/build.make sara_qt_test1/CMakeFiles/sara_qt_window.dir/build
+.PHONY : sara_qt_window/fast
+
+# Convenience name for target.
+sara_qt_test1/CMakeFiles/sara_qt_window_automoc.dir/rule:
+	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f CMakeFiles/Makefile2 sara_qt_test1/CMakeFiles/sara_qt_window_automoc.dir/rule
+.PHONY : sara_qt_test1/CMakeFiles/sara_qt_window_automoc.dir/rule
+
+# Convenience name for target.
+sara_qt_window_automoc: sara_qt_test1/CMakeFiles/sara_qt_window_automoc.dir/rule
+
+.PHONY : sara_qt_window_automoc
+
+# fast build rule for target.
+sara_qt_window_automoc/fast:
+	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f sara_qt_test1/CMakeFiles/sara_qt_window_automoc.dir/build.make sara_qt_test1/CMakeFiles/sara_qt_window_automoc.dir/build
+.PHONY : sara_qt_window_automoc/fast
+
+sara_qt_window_automoc.o: sara_qt_window_automoc.cpp.o
+
+.PHONY : sara_qt_window_automoc.o
 
 # target to build an object file
-src/hello.cpp.o:
-	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f sara_qt_test1/CMakeFiles/turtle_tutorial_node.dir/build.make sara_qt_test1/CMakeFiles/turtle_tutorial_node.dir/src/hello.cpp.o
-.PHONY : src/hello.cpp.o
+sara_qt_window_automoc.cpp.o:
+	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f sara_qt_test1/CMakeFiles/sara_qt_window.dir/build.make sara_qt_test1/CMakeFiles/sara_qt_window.dir/sara_qt_window_automoc.cpp.o
+.PHONY : sara_qt_window_automoc.cpp.o
 
-src/hello.i: src/hello.cpp.i
+sara_qt_window_automoc.i: sara_qt_window_automoc.cpp.i
 
-.PHONY : src/hello.i
+.PHONY : sara_qt_window_automoc.i
 
 # target to preprocess a source file
-src/hello.cpp.i:
-	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f sara_qt_test1/CMakeFiles/turtle_tutorial_node.dir/build.make sara_qt_test1/CMakeFiles/turtle_tutorial_node.dir/src/hello.cpp.i
-.PHONY : src/hello.cpp.i
+sara_qt_window_automoc.cpp.i:
+	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f sara_qt_test1/CMakeFiles/sara_qt_window.dir/build.make sara_qt_test1/CMakeFiles/sara_qt_window.dir/sara_qt_window_automoc.cpp.i
+.PHONY : sara_qt_window_automoc.cpp.i
 
-src/hello.s: src/hello.cpp.s
+sara_qt_window_automoc.s: sara_qt_window_automoc.cpp.s
 
-.PHONY : src/hello.s
+.PHONY : sara_qt_window_automoc.s
 
 # target to generate assembly for a file
-src/hello.cpp.s:
-	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f sara_qt_test1/CMakeFiles/turtle_tutorial_node.dir/build.make sara_qt_test1/CMakeFiles/turtle_tutorial_node.dir/src/hello.cpp.s
-.PHONY : src/hello.cpp.s
+sara_qt_window_automoc.cpp.s:
+	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f sara_qt_test1/CMakeFiles/sara_qt_window.dir/build.make sara_qt_test1/CMakeFiles/sara_qt_window.dir/sara_qt_window_automoc.cpp.s
+.PHONY : sara_qt_window_automoc.cpp.s
 
-src/publisher.o: src/publisher.cpp.o
+src/main.o: src/main.cpp.o
 
-.PHONY : src/publisher.o
+.PHONY : src/main.o
 
 # target to build an object file
-src/publisher.cpp.o:
-	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f sara_qt_test1/CMakeFiles/turtle_tutorial_publisher.dir/build.make sara_qt_test1/CMakeFiles/turtle_tutorial_publisher.dir/src/publisher.cpp.o
-.PHONY : src/publisher.cpp.o
+src/main.cpp.o:
+	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f sara_qt_test1/CMakeFiles/sara_qt_window.dir/build.make sara_qt_test1/CMakeFiles/sara_qt_window.dir/src/main.cpp.o
+.PHONY : src/main.cpp.o
 
-src/publisher.i: src/publisher.cpp.i
+src/main.i: src/main.cpp.i
 
-.PHONY : src/publisher.i
+.PHONY : src/main.i
 
 # target to preprocess a source file
-src/publisher.cpp.i:
-	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f sara_qt_test1/CMakeFiles/turtle_tutorial_publisher.dir/build.make sara_qt_test1/CMakeFiles/turtle_tutorial_publisher.dir/src/publisher.cpp.i
-.PHONY : src/publisher.cpp.i
+src/main.cpp.i:
+	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f sara_qt_test1/CMakeFiles/sara_qt_window.dir/build.make sara_qt_test1/CMakeFiles/sara_qt_window.dir/src/main.cpp.i
+.PHONY : src/main.cpp.i
 
-src/publisher.s: src/publisher.cpp.s
+src/main.s: src/main.cpp.s
 
-.PHONY : src/publisher.s
+.PHONY : src/main.s
 
 # target to generate assembly for a file
-src/publisher.cpp.s:
-	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f sara_qt_test1/CMakeFiles/turtle_tutorial_publisher.dir/build.make sara_qt_test1/CMakeFiles/turtle_tutorial_publisher.dir/src/publisher.cpp.s
-.PHONY : src/publisher.cpp.s
+src/main.cpp.s:
+	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f sara_qt_test1/CMakeFiles/sara_qt_window.dir/build.make sara_qt_test1/CMakeFiles/sara_qt_window.dir/src/main.cpp.s
+.PHONY : src/main.cpp.s
+
+src/mainwindow.o: src/mainwindow.cpp.o
+
+.PHONY : src/mainwindow.o
+
+# target to build an object file
+src/mainwindow.cpp.o:
+	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f sara_qt_test1/CMakeFiles/sara_qt_window.dir/build.make sara_qt_test1/CMakeFiles/sara_qt_window.dir/src/mainwindow.cpp.o
+.PHONY : src/mainwindow.cpp.o
+
+src/mainwindow.i: src/mainwindow.cpp.i
+
+.PHONY : src/mainwindow.i
+
+# target to preprocess a source file
+src/mainwindow.cpp.i:
+	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f sara_qt_test1/CMakeFiles/sara_qt_window.dir/build.make sara_qt_test1/CMakeFiles/sara_qt_window.dir/src/mainwindow.cpp.i
+.PHONY : src/mainwindow.cpp.i
+
+src/mainwindow.s: src/mainwindow.cpp.s
+
+.PHONY : src/mainwindow.s
+
+# target to generate assembly for a file
+src/mainwindow.cpp.s:
+	cd /home/lucas/Sara_QT_work/build && $(MAKE) -f sara_qt_test1/CMakeFiles/sara_qt_window.dir/build.make sara_qt_test1/CMakeFiles/sara_qt_window.dir/src/mainwindow.cpp.s
+.PHONY : src/mainwindow.cpp.s
 
 # Help Target
 help:
@@ -481,18 +508,13 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... list_install_components"
-	@echo "... install"
 	@echo "... std_msgs_generate_messages_py"
-	@echo "... turtle_tutorial_node"
 	@echo "... roscpp_generate_messages_py"
 	@echo "... rosgraph_msgs_generate_messages_eus"
 	@echo "... edit_cache"
 	@echo "... rosgraph_msgs_generate_messages_nodejs"
 	@echo "... rebuild_cache"
 	@echo "... roscpp_generate_messages_cpp"
-	@echo "... turtle_tutorial_publisher"
-	@echo "... rosgraph_msgs_generate_messages_cpp"
-	@echo "... std_msgs_generate_messages_cpp"
 	@echo "... roscpp_generate_messages_eus"
 	@echo "... rosgraph_msgs_generate_messages_py"
 	@echo "... rosgraph_msgs_generate_messages_lisp"
@@ -502,14 +524,22 @@ help:
 	@echo "... roscpp_generate_messages_lisp"
 	@echo "... std_msgs_generate_messages_eus"
 	@echo "... std_msgs_generate_messages_lisp"
+	@echo "... rosgraph_msgs_generate_messages_cpp"
+	@echo "... std_msgs_generate_messages_cpp"
+	@echo "... sara_qt_window"
 	@echo "... install/strip"
 	@echo "... install/local"
-	@echo "... src/hello.o"
-	@echo "... src/hello.i"
-	@echo "... src/hello.s"
-	@echo "... src/publisher.o"
-	@echo "... src/publisher.i"
-	@echo "... src/publisher.s"
+	@echo "... install"
+	@echo "... sara_qt_window_automoc"
+	@echo "... sara_qt_window_automoc.o"
+	@echo "... sara_qt_window_automoc.i"
+	@echo "... sara_qt_window_automoc.s"
+	@echo "... src/main.o"
+	@echo "... src/main.i"
+	@echo "... src/main.s"
+	@echo "... src/mainwindow.o"
+	@echo "... src/mainwindow.i"
+	@echo "... src/mainwindow.s"
 .PHONY : help
 
 

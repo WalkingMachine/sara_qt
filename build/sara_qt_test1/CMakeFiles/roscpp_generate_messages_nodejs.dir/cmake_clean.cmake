@@ -1,3 +1,6 @@
+file(REMOVE_RECURSE
+  "sara_qt_window_automoc.cpp"
+)
 
 # Per-language clean rules from dependency scanning.
 foreach(lang )

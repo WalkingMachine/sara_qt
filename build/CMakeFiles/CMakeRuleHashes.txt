@@ -1,2 +1,4 @@
 # Hashes of file build rules.
 70ecfffb88ac2ec9a79984152bba7f91 CMakeFiles/clean_test_results
+be89a88579eacc2ece6f8d17fd927c8e sara_qt_test1/CMakeFiles/sara_qt_window_automoc
+91d4b394996c40f090b913f4d4d26166 sara_qt_test1/ui_mainwindow.h

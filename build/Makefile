@@ -270,19 +270,6 @@ std_msgs_generate_messages_py/fast:
 .PHONY : std_msgs_generate_messages_py/fast
 
 #=============================================================================
-# Target rules for targets named turtle_tutorial_node
-
-# Build rule for target.
-turtle_tutorial_node: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 turtle_tutorial_node
-.PHONY : turtle_tutorial_node
-
-# fast build rule for target.
-turtle_tutorial_node/fast:
-	$(MAKE) -f sara_qt_test1/CMakeFiles/turtle_tutorial_node.dir/build.make sara_qt_test1/CMakeFiles/turtle_tutorial_node.dir/build
-.PHONY : turtle_tutorial_node/fast
-
-#=============================================================================
 # Target rules for targets named roscpp_generate_messages_py
 
 # Build rule for target.
@@ -333,45 +320,6 @@ roscpp_generate_messages_cpp: cmake_check_build_system
 roscpp_generate_messages_cpp/fast:
 	$(MAKE) -f sara_qt_test1/CMakeFiles/roscpp_generate_messages_cpp.dir/build.make sara_qt_test1/CMakeFiles/roscpp_generate_messages_cpp.dir/build
 .PHONY : roscpp_generate_messages_cpp/fast
-
-#=============================================================================
-# Target rules for targets named turtle_tutorial_publisher
-
-# Build rule for target.
-turtle_tutorial_publisher: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 turtle_tutorial_publisher
-.PHONY : turtle_tutorial_publisher
-
-# fast build rule for target.
-turtle_tutorial_publisher/fast:
-	$(MAKE) -f sara_qt_test1/CMakeFiles/turtle_tutorial_publisher.dir/build.make sara_qt_test1/CMakeFiles/turtle_tutorial_publisher.dir/build
-.PHONY : turtle_tutorial_publisher/fast
-
-#=============================================================================
-# Target rules for targets named rosgraph_msgs_generate_messages_cpp
-
-# Build rule for target.
-rosgraph_msgs_generate_messages_cpp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 rosgraph_msgs_generate_messages_cpp
-.PHONY : rosgraph_msgs_generate_messages_cpp
-
-# fast build rule for target.
-rosgraph_msgs_generate_messages_cpp/fast:
-	$(MAKE) -f sara_qt_test1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build.make sara_qt_test1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build
-.PHONY : rosgraph_msgs_generate_messages_cpp/fast
-
-#=============================================================================
-# Target rules for targets named std_msgs_generate_messages_cpp
-
-# Build rule for target.
-std_msgs_generate_messages_cpp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 std_msgs_generate_messages_cpp
-.PHONY : std_msgs_generate_messages_cpp
-
-# fast build rule for target.
-std_msgs_generate_messages_cpp/fast:
-	$(MAKE) -f sara_qt_test1/CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make sara_qt_test1/CMakeFiles/std_msgs_generate_messages_cpp.dir/build
-.PHONY : std_msgs_generate_messages_cpp/fast
 
 #=============================================================================
 # Target rules for targets named roscpp_generate_messages_eus
@@ -477,6 +425,58 @@ std_msgs_generate_messages_lisp/fast:
 	$(MAKE) -f sara_qt_test1/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make sara_qt_test1/CMakeFiles/std_msgs_generate_messages_lisp.dir/build
 .PHONY : std_msgs_generate_messages_lisp/fast
 
+#=============================================================================
+# Target rules for targets named rosgraph_msgs_generate_messages_cpp
+
+# Build rule for target.
+rosgraph_msgs_generate_messages_cpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 rosgraph_msgs_generate_messages_cpp
+.PHONY : rosgraph_msgs_generate_messages_cpp
+
+# fast build rule for target.
+rosgraph_msgs_generate_messages_cpp/fast:
+	$(MAKE) -f sara_qt_test1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build.make sara_qt_test1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build
+.PHONY : rosgraph_msgs_generate_messages_cpp/fast
+
+#=============================================================================
+# Target rules for targets named std_msgs_generate_messages_cpp
+
+# Build rule for target.
+std_msgs_generate_messages_cpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 std_msgs_generate_messages_cpp
+.PHONY : std_msgs_generate_messages_cpp
+
+# fast build rule for target.
+std_msgs_generate_messages_cpp/fast:
+	$(MAKE) -f sara_qt_test1/CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make sara_qt_test1/CMakeFiles/std_msgs_generate_messages_cpp.dir/build
+.PHONY : std_msgs_generate_messages_cpp/fast
+
+#=============================================================================
+# Target rules for targets named sara_qt_window
+
+# Build rule for target.
+sara_qt_window: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 sara_qt_window
+.PHONY : sara_qt_window
+
+# fast build rule for target.
+sara_qt_window/fast:
+	$(MAKE) -f sara_qt_test1/CMakeFiles/sara_qt_window.dir/build.make sara_qt_test1/CMakeFiles/sara_qt_window.dir/build
+.PHONY : sara_qt_window/fast
+
+#=============================================================================
+# Target rules for targets named sara_qt_window_automoc
+
+# Build rule for target.
+sara_qt_window_automoc: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 sara_qt_window_automoc
+.PHONY : sara_qt_window_automoc
+
+# fast build rule for target.
+sara_qt_window_automoc/fast:
+	$(MAKE) -f sara_qt_test1/CMakeFiles/sara_qt_window_automoc.dir/build.make sara_qt_test1/CMakeFiles/sara_qt_window_automoc.dir/build
+.PHONY : sara_qt_window_automoc/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -498,14 +498,10 @@ help:
 	@echo "... gtest"
 	@echo "... gtest_main"
 	@echo "... std_msgs_generate_messages_py"
-	@echo "... turtle_tutorial_node"
 	@echo "... roscpp_generate_messages_py"
 	@echo "... rosgraph_msgs_generate_messages_eus"
 	@echo "... rosgraph_msgs_generate_messages_nodejs"
 	@echo "... roscpp_generate_messages_cpp"
-	@echo "... turtle_tutorial_publisher"
-	@echo "... rosgraph_msgs_generate_messages_cpp"
-	@echo "... std_msgs_generate_messages_cpp"
 	@echo "... roscpp_generate_messages_eus"
 	@echo "... rosgraph_msgs_generate_messages_py"
 	@echo "... rosgraph_msgs_generate_messages_lisp"
@@ -514,6 +510,10 @@ help:
 	@echo "... roscpp_generate_messages_lisp"
 	@echo "... std_msgs_generate_messages_eus"
 	@echo "... std_msgs_generate_messages_lisp"
+	@echo "... rosgraph_msgs_generate_messages_cpp"
+	@echo "... std_msgs_generate_messages_cpp"
+	@echo "... sara_qt_window"
+	@echo "... sara_qt_window_automoc"
 .PHONY : help
 
 
