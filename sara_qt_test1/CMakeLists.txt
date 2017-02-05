@@ -31,6 +31,7 @@ add_executable(list_topics
 add_executable(sara_qt_window
     src/main.cpp
     src/mainwindow.cpp
+    src/cthreadtopicssubscriber.cpp
     ${MainWindow_UI})
 qt5_use_modules(sara_qt_window Widgets)
 

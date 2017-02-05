@@ -85,7 +85,7 @@
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <item>
-             <widget class="QListView" name="listView"/>
+             <widget class="QListView" name="listTopicsMessages"/>
             </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -110,7 +110,7 @@
                </spacer>
               </item>
               <item>
-               <widget class="QCheckBox" name="checkBox">
+               <widget class="QCheckBox" name="cbRunSubscriber">
                 <property name="layoutDirection">
                  <enum>Qt::RightToLeft</enum>
                 </property>
@@ -172,22 +172,5 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections>
-  <connection>
-   <sender>comboTopics</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>result_2</receiver>
-   <slot>setNum(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>198</x>
-     <y>45</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>141</x>
-     <y>104</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
