@@ -1,15 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent) :
+
+MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    on_bpReloadTopics_clicked();
 
-
-    QObject::connect(ui->bp_forward, SIGNAL(clicked()), this, SLOT(goForward()));
-    QObject::connect(ui->bp_backward, SIGNAL(clicked()), this, SLOT(goBackward()));
 }
 
 MainWindow::~MainWindow()
@@ -17,24 +16,30 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::goForward()
+void MainWindow::on_bpReloadTopics_clicked()
 {
-    msg.linear.x = 100;
-    msg.linear.y = 0;
-    msg.linear.z = 0;
-    msg.angular.x = 0;
-    msg.angular.y = 0;
-    msg.angular.z = 0;
-    //pub.publish(msg);
+    XmlRpc::XmlRpcValue params("ros_topic_list");;
+
+    XmlRpc::XmlRpcValue r;
+
+    ui->result->setText(QString::fromStdString("test"));
+    ui->comboTopics->clear();
+    ui->comboTopics->addItem("Choose a topic ...");
+
+    ros::master::execute("getTopicTypes", params, topic_list, r, false);
+    for (int iBcl = 0; iBcl < topic_list[POSITION_TAB].size(); iBcl++){
+        if(topic_list[POSITION_TAB][iBcl].size() == 2){
+            std::string topic = static_cast<std::string>(topic_list[POSITION_TAB][iBcl][POSITION_TOPIC_NAME]);
+            std::string type = static_cast<std::string>(topic_list[POSITION_TAB][iBcl][POSITION_TOPIC_TYPE]);
+            ui->comboTopics->addItem(QString::fromStdString(topic));
+        }
+    }
 }
 
-void MainWindow::goBackward()
+void MainWindow::on_comboTopics_currentIndexChanged(int index)
 {
-    msg.linear.x = -100;
-    msg.linear.y = 0;
-    msg.linear.z = 0;
-    msg.angular.x = 0;
-    msg.angular.y = 0;
-    msg.angular.z = 0;
-    //pub.publish(msg);
+    index --;
+    if(index>=0){
+        ui->result_4->setText(QString::fromStdString(topic_list[POSITION_TAB][index][POSITION_TOPIC_NAME]));
+    }
 }
