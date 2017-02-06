@@ -11,11 +11,8 @@ MainWindow::MainWindow(QWidget *parent):
     iKeySelectedTopic = -1;
     bIsSubscribe = false;
 
-    Thread.start();
-
-    // Create model
+    //Create model (list of topics)
     model = new QStringListModel(this);
-
     //Link Node Message List to Model
     ui->listTopicsMessages->setModel(model);
 }
@@ -33,7 +30,7 @@ void MainWindow::on_bpReloadTopics_clicked()
     ui->comboTopics->clear();
     ui->comboTopics->addItem("Choose a topic ...");
 
-    //Reload list
+    //Reload topic list
     XmlRpc::XmlRpcValue params("ros_topic_list");
     XmlRpc::XmlRpcValue r;
     ros::master::execute("getTopicTypes", params, topic_list, r, false);
@@ -46,7 +43,7 @@ void MainWindow::on_bpReloadTopics_clicked()
             QString type = QString::fromStdString(topic_list[POSITION_TAB][iBcl][POSITION_TOPIC_TYPE]);
 
             //add item to combobox
-            ui->comboTopics->addItem(topic + "\tof type     " + type);
+            ui->comboTopics->addItem(topic + "-------- of type --------" + type);
         }
     }
 }
@@ -65,14 +62,19 @@ void MainWindow::on_cbRunSubscriber_clicked(bool checked)
 {
     if(checked){
         if(!bIsSubscribe && iKeySelectedTopic != -1){
-            Thread.subscribe();
             bIsSubscribe = true;
+            subscribeSignal("/turtle1/pose");
         }else{
             ui->cbRunSubscriber->setChecked(false);
         }
-    }else if(!checked && bIsSubscribe){
-        Thread.unsubscribe();
+    }else if(!checked){
+        unsubscribeSignal();
         bIsSubscribe = false;
         ui->result_2->setText("Unsubscribe");
     }
+}
+
+void MainWindow::newMessageReceivedSlot(QString topic){
+    // Get the position
+//    ui->listTopicsMessages->setItem(0, 1, new QTableWidgetItem("Hello"));
 }

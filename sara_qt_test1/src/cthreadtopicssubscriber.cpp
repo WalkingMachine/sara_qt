@@ -1,23 +1,32 @@
 #include "cthreadtopicssubscriber.h"
-CThreadTopicsSubscriber::CThreadTopicsSubscriber(){
-
+CThreadTopicsSubscriber::~CThreadTopicsSubscriber(){
+    this->bThreadRun = false;
+    this->exit();
 }
 
 void CThreadTopicsSubscriber::run(){
-    bStop = true;
-    while(bStop){
+    bThreadRun = true;
+    bIsSubscribe = false;
+    while(bThreadRun){
         ros::spin();
     }
 }
 
-void CThreadTopicsSubscriber::subscribe(){
-    subscriber = nh.subscribe("turtle1/pose", 1000, &callback);
+void CThreadTopicsSubscriber::subscribeSlot(QString topic){
+    if(!bIsSubscribe){
+        subscriber = nh.subscribe("turtle1/pose", 1, &CThreadTopicsSubscriber::callbackMessageReceived, this);
+        bIsSubscribe=true;
+    }
 }
 
-void CThreadTopicsSubscriber::unsubscribe(){
-    subscriber.shutdown();
+void CThreadTopicsSubscriber::unsubscribeSlot(){
+    if(bIsSubscribe){
+        subscriber.shutdown();
+        bIsSubscribe=false;
+    }
 }
 
-void CThreadTopicsSubscriber::callback(const turtlesim::Pose &msg){
-  ROS_INFO_STREAM(msg);
+void CThreadTopicsSubscriber::callbackMessageReceived(const turtlesim::Pose &msg){
+//    newMessageReceivedSignal(QString::number(msg.x));
+    ROS_INFO_STREAM(msg);
 }

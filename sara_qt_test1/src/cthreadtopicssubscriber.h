@@ -2,6 +2,7 @@
 #define CTHREADTOPICSSUBSCRIBER_H
 
 #include <QThread>
+#include <QString>
 #include <ros/ros.h>
 #include <turtlesim/Pose.h>
 
@@ -10,10 +11,12 @@ class CThreadTopicsSubscriber: public QThread
     Q_OBJECT
 
 public:
-    CThreadTopicsSubscriber();
-    void subscribe();
-    void unsubscribe();
-    static void callback(const turtlesim::Pose &msg);
+   //static void setFoo(CThreadTopicsSubscriber* obj);
+    ~CThreadTopicsSubscriber();
+
+public slots:
+    void subscribeSlot(QString topic);
+    void unsubscribeSlot();
 
 protected:
     void run();
@@ -21,9 +24,12 @@ protected:
 private:
     ros::NodeHandle nh;
     ros::Subscriber subscriber;
-    bool bStop;
+    bool bThreadRun;
+    bool bIsSubscribe;
+    void callbackMessageReceived(const turtlesim::Pose &msg);
+
+signals:
+    void newMessageReceivedSignal(QString topic);
+
 };
-
-//void callback(const turtlesim::Pose &msg);
-
 #endif // CTHREADTOPICSSUBSCRIBER_H

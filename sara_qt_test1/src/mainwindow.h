@@ -28,6 +28,9 @@ public:
     ~MainWindow();
     void subscriptionCallback(const turtlesim::Pose msg);
 
+public slots:
+    void newMessageReceivedSlot(QString topic);
+
 private slots:
     void on_bpReloadTopics_clicked();
     void on_comboTopics_currentIndexChanged(int index);
@@ -43,8 +46,11 @@ private:
     bool bIsSubscribe;
 
     QStringListModel *model;
-    QStringList List;
-    CThreadTopicsSubscriber Thread;
+
+signals:
+    void subscribeSignal(QString topic);
+    void unsubscribeSignal();
+
 };
 
 #endif // MAINWINDOW_H
