@@ -1,10 +1,8 @@
 #include <ros/ros.h>
-#include <rosgraph_msgs/Log.h>
 #include <diagnostic_aggregator/analyzer.h>
 #include <diagnostic_aggregator/status_item.h>
 #include <diagnostic_msgs/DiagnosticStatus.h>
 #include <diagnostic_msgs/DiagnosticArray.h>
-#include <turtlesim/Pose.h>
 
 /*
 [ INFO] [1488949233.661324768]: 0: HDD Usage (djls_desktop)
@@ -98,19 +96,9 @@ int main(int argc, char *argv[]){
 
 void showNewLog(const diagnostic_msgs::DiagnosticArray &message){
   //For CPU data Reading
-  int iDiv;
-  int iLineNumber;
-  float fReadingValue;
-  int iReadingValue;
-
   static CPU_TYPE CPU;
   static MEMORY_TYPE Memory;
   //END
-
-  int iReadingLoop = 0;
-  static char sTabNames[100];
-  static char sTabValue[100];
-  bool bBlank;
 
   //Si le status recu est un status de data sur le CPU
   if(message.status[0].name[0] == 'C' && message.status[0].name[1] == 'P' && message.status[0].name[2] == 'U'){

@@ -31,7 +31,7 @@ add_executable(test_list
 add_executable(sara_ui
     src/main.cpp
     src/mainwindow.cpp
-    src/cthreadtopicssubscriber.cpp
+    src/CThreadDiagnostics.cpp
     ${MainWindow_UI})
 qt5_use_modules(sara_ui Widgets)
 

@@ -1,6 +1,6 @@
 #include <QApplication>
 #include "mainwindow.h"
-#include "cthreadtopicssubscriber.h"
+#include "CThreadDiagnostics.h"
 
 int main(int argc, char *argv[])
 {
@@ -8,14 +8,15 @@ int main(int argc, char *argv[])
     ROS_INFO("Part");
 
     //Declaring objetcs
-    CThreadTopicsSubscriber Thread;
+    CThreadDiagnostics Thread;
     QApplication a(argc, argv);
     MainWindow Window;
 
     //Setting signals/slots connections
-    QObject::connect(&Window, SIGNAL(subscribeSignal(QString)),     &Thread, SLOT(subscribeSlot(QString)));
-    QObject::connect(&Window, SIGNAL(unsubscribeSignal()),          &Thread, SLOT(unsubscribeSlot()));
-    QObject::connect(&Thread, SIGNAL(newMessageReceivedSignal(QString)),   &Window, SLOT(newMessageReceivedSlot(QString)));
+    QObject::connect(&Window, SIGNAL(subscribeSignal()),    &Thread, SLOT(subscribeSlot()));
+    QObject::connect(&Window, SIGNAL(unsubscribeSignal()),  &Thread, SLOT(unsubscribeSlot()));
+    QObject::connect(&Thread, SIGNAL(updateCPU(int,int,int,int)),   &Window, SLOT(updateCPU(int,int,int,int)));
+    QObject::connect(&Thread, SIGNAL(updateMemory(int)),   &Window, SLOT(updateMemory(int)));
 
     //Run Threads and UIs
     Thread.start();

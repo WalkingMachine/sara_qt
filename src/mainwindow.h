@@ -10,10 +10,10 @@
 #include <QStringListModel>
 #include <QAbstractItemView>
 #include <QThread>
-#include "cthreadtopicssubscriber.h"
+#include "CThreadDiagnostics.h"
 
 #include <ros/ros.h>
-#include <turtlesim/Pose.h>
+
 
 namespace Ui {
 class MainWindow;
@@ -26,15 +26,12 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    void subscriptionCallback(const turtlesim::Pose msg);
 
 public slots:
-    void newMessageReceivedSlot(QString topic);
+    void updateCPU(int iCore0Usage, int iCore1Usage, int iCore2Usage, int iCore3Usage);
+    void updateMemory(int iMemoryUsage);
 
 private slots:
-    void on_bpReloadTopics_clicked();
-    void on_comboTopics_currentIndexChanged(int index);
-    void on_cbRunSubscriber_clicked(bool checked);
 
 private:
     Ui::MainWindow *ui;
@@ -42,13 +39,8 @@ private:
     ros::NodeHandle NodeHandle;
     ros::Subscriber Subscribe;
 
-    int iKeySelectedTopic;
-    bool bIsSubscribe;
-
-    QStringListModel *model;
-
 signals:
-    void subscribeSignal(QString topic);
+    void subscribeSignal();
     void unsubscribeSignal();
 
 };
