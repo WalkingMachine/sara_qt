@@ -28,8 +28,8 @@ public:
     ~MainWindow();
 
 public slots:
-    void updateCPU(int iCore0Usage, int iCore1Usage, int iCore2Usage, int iCore3Usage);
-    void updateMemory(int iMemoryUsage);
+    void updateCPU(float iCore0Usage, float iCore1Usage, float iCore2Usage, float iCore3Usage);
+    void updateMemory(float iMemoryUsage);
 
 private slots:
 

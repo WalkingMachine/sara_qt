@@ -15,8 +15,8 @@ int main(int argc, char *argv[])
     //Setting signals/slots connections
     QObject::connect(&Window, SIGNAL(subscribeSignal()),    &Thread, SLOT(subscribeSlot()));
     QObject::connect(&Window, SIGNAL(unsubscribeSignal()),  &Thread, SLOT(unsubscribeSlot()));
-    QObject::connect(&Thread, SIGNAL(updateCPU(int,int,int,int)),   &Window, SLOT(updateCPU(int,int,int,int)));
-    QObject::connect(&Thread, SIGNAL(updateMemory(int)),   &Window, SLOT(updateMemory(int)));
+    QObject::connect(&Thread, SIGNAL(updateCPU(float,float,float,float)),   &Window, SLOT(updateCPU(float,float,float,float)));
+    QObject::connect(&Thread, SIGNAL(updateMemory(float)),   &Window, SLOT(updateMemory(float)));
 
     //Run Threads and UIs
     Thread.start();

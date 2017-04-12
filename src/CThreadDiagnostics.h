@@ -10,10 +10,10 @@
 #include <diagnostic_msgs/DiagnosticArray.h>
 
 //FOR DEBUG:
-//#define DEBUGCPU
-//#define DEBUGMEMORY
+#define DEBUGCPU
+#define DEBUGMEMORY
 
-#define CPU_NBR_OF_CORE 4
+#define CPU_NBR_OF_CORE 8
 #define CPU_SPEED_POS 2
 #define CPU_TEMP_POS 2
 #define CPU_USAGE_POS 6
@@ -32,7 +32,7 @@ typedef struct CPU_CORE_STRUC{
 
 //Structure représentant un CPU
 typedef struct CPU_STRUC{
-  CPU_CORE_TYPE enrCPUCore[CPU_NBR_OF_CORE];
+  CPU_CORE_TYPE enrCPUCore[4];
   float Average_Usage_1min;
   float Average_Usage_5min;
   float Average_Usage_15min;
@@ -80,8 +80,8 @@ private:
 
 
 signals:
-    void updateCPU(int iCore0Usage, int iCore1Usage, int iCore2Usage, int iCore3Usage);
-    void updateMemory(int iMemoryUsage);
+    void updateCPU(float iCore0Usage, float iCore1Usage, float iCore2Usage, float iCore3Usage);
+    void updateMemory(float iMemoryUsage);
 
 };
 #endif // CTHREADTOPICSSUBSCRIBER_H

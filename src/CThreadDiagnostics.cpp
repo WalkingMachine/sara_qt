@@ -5,14 +5,26 @@ CThreadDiagnostics::~CThreadDiagnostics(){
 }
 
 void CThreadDiagnostics::run(){
-    bThreadRun = true;
+    bool bThreadRun2 = true;
     bIsSubscribe = false;
-    ROS_INFO("Thread On");
+
+    for(int iCore = 0; iCore < CPU_NBR_OF_CORE; iCore++){
+      CPU.enrCPUCore[iCore].Clock_Speed = 0;         //Vitesse d'horloge du coeur
+      CPU.enrCPUCore[iCore].User_Usage = 0;          //Utilisation du coeur par l'utilisateur
+      CPU.enrCPUCore[iCore].Nice_Usage = 0;          //Utilisation du coeur par ???
+      CPU.enrCPUCore[iCore].System_Usage = 0;        //Utilisation du coeur par le système
+      CPU.enrCPUCore[iCore].IDLE = 0;                //Partie du coeur en veille
+      CPU.enrCPUCore[iCore].Core_Temperature = 0;    //Temperature du coeur
+    }
+
+
+    ROS_INFO("Thread START");
     subscribeSlot();
-    while(bThreadRun){
+    while(bThreadRun2){
+        ROS_INFO("Thread END");
         ros::spin();
     }
-    ROS_INFO("Thread On");
+    ROS_INFO("Thread END");
 }
 
 void CThreadDiagnostics::subscribeSlot(){
@@ -31,8 +43,8 @@ void CThreadDiagnostics::unsubscribeSlot(){
 }
 
 void CThreadDiagnostics::callbackMessageReceived(const diagnostic_msgs::DiagnosticArray &message){
-
     //Si le status recu est un status de data sur le CPU
+    ROS_INFO("RECEPTION");
       if(message.status[0].name[0] == 'C' && message.status[0].name[1] == 'P' && message.status[0].name[2] == 'U'){
         //lecture des données d'utilisation du CPU pour chaque coeur
         for(int iCoreId = 0; iCoreId < CPU_NBR_OF_CORE; iCoreId ++){
@@ -54,7 +66,6 @@ void CThreadDiagnostics::callbackMessageReceived(const diagnostic_msgs::Diagnost
           //PRINT FOR DEBUG
           #ifdef DEBUGCPU
           ROS_INFO("Core %i Clk Speed        :  %i", iCoreId, CPU.enrCPUCore[iCoreId].Clock_Speed);
-          ROS_INFO("Core %i User Usage       :  %.2f", iCoreId, CPU.enrCPUCore[iCoreId].User_Usage);
           ROS_INFO("Core %i Nice Usage       :  %.2f", iCoreId, CPU.enrCPUCore[iCoreId].Nice_Usage);
           ROS_INFO("Core %i System Usage     :  %.2f", iCoreId, CPU.enrCPUCore[iCoreId].System_Usage);
           ROS_INFO("Core %i IDLE             :  %.2f", iCoreId, CPU.enrCPUCore[iCoreId].IDLE);
@@ -68,11 +79,16 @@ void CThreadDiagnostics::callbackMessageReceived(const diagnostic_msgs::Diagnost
 
         //PRINT FOR DEBUG
         #ifdef DEBUGCPU
-        ROS_INFO("CPU Average Usage 1 min   :  %.2f", CPU.Average_Usage_1min);
-        ROS_INFO("CPU Average Usage 5 min   :  %.2f", CPU.Average_Usage_5min);
-        ROS_INFO("CPU Average Usage 15 min  :  %.2f", CPU.Average_Usage_15min);
-        ROS_INFO("-------------------------------------------------------------------------");
+        //ROS_INFO("CPU Average Usage 1 min   :  %.2f", CPU.Average_Usage_1min);
+        //ROS_INFO("CPU Average Usage 5 min   :  %.2f", CPU.Average_Usage_5min);
+        //ROS_INFO("CPU Average Usage 15 min  :  %.2f", CPU.Average_Usage_15min);
+        //ROS_INFO("-------------------------------------------------------------------------");
         #endif
+
+        updateCPU(CPU.enrCPUCore[0].User_Usage + CPU.enrCPUCore[0].System_Usage, CPU.enrCPUCore[1].User_Usage + CPU.enrCPUCore[1].System_Usage,CPU.enrCPUCore[2].User_Usage + CPU.enrCPUCore[2].System_Usage,CPU.enrCPUCore[3].User_Usage + CPU.enrCPUCore[3].System_Usage);
+
+
+
 
       }
       else if(message.status[0].name[0] == 'M'){
@@ -99,9 +115,9 @@ void CThreadDiagnostics::callbackMessageReceived(const diagnostic_msgs::Diagnost
         ROS_INFO("Memory Free               :  %iM", Memory.Memory_Free);
         ROS_INFO("-------------------------------------------------------------------------");
         #endif
+        updateMemory((100.0 * Memory.Physical_Memory_Used / Memory.Physical_Memory_Total));
       }
-      updateCPU(CPU.enrCPUCore[0].User_Usage + CPU.enrCPUCore[0].System_Usage, CPU.enrCPUCore[1].User_Usage + CPU.enrCPUCore[1].System_Usage,CPU.enrCPUCore[2].User_Usage + CPU.enrCPUCore[2].System_Usage,CPU.enrCPUCore[3].User_Usage + CPU.enrCPUCore[3].System_Usage);
-      updateMemory((100.0 * Memory.Physical_Memory_Used / Memory.Physical_Memory_Total));
+
 }
 
 float CThreadDiagnostics::readFloatValue(const diagnostic_msgs::DiagnosticArray &message, int iStatus, int iLineNumber, char endChar){
