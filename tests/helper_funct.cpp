@@ -1,9 +1,9 @@
 #include "tests/helper.h"
 
-//extern bool   bEndScript;
+extern bool   bEndScript;
 
 void term(int signum){
-//    bEndScript = true;
+    bEndScript = true;
 }
 
 void refreshCPUdata(float *fCPU_Usage, float *fCpuCoresUsage, int *iNumberOfCore, bool *bRun){

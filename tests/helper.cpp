@@ -1,9 +1,16 @@
 #include "helper.h"
 
-//float readFloatAtIndex(char* theString, int iIndex);
-//void refreshCPUdata(float *fCPU_Usage, float *fCpuCoresUsage, int *iNumberOfCore, bool *bRun);
+volatile bool bEndScript = false;
 
-int main(){
+int main(int argc, char *argv[]){
+    //create safe exit handler (on signal SIGTERM)
+    struct sigaction action;
+    memset(&action, 0, sizeof(struct sigaction));
+    action.sa_handler = term;
+    sigaction(SIGINT, &action, NULL);
+    sigaction(SIGTERM, &action, NULL);
+
+
 	int     i = 0;                  //
 	int     iNumberOfCore = 0;      // number of core of the CPU
 	float   fCPU_Usage;             //
@@ -21,18 +28,15 @@ int main(){
 		if(iNumberOfCore){
 
 
-
-
 			//just for debug
 			printf("----------%i----------\n", i); i++;
 			printf("there is %i core(s). \n", iNumberOfCore);
-			printf("Total  : %f\%\n", fCPU_Usage);
+			printf("Total  : %f \n", fCPU_Usage);
 			for (int iLoop = 0; iLoop < iNumberOfCore; iLoop++) {
-				printf("Core %i : %f\% \n", iLoop, fCPU_Core_Usage[iLoop]);
+				printf("Core %i : %f \n", iLoop, fCPU_Core_Usage[iLoop]);
 			}
-
-
 		}
+		if(bEndScript)break;
 	}
 
 	bRun = false;

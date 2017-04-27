@@ -7,9 +7,13 @@
 #include <thread>
 #include <string.h>
 #include <math.h>
-/*#include <signal.h>
-#include <stdio.h>
-#include <unistd.h>*/
+#include <signal.h>
+
+//includes for ROS messages
+#include "ros/ros.h"
+#include "std_msgs/String.h"
+
+#include <sstream>
 
 //define compilation consts
 #define BUFFER 1000
