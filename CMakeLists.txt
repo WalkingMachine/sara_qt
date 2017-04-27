@@ -1,14 +1,18 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.5)
 set (CMAKE_AUTOMOC ON)
 set (CMAKE_INCLUDE_CURRENT_DIR ON)
 project(sara_ui)
 
+
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+
 ## Find catkin macros and libraries
+find_package(Threads REQUIRED)
 find_package(catkin REQUIRED COMPONENTS roscpp)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Core REQUIRED)
 
-
+set(CMAKE_CXX_STANDARD 11)
 catkin_package()
 
 ## Specify additional locations of header files
@@ -27,6 +31,10 @@ add_executable(test_subscribe
 
 add_executable(test_list
   tests/list_topic.cpp)
+
+add_executable(test_helper
+  tests/helper.cpp)
+target_link_libraries(test_helper Threads::Threads)
 
 add_executable(sara_ui
     src/main.cpp
