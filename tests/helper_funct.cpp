@@ -6,44 +6,46 @@ void term(int signum){
 //    bEndScript = true;
 }
 
-/*void refreshCPUdata(float *fCPU_Usage, float *fCpuCoresUsage, int *iNumberOfCore, bool *bRun){
-    char buffer[BUFFER];    //reading buffer for command execution
-    FILE * f;               //link to terminal
-    printf("Loop. \n");
-    int iNumber = 0;
-    while(*bRun){
-        //get current cpu usage via mpstat linux command
-        f = popen( "mpstat -P ALL 1 1", "r" );
-        iNumber = 0;
+void refreshCPUdata(float *fCPU_Usage, float *fCpuCoresUsage, int *iNumberOfCore, bool *bRun){
+	char buffer[BUFFER];    //reading buffer for command execution
+	FILE * f;               //link to terminal
+	int iCores;
+	printf("Loop. \n");
+	while(*bRun){
+		//get current cpu usage via mpstat linux command
+		f = popen( "mpstat -P ALL 1 1", "r" );
+		//if not able to run command
+		if ( f == 0 ) {
+			fprintf( stderr, "Could not execute\n" );
+		}else{
+			iCores = 0;
+			//go to first usefull line
+			for(int iReadingLine=0; iReadingLine<FIRST_CPU_LINE; iReadingLine++){
+				fgets( buffer, BUFFER,  f );
+			}
+			while( fgets( buffer, BUFFER, f)) {
+				//end loop when reading is done
+				if(buffer[0]=='\n') break;
+				//else, if its the global usage line
+				else if(buffer[13] == 'a' && buffer[14] == 'l' && buffer[15] == 'l'){
+					//read the float value at the constant index for IDLE
+					*fCPU_Usage = 100-readFloatAtIndex(buffer, IDLE_INDEX);
 
-        //if not able to run command
-        if ( f == 0 ) {
-            fprintf( stderr, "Could not execute\n" );
-        }else{
-            //go to first usefull line
-            for(int iReadingLine=0; iReadingLine<FIRST_CPU_LINE; iReadingLine++){
-                fgets( buffer, BUFFER,  f );
-            }
-            while( fgets( buffer, BUFFER, f)) {
-                if(buffer[0]=='\n') break;      //end loop when reading is done
-                //if its the global usage line
-                else if(buffer[13] == 'a' && buffer[14] == 'l' && buffer[15] == 'l'){
-                    *fCPU_Usage = 100-readFloatAtIndex(buffer, IDLE_INDEX);                     //read the float value at the constant index for IDLE
-
-                //else, if its a core usage line
-                }else if(buffer[15] == '0' + iNumber){
-                    fCpuCoresUsage[iNumber] = 100-readFloatAtIndex(buffer, IDLE_INDEX);  //read the float value at the constant index for IDLE
-                    iNumber += 1;                                                       //increment number of cores
-
-                }
-            }
-            //closing terminal
-            pclose( f );
-        }
-        *iNumberOfCore = iNumber;
-    }
-    printf("End Loop. \n");
-}*/
+					//else, if its a core usage line
+				}else if(buffer[15] == '0' + iCores){
+					//read the float value at the constant index for IDLE
+					fCpuCoresUsage[iCores] = 100-readFloatAtIndex(buffer, IDLE_INDEX);
+					//increment number of cores
+					iCores += 1;
+				}
+			}
+			//closing terminal
+			pclose(f);
+		}
+		*iNumberOfCore = iCores;
+	}
+	printf("End Loop. \n");
+}
 
 float readFloatAtIndex(char* theString, int iIndex){
     int iPosition;

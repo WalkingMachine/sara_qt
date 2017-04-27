@@ -19,6 +19,6 @@
 //functions prototypes
 void term(int signum);
 float readFloatAtIndex(char* theString, int iIndex);
-//void refreshCPUdata(float *fCPU_Usage, float *fCpuCoresUsage, int *iNumberOfCore, bool *bRun);
+void refreshCPUdata(float *fCPU_Usage, float *fCpuCoresUsage, int *iNumberOfCore, bool *bRun);
 
 #endif
