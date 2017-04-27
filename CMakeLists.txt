@@ -33,7 +33,8 @@ add_executable(test_list
   tests/list_topic.cpp)
 
 add_executable(test_helper
-  tests/helper.cpp)
+  tests/helper.cpp
+  tests/helper_funct.cpp)
 target_link_libraries(test_helper Threads::Threads)
 
 add_executable(sara_ui
