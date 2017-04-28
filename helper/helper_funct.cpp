@@ -9,7 +9,7 @@
 */
 #include "helper.h"
 
-void refreshCPUdata(char strCPU_Usage[], char strTabCPU_Cores_Usage[][FLOAT_CAR_SIZE], int *iNumberOfCore, bool *bRun){
+void refreshCPUdata(char strCPU_Usage[], char strTabCPU_Cores_Usage[][FLOAT_CAR_SIZE], int *iNumberOfCore, const bool *bRun){
 	char buffer[BUFFER];    //reading buffer for command execution
 
 	FILE * f;               //link to terminal
@@ -54,6 +54,41 @@ void refreshCPUdata(char strCPU_Usage[], char strTabCPU_Cores_Usage[][FLOAT_CAR_
 	ROS_INFO("Stop CPU usage reading loop.");
 }
 
+void refreshMemoryData(Type_Usage *enrMemory, Type_Usage *enrSwap, const bool *bRun){
+	char buffer[BUFFER];    //reading buffer for command execution
+
+	FILE * f;               //link to terminal
+
+	ROS_INFO("Start Memory usage reading loop.");
+
+	while(*bRun){
+		//get current cpu usage via mpstat linux command
+		f = popen( "free -lm", "r" );
+
+		//if not able to run command
+		if ( f == 0 ) {
+			ROS_INFO("Could not execute");
+		}else{
+			while(fgets(buffer, BUFFER, f)) {
+				//Memory line reached
+				if(buffer[0]=='L'){
+					readMemoryUsageValues(buffer, enrMemory);
+				}
+				//Swap line reached
+				else if(buffer[0] == 'S'){
+					readMemoryUsageValues(buffer, enrSwap);
+				}
+			}
+			//closing terminal
+			pclose(f);
+
+			//waiting for next prob
+			usleep(1000000);
+		}
+	}
+	ROS_INFO("Stop Memory usage reading loop.");
+}
+
 void readLastValue(char *theLine, char theResult[], int iSizeResult, char cSeparator){
 	int iIndex = -1;
 	int iLoop = 0;
@@ -84,6 +119,36 @@ void readLastValue(char *theLine, char theResult[], int iSizeResult, char cSepar
 		//write end charactere of the result string
 		theResult[iLoop - iIndex] = '\0';
 	}
+}
+
+void readMemoryUsageValues(char buffer[], Type_Usage *enrUsage){
+	int iBufferLoop = 0;
+	int iIndex;
+	//go to first number (TOTAL Memory)
+	while(!(buffer[iBufferLoop] >= '0' && buffer[iBufferLoop] <= '9') && buffer[iBufferLoop] != '\0'){
+		iBufferLoop ++;
+	}
+
+	iIndex = iBufferLoop;
+	//copy all characters of the first number
+	while((buffer[iBufferLoop] >= '0' && buffer[iBufferLoop] <= '9') && buffer[iBufferLoop] != '\0'){
+		enrUsage->strTotal[iBufferLoop - iIndex] = buffer[iBufferLoop];
+		iBufferLoop ++;
+	}
+	enrUsage->strTotal[iBufferLoop - iIndex] = '\0';
+
+	//go to second number (USED Memory)
+	while(!(buffer[iBufferLoop] >= '0' && buffer[iBufferLoop] <= '9') && buffer[iBufferLoop] != '\0'){
+		iBufferLoop ++;
+	}
+
+	iIndex = iBufferLoop;
+	//copy all caracters of the second number
+	while((buffer[iBufferLoop] >= '0' && buffer[iBufferLoop] <= '9') && buffer[iBufferLoop] != '\0'){
+		enrUsage->strUsed[iBufferLoop - iIndex] = buffer[iBufferLoop];
+		iBufferLoop ++;
+	}
+	enrUsage->strUsed[iBufferLoop - iIndex] = '\0';
 }
 
 std_msgs::Header header_generate(int iSeq){
@@ -147,4 +212,47 @@ void CPUPublisher(ros::Publisher publisher, char strCPU_Usage[], char strTabCPU_
 		//increment static sequence number
 		iSequence ++;
 	}
+}
+
+void MemoryPublisher(ros::Publisher publisher, Type_Usage *enrMemory, Type_Usage *enrSwap){
+	static int iSequence = 0; //sequence number
+	//publications variables
+	diagnostic_msgs::KeyValue value;
+	diagnostic_msgs::DiagnosticStatus status;
+	diagnostic_msgs::DiagnosticArray message;
+
+	//data vectors
+	std::vector<diagnostic_msgs::KeyValue> valuesVector;
+	std::vector<diagnostic_msgs::DiagnosticStatus> statusVector;
+
+	//string stream for generate status message
+	std::stringstream strName;
+
+	//copy values
+	value.key = "Mem_Total";
+	value.value = enrMemory->strTotal;
+	valuesVector.push_back(value);
+	value.key = "Mem_Used";
+	value.value = enrMemory->strUsed;
+	valuesVector.push_back(value);
+	value.key = "Swap_Total";
+	value.value = enrSwap->strTotal;
+	valuesVector.push_back(value);
+	value.key = "Swap_Used";
+	value.value = enrSwap->strUsed;
+	valuesVector.push_back(value);
+
+	//generate status with standard hardware ID and previous generated value vector and name
+	status = status_generate("Memory_Usage", "", HARDWARE_ID, 0, valuesVector);
+	statusVector.push_back(status);
+
+	//add header and status to message
+	message.header = header_generate(iSequence);
+	message.status = statusVector;
+
+	//publish message
+	publisher.publish(message);
+
+	//increment static sequence number
+	iSequence ++;
 }

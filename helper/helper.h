@@ -36,8 +36,15 @@
 #define FIRST_CPU_LINE 3
 #define IDLE_INDEX 12//91 //SYS:35 USR:19 IDLE:91
 #define FLOAT_CAR_SIZE 10
+#define INT_CAR_SIZE 10
 #define NUM_MAX_CORES 10
 #define HARDWARE_ID "MAIN_COMPUTER"
+
+
+typedef struct{
+	char strTotal[INT_CAR_SIZE];
+	char strUsed[INT_CAR_SIZE];
+}Type_Usage;
 
 //functions prototypes
 
@@ -48,7 +55,7 @@
 //					int *iNumberOfCore									: pointer to the number of cores
 //					bool *bRun												: pointer to the running flag
 //		@return	nothing
-void refreshCPUdata(char strCPU_Usage[], char strTabCPU_Cores_Usage[][FLOAT_CAR_SIZE], int *iNumberOfCore, bool *bRun);
+void refreshCPUdata(char strCPU_Usage[], char strTabCPU_Cores_Usage[][FLOAT_CAR_SIZE], int *iNumberOfCore, const bool *bRun);
 //------------------------------------------------------------------------------------------
 
 
@@ -76,7 +83,7 @@ std_msgs::Header header_generate(int iSeq);
 
 
 //------------------------------------------------------------------------------------------
-//	Generate a standard header for ros topic publisher
+//	Generate a diagnostics status for diagnostics publishers
 //		@param	std::string strName												: Name of the status
 //					std::string strMessage											: Message of the status
 //					std::string strHardwareID										: Harware identifier
@@ -86,5 +93,14 @@ std_msgs::Header header_generate(int iSeq);
 diagnostic_msgs::DiagnosticStatus status_generate(std::string strName, std::string strMessage, std::string strHardwareID, char level, std::vector<diagnostic_msgs::KeyValue> valuesVector);
 //------------------------------------------------------------------------------------------
 
+//------------------------------------------------------------------------------------------
+//	Generate a standard header for ros topic publisher
+//		@param	--to fill
+//		@return	diagnostic_msgs::DiagnosticStatus							: return the status
 void CPUPublisher(ros::Publisher publisher, char strCPU_Usage[], char strTabCPU_Cores_Usage[][FLOAT_CAR_SIZE], int iNumberOfCore);
+//------------------------------------------------------------------------------------------
+
+void refreshMemoryData(Type_Usage *enrMemory, Type_Usage *enrSwap, const bool *bRun);
+void readMemoryUsageValues(char buffer[], Type_Usage *enrUsage);
+void MemoryPublisher(ros::Publisher publisher, Type_Usage *enrMemory, Type_Usage *enrSwap);
 #endif
