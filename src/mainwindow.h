@@ -11,8 +11,10 @@
 #include <QAbstractItemView>
 #include <QThread>
 #include "CThreadDiagnostics.h"
+#include "monitors.h"
 
 #include <ros/ros.h>
+
 
 
 namespace Ui {
@@ -28,7 +30,7 @@ public:
     ~MainWindow();
 
 public slots:
-    void updateCPU(float iCore0Usage, float iCore1Usage, float iCore2Usage, float iCore3Usage);
+	 void updateCPU(CPU_TYPE *CPU);
     void updateMemory(float iMemoryUsage);
 
 private slots:

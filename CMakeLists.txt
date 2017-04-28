@@ -32,9 +32,9 @@ add_executable(test_subscribe
 add_executable(test_list
   tests/list_topic.cpp)
 
-add_executable(test_helper
-  tests/helper.cpp
-  tests/helper_funct.cpp)
+add_executable(sara_ui_helper
+  helper/helper.cpp
+  helper/helper_funct.cpp)
 
 add_executable(sara_ui
     src/main.cpp
@@ -48,4 +48,4 @@ target_link_libraries(test_log ${catkin_LIBRARIES})
 target_link_libraries(test_subscribe ${catkin_LIBRARIES})
 target_link_libraries(test_list ${catkin_LIBRARIES})
 target_link_libraries(sara_ui ${catkin_LIBRARIES} Qt5::Widgets)
-target_link_libraries(test_helper ${catkin_LIBRARIES} Threads::Threads)
+target_link_libraries(sara_ui_helper ${catkin_LIBRARIES} Threads::Threads)

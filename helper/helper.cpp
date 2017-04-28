@@ -25,7 +25,7 @@ int main(int argc, char **argv){
 	ros::Publisher diagnostic_publisher = nh.advertise<diagnostic_msgs::DiagnosticArray>("diagnostics", 100);
 
 	ros::Rate loop_rate(2);
-	
+
 	//Create and launch CPU usage refresh thread
 	std::thread CPURefreshThread(refreshCPUdata, strCPU_Usage, strTabCPU_Cores_Usage, &iNumberOfCore, &bRun);
 

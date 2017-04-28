@@ -7,7 +7,7 @@
 	 @contact:	lucas.maurice@outlook.com
     @version:	1.0 28/04/17
 */
-#include "tests/helper.h"
+#include "helper.h"
 
 void refreshCPUdata(char strCPU_Usage[], char strTabCPU_Cores_Usage[][FLOAT_CAR_SIZE], int *iNumberOfCore, bool *bRun){
 	char buffer[BUFFER];    //reading buffer for command execution
@@ -124,7 +124,7 @@ void CPUPublisher(ros::Publisher publisher, char strCPU_Usage[], char strTabCPU_
 		std::stringstream strName;
 
 		//generate status message
-		strName << "cores:" << iNumberOfCore;
+		strName << iNumberOfCore;
 
 		//push data into vector for each CPU cores
 		for (int iLoop = 0; iLoop < iNumberOfCore; iLoop++) {

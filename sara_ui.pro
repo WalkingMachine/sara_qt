@@ -31,7 +31,8 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
     src/mainwindow.h \
-    src/CThreadDiagnostics.h
+    src/CThreadDiagnostics.h \
+    src/monitors.h
 
 FORMS    += mainwindow.ui \
     ui/mainwindow.ui
