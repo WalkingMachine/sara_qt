@@ -21,7 +21,6 @@
 #include <ros/ros.h>
 
 
-
 namespace Ui {
 class MainWindow;
 }

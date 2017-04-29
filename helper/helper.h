@@ -41,21 +41,36 @@
 #define HARDWARE_ID "MAIN_COMPUTER"
 
 
+//------------------------------------------------------------------------------------------
+//	Struct for an usage value (with a total capacity and an actually used capacity)
+//		@members		char strTotal[INT_CAR_SIZE]	: string integer for the total capacity of the usage
+//						char strUsed[INT_CAR_SIZE]		: string integer for the actually in use capacity of the usage
 typedef struct{
 	char strTotal[INT_CAR_SIZE];
 	char strUsed[INT_CAR_SIZE];
 }Type_Usage;
+//------------------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------------------
+//	Struct for the CPU usage
+//		@members	char strCPU_Usage[]									: String containing total CPU usage
+//					char strTabCPU_Cores_Usage[][FLOAT_CAR_SIZE]	: Strings array containing CPU usage, core by core
+//					int iNumberOfCore										: Number of cores
+typedef struct{
+	char strCPU_Usage[FLOAT_CAR_SIZE];
+	char strTabCPU_Cores_Usage[NUM_MAX_CORES][FLOAT_CAR_SIZE];
+	int iNumberOfCore;
+}Type_CPU;
+//------------------------------------------------------------------------------------------
 
 //functions prototypes
 
 //------------------------------------------------------------------------------------------
 //	Function of the thread that will read CPU usage.
-//		@param	char strCPU_Usage[]									: String containing total CPU usage
-//					char strTabCPU_Cores_Usage[][FLOAT_CAR_SIZE]	: Strings array containing CPU usage, core by core
-//					int *iNumberOfCore									: pointer to the number of cores
-//					bool *bRun												: pointer to the running flag
+//		@param	Type_CPU *CPU_data	: pointer to the CPU data
+//					bool *bRun				: pointer to the running flag
 //		@return	nothing
-void refreshCPUdata(char strCPU_Usage[], char strTabCPU_Cores_Usage[][FLOAT_CAR_SIZE], int *iNumberOfCore, const bool *bRun);
+void refreshCPUdata(Type_CPU *CPU_data, const bool *bRun);
 //------------------------------------------------------------------------------------------
 
 
@@ -97,7 +112,7 @@ diagnostic_msgs::DiagnosticStatus status_generate(std::string strName, std::stri
 //	Generate a standard header for ros topic publisher
 //		@param	--to fill
 //		@return	diagnostic_msgs::DiagnosticStatus							: return the status
-diagnostic_msgs::DiagnosticStatus CPUPublisher(char strCPU_Usage[], char strTabCPU_Cores_Usage[][FLOAT_CAR_SIZE], int iNumberOfCore);
+diagnostic_msgs::DiagnosticStatus CPUPublisher(Type_CPU *CPU_data);
 //------------------------------------------------------------------------------------------
 
 void refreshMemoryData(Type_Usage *enrMemory, Type_Usage *enrSwap, const bool *bRun);

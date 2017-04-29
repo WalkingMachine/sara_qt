@@ -9,7 +9,7 @@
 */
 #include "helper.h"
 
-void refreshCPUdata(char strCPU_Usage[], char strTabCPU_Cores_Usage[][FLOAT_CAR_SIZE], int *iNumberOfCore, const bool *bRun){
+void refreshCPUdata(Type_CPU *CPU_data, const bool *bRun){
 	char buffer[BUFFER];    //reading buffer for command execution
 
 	FILE * f;               //link to terminal
@@ -36,11 +36,11 @@ void refreshCPUdata(char strCPU_Usage[], char strTabCPU_Cores_Usage[][FLOAT_CAR_
 				if(buffer[0]=='\n') break;
 				//else, if its the global usage line
 				else if(buffer[13] == 'a' && buffer[14] == 'l' && buffer[15] == 'l'){
-					readLastValue(buffer, strCPU_Usage, FLOAT_CAR_SIZE, ' ');
+					readLastValue(buffer, CPU_data->strCPU_Usage, FLOAT_CAR_SIZE, ' ');
 
 					//else, if its a core usage line
 				}else if(buffer[15] == '0' + iCores){
-					readLastValue(buffer, strTabCPU_Cores_Usage[iCores], FLOAT_CAR_SIZE, ' ');
+					readLastValue(buffer, CPU_data->strTabCPU_Cores_Usage[iCores], FLOAT_CAR_SIZE, ' ');
 
 					iCores += 1;
 				}
@@ -48,7 +48,7 @@ void refreshCPUdata(char strCPU_Usage[], char strTabCPU_Cores_Usage[][FLOAT_CAR_
 			//closing terminal
 			pclose(f);
 		}
-		*iNumberOfCore = iCores;
+		CPU_data->iNumberOfCore = iCores;
 	}
 
 	ROS_INFO("Stop CPU usage reading loop.");
@@ -181,7 +181,7 @@ diagnostic_msgs::DiagnosticStatus status_generate(std::string strName, std::stri
 	return status;
 }
 
-diagnostic_msgs::DiagnosticStatus CPUPublisher(char strCPU_Usage[], char strTabCPU_Cores_Usage[][FLOAT_CAR_SIZE],int iNumberOfCore){
+diagnostic_msgs::DiagnosticStatus CPUPublisher(Type_CPU *CPU_data){
 	//publications variables
 	diagnostic_msgs::KeyValue value;
 
@@ -192,12 +192,12 @@ diagnostic_msgs::DiagnosticStatus CPUPublisher(char strCPU_Usage[], char strTabC
 	std::stringstream strName;
 
 	//generate status message
-	strName << iNumberOfCore;
+	strName << CPU_data->iNumberOfCore;
 
 	//push data into vector for each CPU cores
-	for (int iLoop = 0; iLoop < iNumberOfCore; iLoop++) {
+	for (int iLoop = 0; iLoop < CPU_data->iNumberOfCore; iLoop++) {
 		value.key = '0' + iLoop;
-		value.value = strTabCPU_Cores_Usage[iLoop];
+		value.value = CPU_data->strTabCPU_Cores_Usage[iLoop];
 		valuesVector.push_back(value);
 	}
 
