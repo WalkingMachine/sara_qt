@@ -40,6 +40,9 @@
 #define NUM_MAX_CORES 10
 #define HARDWARE_ID "MAIN_COMPUTER"
 
+//--------------------------------------------------------------------------------------------------------------
+//--------------------------------------------- TYPES DECLARATIONS ---------------------------------------------
+//--------------------------------------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------------------
 //	Struct for an usage value (with a total capacity and an actually used capacity)
@@ -63,7 +66,9 @@ typedef struct{
 }Type_CPU;
 //------------------------------------------------------------------------------------------
 
-//functions prototypes
+//--------------------------------------------------------------------------------------------------------------
+//-------------------------------------------- FUNCTIONS PROTOTYPES --------------------------------------------
+//--------------------------------------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------------------
 //	Function of the thread that will read CPU usage.
@@ -73,6 +78,22 @@ typedef struct{
 void refreshCPUdata(Type_CPU *CPU_data, const bool *bRun);
 //------------------------------------------------------------------------------------------
 
+//------------------------------------------------------------------------------------------
+//	Function of the thread that will read CPU usage.
+//		@param	Type_CPU *CPU_data	: pointer to the CPU data
+//					bool *bRun				: pointer to the running flag
+//		@return	nothing
+void refreshCPUdata(Type_CPU *CPU_data, const bool *bRun);
+//------------------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------------------
+//	Function of the thread that will read CPU usage.
+//		@param	Type_Usage *enrMemory	: pointer to the memory data
+//					Type_Usage *enrSwap		: pointer to the swap data
+//					bool *bRun					: pointer to the running flag
+//		@return	nothing
+void refreshMemoryData(Type_Usage *enrMemory, Type_Usage *enrSwap, const bool *bRun);
+//------------------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------------------
 //	Read the last string part of a string with specified charactere separator.
@@ -85,6 +106,16 @@ void refreshCPUdata(Type_CPU *CPU_data, const bool *bRun);
 void readLastValue(char *theLine, char theResult[], int iSizeResult, char cSeparator);
 //------------------------------------------------------------------------------------------
 
+//------------------------------------------------------------------------------------------
+//	Read the last string part of a string with specified charactere separator.
+//	Assuming than the first string end by a \0 or a \n.
+//		@param	char *theLine			: input string
+//					Type_Usage *enrUsage	: pointer to the memory usage
+//		@return	nothing
+void readMemoryUsageValues(char *theLine, Type_Usage *enrUsage);
+//------------------------------------------------------------------------------------------
+
+
 //--------------------------------------------------------------------------------------------------------------
 //----------------------------------------- FUNCTIONS FOR PUBLISH DATA -----------------------------------------
 //--------------------------------------------------------------------------------------------------------------
@@ -95,7 +126,6 @@ void readLastValue(char *theLine, char theResult[], int iSizeResult, char cSepar
 //		@return	std_msgs::Header	: return the header
 std_msgs::Header header_generate(int iSeq);
 //------------------------------------------------------------------------------------------
-
 
 //------------------------------------------------------------------------------------------
 //	Generate a diagnostics status for diagnostics publishers
@@ -109,13 +139,18 @@ diagnostic_msgs::DiagnosticStatus status_generate(std::string strName, std::stri
 //------------------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------------------
-//	Generate a standard header for ros topic publisher
-//		@param	--to fill
-//		@return	diagnostic_msgs::DiagnosticStatus							: return the status
+//	Generate the status of CPU data for publisher
+//		@param	Type_CPU *CPU_data						: pointer to the CPU data
+//		@return	diagnostic_msgs::DiagnosticStatus	: return the status
 diagnostic_msgs::DiagnosticStatus CPUPublisher(Type_CPU *CPU_data);
 //------------------------------------------------------------------------------------------
 
-void refreshMemoryData(Type_Usage *enrMemory, Type_Usage *enrSwap, const bool *bRun);
-void readMemoryUsageValues(char buffer[], Type_Usage *enrUsage);
+//------------------------------------------------------------------------------------------
+//	Generate the status of Memory data for publisher
+//		@param	Type_Usage *enrMemory					: pointer to the memory data
+//					Type_Usage *enrSwap						: pointer to the swap data
+//		@return	diagnostic_msgs::DiagnosticStatus	: return the status
 diagnostic_msgs::DiagnosticStatus MemoryPublisher(Type_Usage *enrMemory, Type_Usage *enrSwap);
+//------------------------------------------------------------------------------------------
+
 #endif

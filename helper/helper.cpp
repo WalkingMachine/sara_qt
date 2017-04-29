@@ -17,7 +17,8 @@ int main(int argc, char **argv){
 	std::vector<diagnostic_msgs::KeyValue> valuesVector;
 	std::vector<diagnostic_msgs::DiagnosticStatus> statusVector;
 
-	int	iSequence = 0;									// integer value for publisher sequence
+	// integer value for publisher sequence
+	int iSequence = 0;
 
 	//Memory variables
 	Type_Usage enrMemory;
@@ -27,24 +28,21 @@ int main(int argc, char **argv){
 	Type_CPU CPU_data;
 	CPU_data.iNumberOfCore = 0;
 
-
-	//threads values
-	bool	bRun = true;							//
-
 	//init ros connection
 	ros::init(argc, argv, "ui_helper");
 	ros::NodeHandle nh;
-
-	ROS_INFO("Starting UI helper.");
-
 	ros::Publisher diagnostic_publisher = nh.advertise<diagnostic_msgs::DiagnosticArray>("diagnostics", 100);
-
 	ros::Rate loop_rate(2);
 
+	//INFO print
+	ROS_INFO("Starting UI helper.");
+
 	//Create and launch usage refresh threads
+	bool	bRun = true;
 	std::thread CPURefreshThread(refreshCPUdata, &CPU_data, &bRun);
 	std::thread MemoryRefreshThread(refreshMemoryData, &enrMemory, &enrSwap, &bRun);
 
+	//Start publisher loop
 	while(ros::ok()){
 		//clear status
 		statusVector.clear();
@@ -65,9 +63,9 @@ int main(int argc, char **argv){
 		//increment static sequence number
 		iSequence ++;
 
-		ros::spinOnce();
 		//delay for respect publication ratess
 		loop_rate.sleep();
+		ros::spinOnce();
 	}
 
 	bRun = false;

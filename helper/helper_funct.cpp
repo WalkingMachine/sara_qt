@@ -121,41 +121,41 @@ void readLastValue(char *theLine, char theResult[], int iSizeResult, char cSepar
 	}
 }
 
-void readMemoryUsageValues(char buffer[], Type_Usage *enrUsage){
+void readMemoryUsageValues(char *theLine, Type_Usage *enrUsage){
 	int iBufferLoop = 0;
 	int iIndex;
 	//go to first number (TOTAL Memory)
-	while(!(buffer[iBufferLoop] >= '0' && buffer[iBufferLoop] <= '9') && buffer[iBufferLoop] != '\0'){
+	while(!(theLine[iBufferLoop] >= '0' && theLine[iBufferLoop] <= '9') && theLine[iBufferLoop] != '\0'){
 		iBufferLoop ++;
 	}
 
 	iIndex = iBufferLoop;
 	//copy all characters of the first number
-	while((buffer[iBufferLoop] >= '0' && buffer[iBufferLoop] <= '9') && buffer[iBufferLoop] != '\0'){
-		enrUsage->strTotal[iBufferLoop - iIndex] = buffer[iBufferLoop];
+	while((theLine[iBufferLoop] >= '0' && theLine[iBufferLoop] <= '9') && theLine[iBufferLoop] != '\0'){
+		enrUsage->strTotal[iBufferLoop - iIndex] = theLine[iBufferLoop];
 		iBufferLoop ++;
 	}
 	enrUsage->strTotal[iBufferLoop - iIndex] = '\0';
 
 	//go to second number (USED Memory)
-	while(!(buffer[iBufferLoop] >= '0' && buffer[iBufferLoop] <= '9') && buffer[iBufferLoop] != '\0'){
+	while(!(theLine[iBufferLoop] >= '0' && theLine[iBufferLoop] <= '9') && theLine[iBufferLoop] != '\0'){
 		iBufferLoop ++;
 	}
 
 	//go to end of number
-	while((buffer[iBufferLoop] >= '0' && buffer[iBufferLoop] <= '9') && buffer[iBufferLoop] != '\0'){
+	while((theLine[iBufferLoop] >= '0' && theLine[iBufferLoop] <= '9') && theLine[iBufferLoop] != '\0'){
 		iBufferLoop ++;
 	}
 
 	//go to third number (FREE Memory)
-	while(!(buffer[iBufferLoop] >= '0' && buffer[iBufferLoop] <= '9') && buffer[iBufferLoop] != '\0'){
+	while(!(theLine[iBufferLoop] >= '0' && theLine[iBufferLoop] <= '9') && theLine[iBufferLoop] != '\0'){
 		iBufferLoop ++;
 	}
 
 	iIndex = iBufferLoop;
 	//copy all caracters of the second number
-	while((buffer[iBufferLoop] >= '0' && buffer[iBufferLoop] <= '9') && buffer[iBufferLoop] != '\0'){
-		enrUsage->strUsed[iBufferLoop - iIndex] = buffer[iBufferLoop];
+	while((theLine[iBufferLoop] >= '0' && theLine[iBufferLoop] <= '9') && theLine[iBufferLoop] != '\0'){
+		enrUsage->strUsed[iBufferLoop - iIndex] = theLine[iBufferLoop];
 		iBufferLoop ++;
 	}
 	enrUsage->strUsed[iBufferLoop - iIndex] = '\0';
