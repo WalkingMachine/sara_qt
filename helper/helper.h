@@ -97,10 +97,10 @@ diagnostic_msgs::DiagnosticStatus status_generate(std::string strName, std::stri
 //	Generate a standard header for ros topic publisher
 //		@param	--to fill
 //		@return	diagnostic_msgs::DiagnosticStatus							: return the status
-void CPUPublisher(ros::Publisher publisher, char strCPU_Usage[], char strTabCPU_Cores_Usage[][FLOAT_CAR_SIZE], int iNumberOfCore);
+diagnostic_msgs::DiagnosticStatus CPUPublisher(char strCPU_Usage[], char strTabCPU_Cores_Usage[][FLOAT_CAR_SIZE], int iNumberOfCore);
 //------------------------------------------------------------------------------------------
 
 void refreshMemoryData(Type_Usage *enrMemory, Type_Usage *enrSwap, const bool *bRun);
 void readMemoryUsageValues(char buffer[], Type_Usage *enrUsage);
-void MemoryPublisher(ros::Publisher publisher, Type_Usage *enrMemory, Type_Usage *enrSwap);
+diagnostic_msgs::DiagnosticStatus MemoryPublisher(Type_Usage *enrMemory, Type_Usage *enrSwap);
 #endif

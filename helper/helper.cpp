@@ -10,7 +10,14 @@
 
 #include "helper.h"
 int main(int argc, char **argv){
-	int	i = 0;									// integer value for publisher sequence
+	//publication message
+	diagnostic_msgs::DiagnosticArray message;
+
+	//data vectors
+	std::vector<diagnostic_msgs::KeyValue> valuesVector;
+	std::vector<diagnostic_msgs::DiagnosticStatus> statusVector;
+
+	int	iSequence = 0;									// integer value for publisher sequence
 
 	//Memory variables
 	Type_Usage enrMemory;
@@ -40,9 +47,24 @@ int main(int argc, char **argv){
 	std::thread MemoryRefreshThread(refreshMemoryData, &enrMemory, &enrSwap, &bRun);
 
 	while(ros::ok()){
-		//CPU publisher function
-		CPUPublisher(diagnostic_publisher, strCPU_Usage, strTabCPU_Cores_Usage, iNumberOfCore);
-		MemoryPublisher(diagnostic_publisher, &enrMemory, &enrSwap);
+		//clear status
+		statusVector.clear();
+
+		//add status to vector
+		statusVector.push_back(CPUPublisher(strCPU_Usage, strTabCPU_Cores_Usage, iNumberOfCore));
+		statusVector.push_back(MemoryPublisher(&enrMemory, &enrSwap));
+
+		//add header and status to message
+		message.header = header_generate(iSequence);
+		message.status = statusVector;
+
+		//publish message
+		if(iNumberOfCore){
+			diagnostic_publisher.publish(message);
+		}
+
+		//increment static sequence number
+		iSequence ++;
 
 		ros::spinOnce();
 		//delay for respect publication ratess

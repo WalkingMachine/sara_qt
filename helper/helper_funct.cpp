@@ -142,6 +142,16 @@ void readMemoryUsageValues(char buffer[], Type_Usage *enrUsage){
 		iBufferLoop ++;
 	}
 
+	//go to end of number
+	while((buffer[iBufferLoop] >= '0' && buffer[iBufferLoop] <= '9') && buffer[iBufferLoop] != '\0'){
+		iBufferLoop ++;
+	}
+
+	//go to third number (FREE Memory)
+	while(!(buffer[iBufferLoop] >= '0' && buffer[iBufferLoop] <= '9') && buffer[iBufferLoop] != '\0'){
+		iBufferLoop ++;
+	}
+
 	iIndex = iBufferLoop;
 	//copy all caracters of the second number
 	while((buffer[iBufferLoop] >= '0' && buffer[iBufferLoop] <= '9') && buffer[iBufferLoop] != '\0'){
@@ -171,59 +181,36 @@ diagnostic_msgs::DiagnosticStatus status_generate(std::string strName, std::stri
 	return status;
 }
 
-
-void CPUPublisher(ros::Publisher publisher, char strCPU_Usage[], char strTabCPU_Cores_Usage[][FLOAT_CAR_SIZE],int iNumberOfCore){
-	static int iSequence = 0; //sequence number
-	//security for publish only if there are data about CPU usage (use number of core for this)
-	if(iNumberOfCore){
-		//publications variables
-		diagnostic_msgs::KeyValue value;
-		diagnostic_msgs::DiagnosticStatus status;
-		diagnostic_msgs::DiagnosticArray message;
-
-		//data vectors
-		std::vector<diagnostic_msgs::KeyValue> valuesVector;
-		std::vector<diagnostic_msgs::DiagnosticStatus> statusVector;
-
-		//string stream for generate status message
-		std::stringstream strName;
-
-		//generate status message
-		strName << iNumberOfCore;
-
-		//push data into vector for each CPU cores
-		for (int iLoop = 0; iLoop < iNumberOfCore; iLoop++) {
-			value.key = '0' + iLoop;
-			value.value = strTabCPU_Cores_Usage[iLoop];
-			valuesVector.push_back(value);
-		}
-
-		//generate status with standard hardware ID and previous generated value vector and name
-		status = status_generate("CPU_Usage", strName.str(), HARDWARE_ID, 0, valuesVector);
-		statusVector.push_back(status);
-
-		//add header and status to message
-		message.header = header_generate(iSequence);
-		message.status = statusVector;
-
-		//publish message
-		publisher.publish(message);
-
-		//increment static sequence number
-		iSequence ++;
-	}
-}
-
-void MemoryPublisher(ros::Publisher publisher, Type_Usage *enrMemory, Type_Usage *enrSwap){
-	static int iSequence = 0; //sequence number
+diagnostic_msgs::DiagnosticStatus CPUPublisher(char strCPU_Usage[], char strTabCPU_Cores_Usage[][FLOAT_CAR_SIZE],int iNumberOfCore){
 	//publications variables
 	diagnostic_msgs::KeyValue value;
-	diagnostic_msgs::DiagnosticStatus status;
-	diagnostic_msgs::DiagnosticArray message;
 
 	//data vectors
 	std::vector<diagnostic_msgs::KeyValue> valuesVector;
-	std::vector<diagnostic_msgs::DiagnosticStatus> statusVector;
+
+	//string stream for generate status message
+	std::stringstream strName;
+
+	//generate status message
+	strName << iNumberOfCore;
+
+	//push data into vector for each CPU cores
+	for (int iLoop = 0; iLoop < iNumberOfCore; iLoop++) {
+		value.key = '0' + iLoop;
+		value.value = strTabCPU_Cores_Usage[iLoop];
+		valuesVector.push_back(value);
+	}
+
+	//generate status with standard hardware ID and previous generated value vector and name
+	return status_generate("CPU_Usage", strName.str(), HARDWARE_ID, 0, valuesVector);
+}
+
+diagnostic_msgs::DiagnosticStatus MemoryPublisher(Type_Usage *enrMemory, Type_Usage *enrSwap){
+	//publications variables
+	diagnostic_msgs::KeyValue value;
+
+	//data vector
+	std::vector<diagnostic_msgs::KeyValue> valuesVector;
 
 	//string stream for generate status message
 	std::stringstream strName;
@@ -243,16 +230,5 @@ void MemoryPublisher(ros::Publisher publisher, Type_Usage *enrMemory, Type_Usage
 	valuesVector.push_back(value);
 
 	//generate status with standard hardware ID and previous generated value vector and name
-	status = status_generate("Memory_Usage", "", HARDWARE_ID, 0, valuesVector);
-	statusVector.push_back(status);
-
-	//add header and status to message
-	message.header = header_generate(iSequence);
-	message.status = statusVector;
-
-	//publish message
-	publisher.publish(message);
-
-	//increment static sequence number
-	iSequence ++;
+	return status_generate("Memory_Usage", "", HARDWARE_ID, 0, valuesVector);
 }
