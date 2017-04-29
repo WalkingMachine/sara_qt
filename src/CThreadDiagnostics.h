@@ -21,15 +21,12 @@ typedef struct CPU_STRUC{
 
 //Structure de la memoire
 typedef struct MEMORY_STRUCT{
-	int Physical_Memory_Total;
-	int Physical_Memory_Used;
-	int Physical_Memory_Free;
-	int Swap_Total;
-	int Swap_Used;
-	int Swap_Free;
 	int Memory_Total;
 	int Memory_Used;
-	int Memory_Free;
+	int Memory_Usage;
+	int Swap_Total;
+	int Swap_Used;
+	int Swap_Usage;
 }MEMORY_TYPE;
 
 
@@ -62,7 +59,7 @@ private:
 
 signals:
 	void updateCPU(CPU_TYPE *CPU);
-	void updateMemory(float iMemoryUsage);
+	void updateMemory(MEMORY_TYPE *Memory);
 
 };
 #endif // CTHREADTOPICSSUBSCRIBER_H

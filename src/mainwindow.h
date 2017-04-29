@@ -9,6 +9,11 @@
 #include <QMainWindow>
 #include <QStringListModel>
 #include <QAbstractItemView>
+
+#include <QProgressBar>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+
 #include <QThread>
 #include "CThreadDiagnostics.h"
 #include "monitors.h"
@@ -23,27 +28,32 @@ class MainWindow;
 
 class MainWindow : public QMainWindow
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+	explicit MainWindow(QWidget *parent = 0);
+	~MainWindow();
 
 public slots:
-	 void updateCPU(CPU_TYPE *CPU);
-    void updateMemory(float iMemoryUsage);
+	void updateCPU(CPU_TYPE *CPU);
+	void updateMemory(MEMORY_TYPE *Memory);
 
 private slots:
 
 private:
-    Ui::MainWindow *ui;
-    XmlRpc::XmlRpcValue topic_list;
-    ros::NodeHandle NodeHandle;
-    ros::Subscriber Subscribe;
+	Ui::MainWindow *ui;
+
+	//CPU Usage Box
+	QProgressBar **CPU_Usage_Bars;
+	void generateCPU_Usage_Box(int numberOfCores);
+
+	XmlRpc::XmlRpcValue topic_list;
+	ros::NodeHandle NodeHandle;
+	ros::Subscriber Subscribe;
 
 signals:
-    void subscribeSignal();
-    void unsubscribeSignal();
+	void subscribeSignal();
+	void unsubscribeSignal();
 
 };
 

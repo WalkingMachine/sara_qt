@@ -36,28 +36,42 @@ void CThreadDiagnostics::unsubscribeSlot(){
 
 void CThreadDiagnostics::callbackMessageReceived(const diagnostic_msgs::DiagnosticArray &message){
 	QString statusName, hardwareID;
-	statusName.fromStdString(message.status[0].name);
+
 	hardwareID.fromStdString(message.status[0].hardware_id);
 
 
 	//if the hardware related data is the main computer of SARA
 	if(hardwareID.compare(HARDWARE_ID)){
-		//if it is the CPU usage
-		if(statusName.compare("CPU_Usage")){
-			//Update Number of Cores
-			CPU.enrNumberOfCore = readIntValue(message.status[0].message);
 
-			//Create new array of core
-			float* enrTabCoresUsage = (float *)malloc(sizeof(float)*CPU.enrNumberOfCore);
+		//Update Number of Cores
+		CPU.enrNumberOfCore = readIntValue(message.status[0].message);
 
-			for(int iCoreNumber = 0; iCoreNumber<CPU.enrNumberOfCore; iCoreNumber++){
-				enrTabCoresUsage[iCoreNumber] = 100 - readFloatValue(message.status[0].values[iCoreNumber].value);
-			}
-			CPU.pCPUCoresUsage = enrTabCoresUsage;
-			updateCPU(&CPU);
+		//Create new array of core
+		float* enrTabCoresUsage = (float *)malloc(sizeof(float)*CPU.enrNumberOfCore);
 
-			//sleep(1000);
+		for(int iCoreNumber = 0; iCoreNumber<CPU.enrNumberOfCore; iCoreNumber++){
+			enrTabCoresUsage[iCoreNumber] = 100 - readFloatValue(message.status[0].values[iCoreNumber].value);
 		}
+
+		//link array with CPU struct
+		CPU.pCPUCoresUsage = enrTabCoresUsage;
+
+		//execute CPU update signal
+		updateCPU(&CPU);
+
+
+		//Update Memory Usages
+		Memory.Memory_Total = readIntValue(message.status[1].values[0].value);
+		Memory.Memory_Used= Memory.Memory_Total - readIntValue(message.status[1].values[1].value);
+		Memory.Memory_Usage = Memory.Memory_Used * 100 / Memory.Memory_Total;
+		//Update Swap Usages
+		Memory.Swap_Total = readIntValue(message.status[1].values[2].value);
+		Memory.Swap_Used = Memory.Swap_Total - readIntValue(message.status[1].values[3].value);
+		Memory.Swap_Usage = Memory.Swap_Used * 100 / Memory.Swap_Total;
+
+		//execute memory update signal
+		updateMemory(&Memory);
+
 	}
 
 

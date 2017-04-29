@@ -21,34 +21,53 @@ void MainWindow::updateCPU(CPU_TYPE *CPU){
 	if(CPU->pCPUCoresUsage!=NULL){
 		if(numberOfCores != CPU->enrNumberOfCore){
 			numberOfCores = CPU->enrNumberOfCore;
-			QString newTitle = "CPU ("+ QString::number(CPU->enrNumberOfCore) +" cores)";
-			ui->CPU->setTitle(newTitle);
+			generateCPU_Usage_Box(numberOfCores);
 		}
 
-		switch (CPU->enrNumberOfCore) {
-		case 8:
-			ui->Core7_bar->setValue(CPU->pCPUCoresUsage[7]);
-		case 7:
-			ui->Core6_bar->setValue(CPU->pCPUCoresUsage[6]);
-		case 6:
-			ui->Core5_bar->setValue(CPU->pCPUCoresUsage[5]);
-		case 5:
-			ui->Core4_bar->setValue(CPU->pCPUCoresUsage[4]);
-		case 4:
-			ui->Core3_bar->setValue(CPU->pCPUCoresUsage[3]);
-		case 3:
-			ui->Core2_bar->setValue(CPU->pCPUCoresUsage[2]);
-		case 2:
-			ui->Core1_bar->setValue(CPU->pCPUCoresUsage[1]);
-		case 1:
-			ui->Core0_bar->setValue(CPU->pCPUCoresUsage[0]);
-			break;
-		default:
-			break;
+		if(CPU->enrNumberOfCore > 0){
+			for(int iLoop = 0; iLoop < CPU->enrNumberOfCore; iLoop++){
+				CPU_Usage_Bars[iLoop]->setValue(CPU->pCPUCoresUsage[iLoop]);
+			}
 		}
 	}
 }
 
-void MainWindow::updateMemory(float iMemoryUsage){
-	ui->Memory_bar->setValue(iMemoryUsage*100);
+void MainWindow::generateCPU_Usage_Box(int numberOfCores){
+	QHBoxLayout *newLayout = new QHBoxLayout();	//generate new master cpu usage layout
+	QVBoxLayout *newLLayout = new QVBoxLayout();	//generate new left cpu usage layout
+	QVBoxLayout *newRLayout = new QVBoxLayout();	//generate new right cpu usage layout
+
+	//link left cpu usage layout in  master cpu usage layout
+	newLayout->addLayout(newLLayout);
+	//link right cpu usage layout in  master cpu usage layout
+	newLayout->addLayout(newRLayout);
+
+	//link with new layout
+	ui->CPU_u->setLayout(newLayout);
+
+	//allocate new size for number of cores
+	CPU_Usage_Bars = new QProgressBar*[numberOfCores];
+
+	//generate all progress bars
+	for(int iLoop = 0; iLoop < numberOfCores; iLoop++){
+		//allocate progress bar
+		CPU_Usage_Bars[iLoop] = new QProgressBar();
+		if(iLoop<numberOfCores/2){
+			//add first half in left layout
+			newLLayout->addWidget(CPU_Usage_Bars[iLoop]);
+		}else{
+			//add second half in left layout
+			newRLayout->addWidget(CPU_Usage_Bars[iLoop]);
+		}
+	}
+
+	//update ox title
+	ui->CPU_u->setTitle("CPU Usage ("+ QString::number(numberOfCores) +" cores)");
+}
+
+void MainWindow::updateMemory(MEMORY_TYPE *Memory){
+	QString newTitle = "Memory (" + QString::number(Memory->Memory_Used) + "M/" + QString::number(Memory->Memory_Total)+ "M) | Swap (" + QString::number(Memory->Swap_Used) + "M/" + QString::number(Memory->Swap_Total)+ "M)";
+	ui->Memory->setTitle(newTitle);
+	ui->Memory_bar->setValue(Memory->Memory_Usage);
+	ui->Swap_bar->setValue(Memory->Swap_Usage);
 }
