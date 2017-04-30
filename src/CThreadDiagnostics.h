@@ -51,7 +51,7 @@ private:
 	MEMORY_TYPE Memory;
 	bool bThreadRun;
 	bool bIsSubscribe;
-	void callbackMessageReceived(const diagnostic_msgs::DiagnosticArray &message);
+	void callbackMessageReceived(const diagnostic_msgs::DiagnosticArray message);
 	//for ros diagnostics data reading
 	float readFloatValue(std::string theString);
 	int readIntValue(std::string theString);

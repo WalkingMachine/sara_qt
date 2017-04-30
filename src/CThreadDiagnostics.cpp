@@ -34,44 +34,41 @@ void CThreadDiagnostics::unsubscribeSlot(){
 	}
 }
 
-void CThreadDiagnostics::callbackMessageReceived(const diagnostic_msgs::DiagnosticArray &message){
-	QString statusName, hardwareID;
-
-	hardwareID.fromStdString(message.status[0].hardware_id);
-
-
+void CThreadDiagnostics::callbackMessageReceived(const diagnostic_msgs::DiagnosticArray message){
 	//if the hardware related data is the main computer of SARA
-	if(hardwareID.compare(HARDWARE_ID)){
+	if(!message.status[0].hardware_id.compare(HARDWARE_ID)){
+		//read all status of the message
+		for(std::vector<diagnostic_msgs::DiagnosticStatus>::const_iterator StatusIterator = message.status.begin(); StatusIterator != message.status.end(); ++StatusIterator){
+			if(!StatusIterator->name.compare("CPU_Usage")){
+				//Update Number of Cores
+				CPU.enrNumberOfCore = readIntValue(StatusIterator->message);
 
-		//Update Number of Cores
-		CPU.enrNumberOfCore = readIntValue(message.status[0].message);
+				//Create new array of core
+				float* enrTabCoresUsage = (float *)malloc(sizeof(float)*CPU.enrNumberOfCore);
 
-		//Create new array of core
-		float* enrTabCoresUsage = (float *)malloc(sizeof(float)*CPU.enrNumberOfCore);
+				for(int iCoreNumber = 0; iCoreNumber<CPU.enrNumberOfCore; iCoreNumber++){
+					enrTabCoresUsage[iCoreNumber] = 100 - readFloatValue(StatusIterator->values[iCoreNumber].value);
+				}
 
-		for(int iCoreNumber = 0; iCoreNumber<CPU.enrNumberOfCore; iCoreNumber++){
-			enrTabCoresUsage[iCoreNumber] = 100 - readFloatValue(message.status[0].values[iCoreNumber].value);
+				//link array with CPU struct
+				CPU.pCPUCoresUsage = enrTabCoresUsage;
+
+				//execute CPU update signal
+				updateCPU(&CPU);
+			}else if(!StatusIterator->name.compare("Memory_Usage")){
+				//Update Memory Usages
+				Memory.Memory_Total = readIntValue(StatusIterator->values[0].value);
+				Memory.Memory_Used= Memory.Memory_Total - readIntValue(StatusIterator->values[1].value);
+				Memory.Memory_Usage = Memory.Memory_Used * 100 / Memory.Memory_Total;
+				//Update Swap Usages
+				Memory.Swap_Total = readIntValue(StatusIterator->values[2].value);
+				Memory.Swap_Used = Memory.Swap_Total - readIntValue(StatusIterator->values[3].value);
+				Memory.Swap_Usage = Memory.Swap_Used * 100 / Memory.Swap_Total;
+
+				//execute memory update signal
+				updateMemory(&Memory);
+			}
 		}
-
-		//link array with CPU struct
-		CPU.pCPUCoresUsage = enrTabCoresUsage;
-
-		//execute CPU update signal
-		updateCPU(&CPU);
-
-
-		//Update Memory Usages
-		Memory.Memory_Total = readIntValue(message.status[1].values[0].value);
-		Memory.Memory_Used= Memory.Memory_Total - readIntValue(message.status[1].values[1].value);
-		Memory.Memory_Usage = Memory.Memory_Used * 100 / Memory.Memory_Total;
-		//Update Swap Usages
-		Memory.Swap_Total = readIntValue(message.status[1].values[2].value);
-		Memory.Swap_Used = Memory.Swap_Total - readIntValue(message.status[1].values[3].value);
-		Memory.Swap_Usage = Memory.Swap_Used * 100 / Memory.Swap_Total;
-
-		//execute memory update signal
-		updateMemory(&Memory);
-
 	}
 
 
@@ -148,6 +145,9 @@ void CThreadDiagnostics::callbackMessageReceived(const diagnostic_msgs::Diagnost
 		}
 */
 }
+
+
+
 
 float CThreadDiagnostics::readFloatValue(std::string theString){
 	int iDiv = 1;
