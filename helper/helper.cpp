@@ -28,6 +28,9 @@ int main(int argc, char **argv){
 	Type_CPU CPU_data;
 	CPU_data.iNumberOfCore = 0;
 
+	//Temperature variable
+	Type_Temperature temperatures;
+
 	//init ros connection
 	ros::init(argc, argv, "ui_helper");
 	ros::NodeHandle nh;
@@ -41,22 +44,25 @@ int main(int argc, char **argv){
 	bool	bRun = true;
 	std::thread CPURefreshThread(refreshCPUdata, &CPU_data, &bRun);
 	std::thread MemoryRefreshThread(refreshMemoryData, &enrMemory, &enrSwap, &bRun);
-
+	std::thread TemperatureRefreshThread(refreshTemperatureData, &temperatures, &bRun);
 	//Start publisher loop
 	while(ros::ok()){
 		//clear status
 		statusVector.clear();
 
-		//add status to vector
-		statusVector.push_back(CPUPublisher(&CPU_data));
-		statusVector.push_back(MemoryPublisher(&enrMemory, &enrSwap));
-
-		//add header and status to message
-		message.header = header_generate(iSequence);
-		message.status = statusVector;
-
-		//publish message
 		if(CPU_data.iNumberOfCore){
+			//add status to vector
+			statusVector.push_back(CPUPublisher(&CPU_data));
+			statusVector.push_back(MemoryPublisher(&enrMemory, &enrSwap));
+			if(temperatures.iNumberOfSensors){
+				statusVector.push_back(TemperaturePublisher(&temperatures));
+			}
+
+			//add header and status vector to message
+			message.header = header_generate(iSequence);
+			message.status = statusVector;
+
+			//publish message
 			diagnostic_publisher.publish(message);
 		}
 

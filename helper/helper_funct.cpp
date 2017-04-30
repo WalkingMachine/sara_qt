@@ -89,6 +89,68 @@ void refreshMemoryData(Type_Usage *enrMemory, Type_Usage *enrSwap, const bool *b
 	ROS_INFO("Stop Memory usage reading loop.");
 }
 
+void refreshTemperatureData(Type_Temperature *temperatureValues, const bool *bRun){
+	//for each sensors
+	diagnostic_msgs::KeyValue value;
+
+	char buffer[BUFFER];    //reading buffer for command execution
+	FILE * f;               //link to terminal
+	char string[FLOAT_CAR_SIZE];
+	int iId;
+
+	ROS_INFO("Start Temperatures reading loop.");
+
+	while(*bRun){
+		//get current cpu usage via mpstat linux command
+		f = popen( "sensors -u -A", "r" );
+
+		//if not able to run command
+		if ( f == 0 ) {
+			ROS_INFO("Could not execute");
+		}else{
+			//clear list
+			temperatureValues->iNumberOfSensors = 0;
+			temperatureValues->valuesVector.clear();
+			//read all lines
+			while(fgets(buffer, BUFFER, f)) {
+				//if it's the cpu Temperatures line, start routine
+				if(buffer[0] == 'c' && buffer[1] == 'o' && buffer[2] == 'r' && buffer[3] == 'e' && buffer[4] == 't' && buffer[5] == 'e' && buffer[6] == 'm' && buffer[7] == 'p'){
+					while(fgets(buffer, BUFFER, f) && buffer[0] != '\n'){
+						if(buffer[0] == 'P' && buffer[1] == 'h' && buffer[2] == 'y' && buffer[3] == 's' && buffer[4] == 'i' && buffer[5] == 'c' && buffer[6] == 'a' && buffer[7] == 'l'){
+							value.key = "CPU";
+
+							fgets(buffer, BUFFER, f);
+							readLastValue(buffer, string, FLOAT_CAR_SIZE, ' ');
+							value.value = string;
+
+							temperatureValues->valuesVector.push_back(value);
+							temperatureValues->iNumberOfSensors ++;
+						}
+						if(buffer[0] == 'C' && buffer[1] == 'o' && buffer[2] == 'r' && buffer[3] == 'e' && buffer[4] == ' '){
+							value.key = "CPU_Core";
+							fgets(buffer, BUFFER, f);
+
+							readLastValue(buffer, string, FLOAT_CAR_SIZE, ' ');
+							value.value = string;
+
+							temperatureValues->valuesVector.push_back(value);
+							temperatureValues->iNumberOfSensors ++;
+						}
+					}
+					break;
+				}
+			}
+
+			//closing terminal
+			pclose(f);
+
+			//waiting for next prob
+			usleep(1000000);
+		}
+	}
+	ROS_INFO("Stop Temperatures reading loop.");
+}
+
 void readLastValue(char *theLine, char theResult[], int iSizeResult, char cSeparator){
 	int iIndex = -1;
 	int iLoop = 0;
@@ -188,7 +250,7 @@ diagnostic_msgs::DiagnosticStatus CPUPublisher(Type_CPU *CPU_data){
 	//data vectors
 	std::vector<diagnostic_msgs::KeyValue> valuesVector;
 
-	//string stream for generate status message
+	//string stream for generate status message containing number of cores
 	std::stringstream strName;
 
 	//generate status message
@@ -231,4 +293,15 @@ diagnostic_msgs::DiagnosticStatus MemoryPublisher(Type_Usage *enrMemory, Type_Us
 
 	//generate status with standard hardware ID and previous generated value vector and name
 	return status_generate("Memory_Usage", "", HARDWARE_ID, 0, valuesVector);
+}
+
+diagnostic_msgs::DiagnosticStatus TemperaturePublisher(Type_Temperature *temperatureValues){
+	//string stream for generate status message
+	std::stringstream strName;
+
+	//generate status message containing number of sensors
+	strName << temperatureValues->iNumberOfSensors;
+
+	//return status
+	return status_generate("Temperature_Sensors",  strName.str(), HARDWARE_ID, 0, temperatureValues->valuesVector);
 }
