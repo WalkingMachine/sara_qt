@@ -13,10 +13,10 @@
 #include <QProgressBar>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QLabel>
 
 #include <QThread>
 #include "CThreadDiagnostics.h"
-#include "monitors.h"
 
 #include <ros/ros.h>
 
@@ -36,6 +36,7 @@ public:
 public slots:
 	void updateCPU(CPU_TYPE *CPU);
 	void updateMemory(MEMORY_TYPE *Memory);
+	void updateTemperatureSensors(TEMPERATURE_SENSORS_TYPE *Temperature_Sensors);
 
 private slots:
 

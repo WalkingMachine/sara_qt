@@ -34,15 +34,24 @@ void MainWindow::updateCPU(CPU_TYPE *CPU){
 
 void MainWindow::generateCPU_Usage_Box(int numberOfCores){
 	QHBoxLayout *newLayout = new QHBoxLayout();	//generate new master cpu usage layout
-	QVBoxLayout *newLLayout = new QVBoxLayout();	//generate new left cpu usage layout
-	QVBoxLayout *newRLayout = new QVBoxLayout();	//generate new right cpu usage layout
+	QVBoxLayout *new1Layout = new QVBoxLayout();	//generate new 1st cpu usage layout
+	QVBoxLayout *new2Layout = new QVBoxLayout();	//generate new 2nd cpu usage layout
+	QVBoxLayout *new3Layout = new QVBoxLayout();	//generate new 3rd cpu usage layout
+	QVBoxLayout *new4Layout = new QVBoxLayout();	//generate new 4th cpu usage layout
 
-	//link left cpu usage layout in  master cpu usage layout
-	newLayout->addLayout(newLLayout);
-	//link right cpu usage layout in  master cpu usage layout
-	newLayout->addLayout(newRLayout);
+	//link 1st cpu usage layout in  master cpu usage layout
+	newLayout->addLayout(new1Layout);
+	//link 2nd cpu usage layout in  master cpu usage layout
+	newLayout->addLayout(new2Layout);
+	//link 3rd cpu usage layout in  master cpu usage layout
+	newLayout->addLayout(new3Layout);
+	//link 4th cpu usage layout in  master cpu usage layout
+	newLayout->addLayout(new4Layout);
 
 	//link with new layout
+	if(ui->CPU_u->layout()){
+		delete ui->CPU_u->layout();
+	}
 	ui->CPU_u->setLayout(newLayout);
 
 	//allocate new size for number of cores
@@ -52,12 +61,18 @@ void MainWindow::generateCPU_Usage_Box(int numberOfCores){
 	for(int iLoop = 0; iLoop < numberOfCores; iLoop++){
 		//allocate progress bar
 		CPU_Usage_Bars[iLoop] = new QProgressBar();
-		if(iLoop<numberOfCores/2){
+		if(iLoop<numberOfCores/4){
 			//add first half in left layout
-			newLLayout->addWidget(CPU_Usage_Bars[iLoop]);
+			new1Layout->addWidget(CPU_Usage_Bars[iLoop]);
+		}else if(iLoop<numberOfCores/2){
+			//add second half in left layout
+			new2Layout->addWidget(CPU_Usage_Bars[iLoop]);
+		}else if(iLoop<numberOfCores*3/4){
+			//add second half in left layout
+			new3Layout->addWidget(CPU_Usage_Bars[iLoop]);
 		}else{
 			//add second half in left layout
-			newRLayout->addWidget(CPU_Usage_Bars[iLoop]);
+			new4Layout->addWidget(CPU_Usage_Bars[iLoop]);
 		}
 	}
 
@@ -70,4 +85,16 @@ void MainWindow::updateMemory(MEMORY_TYPE *Memory){
 	ui->Memory->setTitle(newTitle);
 	ui->Memory_bar->setValue(Memory->Memory_Usage);
 	ui->Swap_bar->setValue(Memory->Swap_Usage);
+}
+
+void MainWindow::updateTemperatureSensors(TEMPERATURE_SENSORS_TYPE *Temperature_Sensors){
+	if(Temperature_Sensors != NULL){
+		ui->listWidget->clear();
+		for(std::vector<SENSOR_TYPE>::const_iterator Sensor = Temperature_Sensors->enrCpuSensors.begin(); Sensor != Temperature_Sensors->enrCpuSensors.end(); ++Sensor){
+			new QListWidgetItem(Sensor->strName + ": " + Sensor->strValue + "°C", ui->listWidget);
+		}
+		for(std::vector<SENSOR_TYPE>::const_iterator Sensor = Temperature_Sensors->enrSensors.begin(); Sensor != Temperature_Sensors->enrSensors.end(); ++Sensor){
+			new QListWidgetItem(Sensor->strName + ": " + Sensor->strValue, ui->listWidget);
+		}
+	}
 }

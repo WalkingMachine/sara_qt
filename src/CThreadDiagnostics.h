@@ -3,15 +3,17 @@
 
 #include <QThread>
 #include <QString>
-#include <ros/ros.h>
-#include <diagnostic_msgs/DiagnosticStatus.h>
-#include <diagnostic_msgs/DiagnosticArray.h>
+#include <QRegExp>
 
-#include "monitors.h"
+#include <ros/ros.h>
+
+#include <diagnostic_msgs/DiagnosticArray.h>
 
 //FOR DEBUG:
 #define DEBUGCPU
 #define DEBUGMEMORY
+
+#define HARDWARE_ID "MAIN_COMPUTER"
 
 //Structure représentant un CPU
 typedef struct CPU_STRUC{
@@ -28,6 +30,19 @@ typedef struct MEMORY_STRUCT{
 	int Swap_Used;
 	int Swap_Usage;
 }MEMORY_TYPE;
+
+
+//Structure d'une valeur d'un capteur
+typedef struct SENSOR_STRUCT{
+	QString strName;
+	QString strValue;
+}SENSOR_TYPE;
+
+//Structure des capteurs de temperature
+typedef struct TEMPERATURE_SENSORS_STRUCT{
+	std::vector<SENSOR_TYPE>	enrCpuSensors;
+	std::vector<SENSOR_TYPE>	enrSensors;
+}TEMPERATURE_SENSORS_TYPE;
 
 
 class CThreadDiagnostics: public QThread
@@ -49,17 +64,15 @@ private:
 	ros::Subscriber subscriber;
 	CPU_TYPE CPU;
 	MEMORY_TYPE Memory;
+	TEMPERATURE_SENSORS_TYPE Temperature_Sensors;
 	bool bThreadRun;
 	bool bIsSubscribe;
 	void callbackMessageReceived(const diagnostic_msgs::DiagnosticArray message);
-	//for ros diagnostics data reading
-	float readFloatValue(std::string theString);
-	int readIntValue(std::string theString);
-
 
 signals:
 	void updateCPU(CPU_TYPE *CPU);
 	void updateMemory(MEMORY_TYPE *Memory);
+	void updateTemperatureSensors(TEMPERATURE_SENSORS_TYPE *Temperature_Sensors);
 
 };
 #endif // CTHREADTOPICSSUBSCRIBER_H
