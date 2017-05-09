@@ -7,12 +7,13 @@ MainWindow::MainWindow(QWidget *parent):
 	ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
-
 	ROS_INFO("UI on");
 }
 
 MainWindow::~MainWindow()
 {
+	ROS_INFO("UI off");
+	std::raise(SIGTERM);
 	delete ui;
 }
 
@@ -97,4 +98,10 @@ void MainWindow::updateTemperatureSensors(TEMPERATURE_SENSORS_TYPE *Temperature_
 			new QListWidgetItem(Sensor->strName + ": " + Sensor->strValue, ui->listWidget);
 		}
 	}
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+//	 delete this;
+	this->~MainWindow();
 }

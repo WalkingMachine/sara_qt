@@ -9,10 +9,6 @@
 
 #include <diagnostic_msgs/DiagnosticArray.h>
 
-//FOR DEBUG:
-#define DEBUGCPU
-#define DEBUGMEMORY
-
 #define HARDWARE_ID "MAIN_COMPUTER"
 
 //Structure représentant un CPU

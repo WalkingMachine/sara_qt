@@ -17,8 +17,8 @@
 
 #include <QThread>
 #include "CThreadDiagnostics.h"
-
 #include <ros/ros.h>
+#include <csignal>
 
 
 namespace Ui {
@@ -39,6 +39,8 @@ public slots:
 	void updateTemperatureSensors(TEMPERATURE_SENSORS_TYPE *Temperature_Sensors);
 
 private slots:
+
+	void on_pushButton_clicked();
 
 private:
 	Ui::MainWindow *ui;
