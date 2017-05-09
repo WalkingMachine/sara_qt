@@ -20,6 +20,7 @@ int main(int argc, char *argv[])
 
 	if(!QCoreApplication::arguments().contains("--debug")){
 		Window.showFullScreen();
+		Window.setCursor(Qt::BlankCursor);
 	}
 
 	//Run Threads and UIs

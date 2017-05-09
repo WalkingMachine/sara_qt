@@ -16,6 +16,7 @@
 #include <QLabel>
 
 #include <QThread>
+
 #include "CThreadDiagnostics.h"
 #include <ros/ros.h>
 #include <csignal>
