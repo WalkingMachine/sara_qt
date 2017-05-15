@@ -1,0 +1,4 @@
+<launch>
+	<machine name="local"  address="localhost"/>
+	<node  name="sara_ui_raspberry"	pkg="sara_ui"	type="sara_ui_helper"	machine="local" respawn="false" output="screen"/>
+</launch>
