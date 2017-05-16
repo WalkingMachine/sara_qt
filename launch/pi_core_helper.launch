@@ -1,0 +1,6 @@
+<launch>
+	<env name="ROS_MASTER_URI" value="http://192.168.0.118:11311"/>
+	<machine	name="core"	address="192.168.0.118"	user="lucas"	password="mauricel"	env-loader="/opt/ros/kinetic/sara_core.sh"/>
+	<machine	name="local"	address="192.168.0.219" />
+	<node  name="helper"    pkg="sara_ui"   type="sara_ui_helper"   machine="core" respawn="false" output="screen"/>
+</launch>
