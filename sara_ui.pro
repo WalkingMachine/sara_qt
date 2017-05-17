@@ -27,11 +27,16 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     src/main.cpp \
     src/mainwindow.cpp \
-    src/CThreadDiagnostics.cpp
+    src/CThreadDiagnostics.cpp \
+    src/CScenarios.cpp
 
 HEADERS  += mainwindow.h \
     src/mainwindow.h \
-    src/CThreadDiagnostics.h
+    src/CThreadDiagnostics.h \
+    src/CScenarios.h
 
 FORMS    += mainwindow.ui \
     ui/mainwindow.ui
+
+DISTFILES += \
+    CMakeLists.txt

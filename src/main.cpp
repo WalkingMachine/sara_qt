@@ -7,10 +7,13 @@ int main(int argc, char *argv[])
 	ros::init(argc, argv, "SARA_QT_USER_INTERFACE");
 	ROS_INFO("Part");
 
+
+
 	//Declaring objetcs
 	CThreadDiagnostics Thread;
 	QApplication a(argc, argv);
 	MainWindow Window;
+
 	//Setting signals/slots connections
 	QObject::connect(&Window, SIGNAL(subscribeSignal()),    &Thread, SLOT(subscribeSlot()));
 	QObject::connect(&Window, SIGNAL(unsubscribeSignal()),  &Thread, SLOT(unsubscribeSlot()));
