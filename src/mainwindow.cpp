@@ -10,6 +10,12 @@ MainWindow::MainWindow(QWidget *parent):
 	ROS_INFO("UI on");
 }
 
+void MainWindow::setProduction(){
+	this->showFullScreen();
+	this->setCursor(Qt::BlankCursor);
+	ui->mainTab->setCurrentIndex(0);
+}
+
 MainWindow::~MainWindow()
 {
 	ROS_INFO("UI off");
@@ -32,6 +38,7 @@ void MainWindow::updateCPU(CPU_TYPE *CPU){
 		}
 	}
 }
+
 
 void MainWindow::generateCPU_Usage_Box(int numberOfCores){
 	QHBoxLayout *newLayout = new QHBoxLayout();	//generate new master cpu usage layout

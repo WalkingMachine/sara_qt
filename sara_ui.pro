@@ -33,6 +33,7 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     src/mainwindow.h \
     src/CThreadDiagnostics.h \
+    src/cscenario.h \
     src/CScenarios.h
 
 FORMS    += mainwindow.ui \

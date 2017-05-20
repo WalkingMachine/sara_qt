@@ -32,6 +32,7 @@ class MainWindow : public QMainWindow
 
 public:
 	explicit MainWindow(QWidget *parent = 0);
+	void setProduction();
 	~MainWindow();
 
 public slots:
@@ -40,7 +41,6 @@ public slots:
 	void updateTemperatureSensors(TEMPERATURE_SENSORS_TYPE *Temperature_Sensors);
 
 private slots:
-
 	void on_pushButton_clicked();
 
 private:

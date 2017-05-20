@@ -48,10 +48,6 @@ class CThreadDiagnostics: public QThread
 public:
 	~CThreadDiagnostics();
 
-public slots:
-	void subscribeSlot();
-	void unsubscribeSlot();
-
 protected:
 	void run();
 
@@ -61,7 +57,6 @@ private:
 	CPU_TYPE CPU;
 	MEMORY_TYPE Memory;
 	TEMPERATURE_SENSORS_TYPE Temperature_Sensors;
-	bool bThreadRun;
 	bool bIsSubscribe;
 	void callbackMessageReceived(const diagnostic_msgs::DiagnosticArray message);
 

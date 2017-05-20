@@ -44,6 +44,10 @@ add_executable(sara_ui
     ${MainWindow_UI})
 qt5_use_modules(sara_ui Widgets)
 
+
+## For support Yaml CPP
+target_link_libraries(${PROJECT_NAME} yaml-cpp)
+
 ## Specify libraries to link a library or executable target against
 target_link_libraries(test_log ${catkin_LIBRARIES})
 target_link_libraries(test_subscribe ${catkin_LIBRARIES})

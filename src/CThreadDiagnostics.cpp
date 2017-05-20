@@ -1,37 +1,18 @@
 #include "CThreadDiagnostics.h"
 CThreadDiagnostics::~CThreadDiagnostics(){
-	this->bThreadRun = false;
 	this->exit();
 }
 
 void CThreadDiagnostics::run(){
-	bIsSubscribe = false;
-
 	CPU.enrNumberOfCore = 0;
 	CPU.pCPUCoresUsage = NULL;
 
 	ROS_INFO("Thread START");
-	subscribeSlot();
 	while(ros::ok()){
 		ROS_INFO("spin");
 		ros::spin();
 	}
 	ROS_INFO("Thread END");
-}
-
-void CThreadDiagnostics::subscribeSlot(){
-	ROS_INFO("Subscript");
-	if(!bIsSubscribe){
-		subscriber = nh.subscribe("diagnostics", 1, &CThreadDiagnostics::callbackMessageReceived, this);
-		bIsSubscribe=true;
-	}
-}
-
-void CThreadDiagnostics::unsubscribeSlot(){
-	if(bIsSubscribe){
-		subscriber.shutdown();
-		bIsSubscribe=false;
-	}
 }
 
 void CThreadDiagnostics::callbackMessageReceived(const diagnostic_msgs::DiagnosticArray message){
@@ -46,6 +27,7 @@ void CThreadDiagnostics::callbackMessageReceived(const diagnostic_msgs::Diagnost
 				//Create new array of core
 				float* enrTabCoresUsage = (float *)malloc(sizeof(float)*CPU.enrNumberOfCore);
 
+				//reading each core usage
 				for(int iCoreNumber = 0; iCoreNumber<CPU.enrNumberOfCore; iCoreNumber++){
 					enrTabCoresUsage[iCoreNumber] = 100 - std::stod(StatusIterator->values[iCoreNumber].value);
 				}
