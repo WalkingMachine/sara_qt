@@ -21,7 +21,7 @@ Il faut lancer le node **sara_ui_helper** sur l'ordinateur qui execute le roscor
 rosrun sara_ui sara_ui_helper
 ```
 Pour réccuperé les diagnostics du robot le topic */diagnostics* est utilisé.
-Pour executer les scenarios, c'est le topic */sara_launch* qui est utilisé. */-Supposément--\*
+Pour executer les scenarios, c'est le topic */sara_launch* qui est utilisé. */-Supposément--\\*
 
 # Lanceur de scenarios
 Afin de simplifier la compétition et le développement de Sara, il est possible de lancer des scénarios directement depuis cette interface utilisateur.
