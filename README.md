@@ -8,7 +8,8 @@ Développé grace au framework Qt (5.8), en C++.
 ```shell
 rosrun sara_ui sara_ui
 ```
-*Pour fermer la fenêtre en plein écran, il faut ce rendre dans l'onglet "**Power Mode**"*
+*Pour fermer la fenêtre en plein écran, il faut ce rendre dans l'onglet "**Power Mode**"
+
 **Pour lancer l'interface graphique en mode debuguage :**
 ```shell
 rosrun sara_ui sara_ui --debug
