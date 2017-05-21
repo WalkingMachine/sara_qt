@@ -115,32 +115,35 @@ void CScenarios::CreateNewFile(){
  */
 void CScenarios::ReloadScenarios(void){
 	//read YAML file
-	try
-	{
-		_Scenarios.clear();
-	  YAML::Node scenariosFile = YAML::LoadFile(_scenariosFilePath.toStdString());
-	  //read scenarios
-	  if (!scenariosFile["Scenarios"]) {
-		 ROS_INFO("There is no scenarios to load in Scenarios File!");
-	  }else if(scenariosFile["Scenarios"].size() == 0){
-		  ROS_INFO("There is no scenarios to load in Scenarios File!");
-	  }else{
-		  _Scenarios.clear();
-		  for (std::size_t i=0 ; i<scenariosFile["Scenarios"].size() ; i++) {
-			  if(scenariosFile["Scenarios"][i]["name"] && scenariosFile["Scenarios"][i]["command"]){
-				  if(scenariosFile["Scenarios"][i]["uses"]){
-					  _Scenarios.push_back(CScenario(QString().fromStdString(scenariosFile["Scenarios"][i]["name"].as<std::string>()), QString().fromStdString(scenariosFile["Scenarios"][i]["command"].as<std::string>()), scenariosFile["Scenarios"][i]["uses"].as<int>()));
-				  }else{
-					  _Scenarios.push_back(CScenario(QString().fromStdString(scenariosFile["Scenarios"][i]["name"].as<std::string>()), QString().fromStdString(scenariosFile["Scenarios"][i]["command"].as<std::string>())));
-				  }
-			  }
-		  }
-	  }
-	}
-	catch (YAML::BadSubscript e)
-	{
-		ROS_INFO("Bad file subscription!");
-	}
+	if(_scenariosFilePath.isEmpty()){
+		ROS_INFO("No path to open!");
+	}else{
+		try
+		{
+			_Scenarios.clear();
+			YAML::Node scenariosFile = YAML::LoadFile(_scenariosFilePath.toStdString());
+			//read scenarios
+			if (!scenariosFile["Scenarios"]) {
+				ROS_INFO("There is no scenarios to load in Scenarios File!");
+			}else if(scenariosFile["Scenarios"].size() == 0){
+				ROS_INFO("There is no scenarios to load in Scenarios File!");
+			}else{
+				_Scenarios.clear();
+				for (std::size_t i=0 ; i<scenariosFile["Scenarios"].size() ; i++) {
+					if(scenariosFile["Scenarios"][i]["name"] && scenariosFile["Scenarios"][i]["command"]){
+						if(scenariosFile["Scenarios"][i]["uses"]){
+							_Scenarios.push_back(CScenario(QString().fromStdString(scenariosFile["Scenarios"][i]["name"].as<std::string>()), QString().fromStdString(scenariosFile["Scenarios"][i]["command"].as<std::string>()), scenariosFile["Scenarios"][i]["uses"].as<int>()));
+						}else{
+							_Scenarios.push_back(CScenario(QString().fromStdString(scenariosFile["Scenarios"][i]["name"].as<std::string>()), QString().fromStdString(scenariosFile["Scenarios"][i]["command"].as<std::string>())));
+						}
+					}
+				}
+			}
+		}
+		catch (YAML::BadSubscript e)
+		{
+			ROS_INFO("Bad file subscription!");
+		}}
 }
 
 /**
@@ -171,7 +174,7 @@ void CScenarios::setFilePath(QString scenariosFilePath){
 		QFile file(strSaveFilePath);
 		_scenariosFilePath = scenariosFilePath;
 		if(!file.open(QFile::WriteOnly | QFile::Text)){
-				ROS_INFO("Can't read save file.");
+			ROS_INFO("Can't read save file.");
 		}else{
 			//read str stream from save file
 			QTextStream out(&file);
