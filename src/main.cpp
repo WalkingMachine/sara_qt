@@ -5,7 +5,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "CThreadDiagnostics.h"
-#include "CScenarios.h"
 
 int main(int argc, char *argv[])
 {
@@ -15,14 +14,15 @@ int main(int argc, char *argv[])
 	//Declaring objetcs
 	CThreadDiagnostics Thread;
 	ROS_INFO("Thread");
-	CScenarios Scenarios;
 
 	QApplication a(argc, argv);
 	MainWindow Window;
 
 	//Setting Fullscreen and other stufs if it is not debbuging
 	if(!QCoreApplication::arguments().contains("--debug")){
-			Window.setProduction();
+		Window.setProduction();
+	}else{
+		//Scenarios.PrintScenarios();
 	}
 
 	//Setting signals/slots connections for diagnostics over ROS topics

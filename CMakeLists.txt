@@ -41,6 +41,7 @@ add_executable(sara_ui
     src/mainwindow.cpp
     src/CThreadDiagnostics.cpp
     src/CScenarios.cpp
+    src/CScenario.cpp
     ${MainWindow_UI})
 qt5_use_modules(sara_ui Widgets)
 

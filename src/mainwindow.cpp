@@ -1,21 +1,30 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-
-MainWindow::MainWindow(QWidget *parent):
-	QMainWindow(parent),
-	ui(new Ui::MainWindow)
-{
+/**
+ * @brief MainWindow::MainWindow
+ * @param parent
+ */
+MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow){
 	ui->setupUi(this);
 	ROS_INFO("UI on");
+	InitScenarios();
+	ui->scenatioTree->setSortingEnabled(true);
 }
 
+/**
+ * @brief MainWindow::setProduction
+ * settings for production
+ */
 void MainWindow::setProduction(){
 	this->showFullScreen();
 	this->setCursor(Qt::BlankCursor);
 	ui->mainTab->setCurrentIndex(0);
 }
 
+/**
+ * @brief MainWindow::~MainWindow
+ */
 MainWindow::~MainWindow()
 {
 	ROS_INFO("UI off");
@@ -23,6 +32,12 @@ MainWindow::~MainWindow()
 	delete ui;
 }
 
+/**
+ * Update CPU diagnostics on UI. Set number of progress bar in function of number of monitored cores.
+ * @brief MainWindow::updateCPU
+ * @param CPU
+ *
+ */
 void MainWindow::updateCPU(CPU_TYPE *CPU){
 	static int numberOfCores = 0;
 	if(CPU->pCPUCoresUsage!=NULL){
@@ -39,7 +54,11 @@ void MainWindow::updateCPU(CPU_TYPE *CPU){
 	}
 }
 
-
+/**
+ * Generate a QT widget containing all CPU cores usage ProgressBar
+ * @brief MainWindow::generateCPU_Usage_Box
+ * @param numberOfCores
+ */
 void MainWindow::generateCPU_Usage_Box(int numberOfCores){
 	QHBoxLayout *newLayout = new QHBoxLayout();	//generate new master cpu usage layout
 	QVBoxLayout *new1Layout = new QVBoxLayout();	//generate new 1st cpu usage layout
@@ -88,6 +107,11 @@ void MainWindow::generateCPU_Usage_Box(int numberOfCores){
 	ui->CPU_u->setTitle("CPU Usage ("+ QString::number(numberOfCores) +" cores)");
 }
 
+/**
+ * Update memory usage ProgressBar and Values in the name of the group
+ * @brief MainWindow::updateMemory
+ * @param Memory
+ */
 void MainWindow::updateMemory(MEMORY_TYPE *Memory){
 	QString newTitle = "Memory (" + QString::number(Memory->Memory_Used) + "M/" + QString::number(Memory->Memory_Total)+ "M) | Swap (" + QString::number(Memory->Swap_Used) + "M/" + QString::number(Memory->Swap_Total)+ "M)";
 	ui->Memory->setTitle(newTitle);
@@ -95,6 +119,11 @@ void MainWindow::updateMemory(MEMORY_TYPE *Memory){
 	ui->Swap_bar->setValue(Memory->Swap_Usage);
 }
 
+/**
+ * Generate a table containing all temperatures sensors and thoses values
+ * @brief MainWindow::updateTemperatureSensors
+ * @param Temperature_Sensors
+ */
 void MainWindow::updateTemperatureSensors(TEMPERATURE_SENSORS_TYPE *Temperature_Sensors){
 	if(Temperature_Sensors != NULL){
 		ui->listWidget->clear();
@@ -111,4 +140,58 @@ void MainWindow::on_pushButton_clicked()
 {
 //	 delete this;
 	this->~MainWindow();
+}
+
+/**
+ * Initialise scenarios page
+ * @brief MainWindow::InitScenarios
+ */
+void MainWindow::InitScenarios(){
+
+	if(!_Scenarios.getFilePath().isEmpty()){
+		ui->scenatioTree->clear();
+
+		if(_Scenarios.getNumberOfScenarios()>0){
+			int iIndex = 0;
+			for (QList<CScenario>::iterator Scenario = _Scenarios._Scenarios.begin(); Scenario != _Scenarios._Scenarios.end(); Scenario++){
+				QTreeWidgetItem *item = new QTreeWidgetItem();
+
+				item->setText(0, Scenario->getName());
+
+				item->setData(1, Qt::EditRole, Scenario->getNumberOfUse());
+				item->setData(1, Qt::DisplayRole, QString().number(Scenario->getNumberOfUse()));
+
+				item->setText(2, Scenario->getCommand());
+
+				ui->scenatioTree->insertTopLevelItem(iIndex,item);
+				iIndex++;
+			}
+		}
+
+		if(_Scenarios.getNumberOfScenarios()<2){
+			ui->Scenario_Path->setText(_Scenarios.getFilePath() + " - " + QString::number(_Scenarios.getNumberOfScenarios()) + " Scenario");
+		}else{
+			ui->Scenario_Path->setText(_Scenarios.getFilePath() + " - " + QString::number(_Scenarios.getNumberOfScenarios()) + " Scenarios");
+		}
+	}else{
+		ui->Scenario_Path->setText(QString("No Scenarios File loaded."));
+	}
+}
+
+/**
+ * @brief MainWindow::on_chooseFileButton_clicked
+ * Handler for choose a scenario file.
+ */
+void MainWindow::on_chooseFileButton_clicked(){
+	QString newPath = QFileDialog::getOpenFileName(this, tr("Select Scenarios file"), QDir::homePath(), tr("Scenarios file (*.scenario) ;; All files (*.*)"));
+	if(!newPath.isEmpty()){
+		if(!QFile::exists(newPath)){
+			QMessageBox(QMessageBox::Information, "File Error", "The selected file do not exist!", QMessageBox::Close).exec();
+		}else if(!CScenarios::isReadableFile(newPath)){
+			QMessageBox(QMessageBox::Information, "File Error", "The selected file is not in a readable format (YAML)!", QMessageBox::Close).exec();
+		}else{
+			_Scenarios.setFilePath(newPath);
+			InitScenarios();
+		}
+	}
 }

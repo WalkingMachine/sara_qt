@@ -105,7 +105,58 @@
        <attribute name="title">
         <string>Scenarios</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_3"/>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QTreeWidget" name="scenatioTree">
+          <column>
+           <property name="text">
+            <string notr="true">Name</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string notr="true">Nbr of Uses</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string notr="true">Command</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QLabel" name="Scenario_Path">
+            <property name="text">
+             <string>No Scenarios File loaded.</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="chooseFileButton">
+            <property name="text">
+             <string>Browse Scenario File...</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_power_mode">
        <attribute name="title">

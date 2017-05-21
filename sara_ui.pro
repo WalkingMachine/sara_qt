@@ -28,13 +28,15 @@ SOURCES += main.cpp\
     src/main.cpp \
     src/mainwindow.cpp \
     src/CThreadDiagnostics.cpp \
-    src/CScenarios.cpp
+    src/CScenarios.cpp \
+    src/CScenario.cpp
 
 HEADERS  += mainwindow.h \
     src/mainwindow.h \
     src/CThreadDiagnostics.h \
     src/cscenario.h \
-    src/CScenarios.h
+    src/CScenarios.h \
+    src/CScenario.h
 
 FORMS    += mainwindow.ui \
     ui/mainwindow.ui

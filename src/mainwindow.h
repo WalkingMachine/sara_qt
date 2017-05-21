@@ -10,14 +10,20 @@
 #include <QStringListModel>
 #include <QAbstractItemView>
 
+#include <QFileDialog>
 #include <QProgressBar>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QMessageBox>
 #include <QLabel>
+#include <QSizePolicy>
+
 
 #include <QThread>
 
+#include "CScenarios.h"
 #include "CThreadDiagnostics.h"
+
 #include <ros/ros.h>
 #include <csignal>
 
@@ -43,9 +49,10 @@ public slots:
 private slots:
 	void on_pushButton_clicked();
 
+	void on_chooseFileButton_clicked();
+
 private:
 	Ui::MainWindow *ui;
-
 	//CPU Usage Box
 	QProgressBar **CPU_Usage_Bars;
 	void generateCPU_Usage_Box(int numberOfCores);
@@ -53,6 +60,9 @@ private:
 	XmlRpc::XmlRpcValue topic_list;
 	ros::NodeHandle NodeHandle;
 	ros::Subscriber Subscribe;
+
+	CScenarios _Scenarios;
+	void InitScenarios();
 
 signals:
 	void subscribeSignal();
