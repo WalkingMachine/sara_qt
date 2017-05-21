@@ -16,7 +16,9 @@ rosrun sara_ui sara_ui --debug
 ```
 
 # Node Principale 
+
 **Il faut le lancer sur l'ordinateur qui éxécute Roscore, sans quoi ni le monitoring ni le lancement de scenarios ne fonctionneront**
+
 Il faut lancer le node **sara_ui_helper** sur l'ordinateur qui execute le roscore. Il permet de reccuperer des informations de diagnostique sur celui-ci et de lancer les scenarios. :
 ```shell
 rosrun sara_ui sara_ui_helper
