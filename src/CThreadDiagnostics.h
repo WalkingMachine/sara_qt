@@ -59,6 +59,8 @@ private:
 	TEMPERATURE_SENSORS_TYPE Temperature_Sensors;
 	bool bIsSubscribe;
 	void callbackMessageReceived(const diagnostic_msgs::DiagnosticArray message);
+	void subscribeROS();
+	void unsubscribeROS();
 
 signals:
 	void updateCPU(CPU_TYPE *CPU);

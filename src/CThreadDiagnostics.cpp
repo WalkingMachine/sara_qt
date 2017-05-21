@@ -1,5 +1,6 @@
 #include "CThreadDiagnostics.h"
 CThreadDiagnostics::~CThreadDiagnostics(){
+	unsubscribeROS();
 	this->exit();
 }
 
@@ -8,10 +9,16 @@ void CThreadDiagnostics::run(){
 	CPU.pCPUCoresUsage = NULL;
 
 	ROS_INFO("Thread START");
+
+	subscribeROS();
+
+	ROS_INFO("Ros Subscription to Diagnostics");
+
 	while(ros::ok()){
 		ROS_INFO("spin");
 		ros::spin();
 	}
+
 	ROS_INFO("Thread END");
 }
 
@@ -77,4 +84,13 @@ void CThreadDiagnostics::callbackMessageReceived(const diagnostic_msgs::Diagnost
 			}
 		}
 	}
+}
+
+void CThreadDiagnostics::subscribeROS(){
+	ROS_INFO("Subscript");
+	subscriber = nh.subscribe("diagnostics", 1, &CThreadDiagnostics::callbackMessageReceived, this);
+}
+
+void CThreadDiagnostics::unsubscribeROS(){
+	subscriber.shutdown();
 }
