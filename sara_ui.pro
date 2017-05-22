@@ -36,7 +36,8 @@ HEADERS  += mainwindow.h \
     src/CThreadDiagnostics.h \
     src/cscenario.h \
     src/CScenarios.h \
-    src/CScenario.h
+    src/CScenario.h \
+    src/roslaunch_message.h
 
 FORMS    += mainwindow.ui \
     ui/mainwindow.ui
