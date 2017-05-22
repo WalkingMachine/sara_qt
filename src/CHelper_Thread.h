@@ -9,15 +9,17 @@
 
 #include <stdlib.h>
 
-class CHelper_Thread : public QThread{
+class CHelper_Thread : public QThread {
 public:
-    void run();
-    void setCommand(std::string command);
+	void run();
+	
+	void setCommand(std::string command);
 
 
 private:
-    std::string _strCommand;
-    void runCommand();
+	std::string _strCommand;
+	
+	void runCommand();
 };
 
 

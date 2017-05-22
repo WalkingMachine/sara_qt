@@ -14,19 +14,17 @@
 
 #include "CHelper_Thread.h"
 
-class CHelper_Launcher : public QThread{
+class CHelper_Launcher : public QThread {
 public:
-    ~CHelper_Launcher();
-    void run();
-    void stop();
-    void callbackMessageReceived(const sara_ui::sara_launch message);
+	void Subscribe(ros::NodeHandle nh);
+	
+	void run();
+	
+	void callbackMessageReceived(const sara_ui::sara_launch message);
 
 private:
-    ros::NodeHandle _nh;
-    ros::Subscriber _subscriber;
-    bool bRunning;
-    void subscribeROS();
-    void unsubscribeROS();
+	ros::Subscriber _subscriber;
+	bool bRunning;
 };
 
 

@@ -10,7 +10,7 @@ rosrun sara_ui sara_ui
 ```
 *Pour fermer la fenêtre en plein écran, il faut ce rendre dans l'onglet "**Power Mode**"*
 
-**Pour lancer l'interface graphique en mode debuguage :**
+**Pour lancer l'interface graphique en mode débogage :**
 ```shell
 rosrun sara_ui sara_ui --debug
 ```
@@ -23,8 +23,8 @@ Il faut lancer le node **sara_ui_helper** sur l'ordinateur qui execute le roscor
 ```shell
 rosrun sara_ui sara_ui_helper
 ```
-- Pour réccuperé les diagnostics du robot le topic */diagnostics* est utilisé.
-- Pour executer les scenarios, c'est le topic */sara_launch* qui est utilisé. */-Supposément--\\*
+- Pour réccuperer les diagnostics du robot le topic */diagnostics* est utilisé.
+- Pour executer les scénarios, c'est le topic */sara_launch* qui est utilisé.
 
 # Lanceur de scenarios
 Afin de simplifier la compétition et le développement de Sara, il est possible de lancer des scénarios directement depuis cette interface utilisateur.
@@ -49,4 +49,4 @@ Scenarios:
 ```shell
 sudo apt install sysstat
 ```
-**lm-sensors** pour reccuperer les temperatures sur le Pc avec *sensors*
+**lm-sensors** pour récupérer les temperatures sur le Pc avec *sensors*

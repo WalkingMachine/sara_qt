@@ -63,6 +63,10 @@ add_executable(sara_ui
     ${MainWindow_UI})
 qt5_use_modules(sara_ui Widgets)
 
+## Non Standart message
+add_dependencies(sara_ui ${catkin_EXPORTED_TARGETS})
+add_dependencies(sara_ui_helper ${catkin_EXPORTED_TARGETS})
+
 ## For support Yaml CPP
 target_link_libraries(${PROJECT_NAME} yaml-cpp)
 

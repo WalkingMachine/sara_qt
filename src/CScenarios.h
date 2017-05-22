@@ -18,30 +18,40 @@
 #include <QDir>
 #include <QTableWidget>
 
-class CScenarios
-{
+class CScenarios {
 public:
 	explicit CScenarios(QObject *parent = 0);
+	
 	static bool isReadableFile(QString strFileLocation);
-
+	
 	//for Scenarios
 	void ReloadScenarios();
+	
 	void PrintScenarios();
+	
 	void RunScenario(CScenario *scenario);
+	
 	void StopScenario();
+	
 	int getNumberOfScenarios();
+	
 	QList<CScenario> _Scenarios;
-
+	
 	//for file management:
 	QString getFilePath();
+	
 	void setFilePath(QString scenariosFilePath);
+	
 	bool FileExist();
+	
 	void CreateNewFile();
 
 private:
 	QString _scenariosFilePath;
 	bool _fileExist;
+	
 	void UpdatePathFromSave(void);
+	
 	ros::NodeHandle _nh;
 	ros::Publisher _command_publisher;
 

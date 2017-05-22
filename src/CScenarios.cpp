@@ -4,14 +4,14 @@
  * @brief CScenarios::CScenarios
  * @param parent
  */
-CScenarios::CScenarios(QObject *parent){
+CScenarios::CScenarios(QObject *parent) {
 	_scenariosFilePath = "";
 	_fileExist = false;
-
+	
 	_command_publisher = _nh.advertise<sara_ui::sara_launch>("sara_launch", 100);
-
+	
 	UpdatePathFromSave();
-	if(!FileExist()){
+	if (!FileExist()) {
 		CreateNewFile();
 	}
 	ReloadScenarios();
@@ -21,25 +21,25 @@ CScenarios::CScenarios(QObject *parent){
  * @brief CScenarios::UpdatePathFromSave
  * Read if a path is saved in the user data, and save it in strSaveFilePath.
  */
-void CScenarios::UpdatePathFromSave(void){
-	QString strSaveFilePath = QDir::homePath()+"/.sara_ui_data";
+void CScenarios::UpdatePathFromSave(void) {
+	QString strSaveFilePath = QDir::homePath() + "/.sara_ui_data";
 	QFile file(strSaveFilePath);
-
+	
 	ROS_INFO("Try to load saved Scenarios Files path from \"%s\".", strSaveFilePath.toUtf8().constData());
-
+	
 	// Trying to open in ReadWrite and Text mode the data file
-	if(!QFile::exists(strSaveFilePath)){
+	if (!QFile::exists(strSaveFilePath)) {
 		ROS_INFO("Save file do not existe.");
-	}else if(!file.open(QFile::ReadOnly | QFile::Text)){
+	} else if (!file.open(QFile::ReadOnly | QFile::Text)) {
 		ROS_INFO("Can't read save file.");
-	}else{
+	} else {
 		// Test if file is empty
-		if(file.size()==0){
+		if (file.size() == 0) {
 			ROS_INFO("Save file is empty.");
-		}else{
+		} else {
 			//read str stream from save file
 			QTextStream in(&file);
-
+			
 			//read XML path from save
 			_scenariosFilePath = in.readLine();
 			ROS_INFO("Selected file : \"%s\"", _scenariosFilePath.toUtf8().constData());
@@ -52,10 +52,10 @@ void CScenarios::UpdatePathFromSave(void){
  * @brief CScenarios::FileExist
  * @return return if the file selected exist
  */
-bool CScenarios::FileExist(){
-	if(_scenariosFilePath.isEmpty()){
+bool CScenarios::FileExist() {
+	if (_scenariosFilePath.isEmpty()) {
 		return false;
-	}else{
+	} else {
 		return QFile::exists(_scenariosFilePath);
 	}
 }
@@ -64,13 +64,13 @@ bool CScenarios::FileExist(){
  * @brief CScenarios::Create	NewFile
  * Create a new Scenarios example page
  */
-void CScenarios::CreateNewFile(){
+void CScenarios::CreateNewFile() {
 	QFile scenariosFile(_scenariosFilePath);
-	if (FileExist()){
+	if (FileExist()) {
 		ROS_INFO("File exist !");
-	}else if(!scenariosFile.open(QIODevice::WriteOnly)){
+	} else if (!scenariosFile.open(QIODevice::WriteOnly)) {
 		ROS_INFO("Not able to read Scenarios Files scenarios file.");
-	}else{
+	} else {
 		//file created
 		YAML::Emitter out;
 		//generating header
@@ -80,10 +80,10 @@ void CScenarios::CreateNewFile(){
 		out << YAML::Key << "date";
 		out << YAML::Value << "2017-05-20";
 		out << YAML::Key << "Scenarios";
-		out << YAML::Value << YAML::BeginSeq ;
-
+		out << YAML::Value << YAML::BeginSeq;
+		
 		//generating a scenario map
-		out << YAML::BeginMap ;
+		out << YAML::BeginMap;
 		out << YAML::Key << "name";
 		out << YAML::Value << "Teleop";
 		out << YAML::Key << "command";
@@ -91,9 +91,9 @@ void CScenarios::CreateNewFile(){
 		out << YAML::Key << "uses";
 		out << YAML::Value << "0";
 		out << YAML::EndMap;
-
+		
 		//generating a scenario map
-		out << YAML::BeginMap ;
+		out << YAML::BeginMap;
 		out << YAML::Key << "name";
 		out << YAML::Value << "Teleop";
 		out << YAML::Key << "command";
@@ -101,12 +101,12 @@ void CScenarios::CreateNewFile(){
 		out << YAML::Key << "uses";
 		out << YAML::Value << "0";
 		out << YAML::EndMap;
-
+		
 		//generating footer
 		out << YAML::EndSeq;
 		out << YAML::EndSeq;
 		out << YAML::EndMap;
-
+		
 		scenariosFile.write(out.c_str(), out.size());
 		scenariosFile.close();
 	}
@@ -116,35 +116,39 @@ void CScenarios::CreateNewFile(){
  * @brief CScenarios::ReloadXML
  * Reload the data of the Scenarios Files.
  */
-void CScenarios::ReloadScenarios(void){
+void CScenarios::ReloadScenarios(void) {
 	//read YAML file
-	if(_scenariosFilePath.isEmpty()){
+	if (_scenariosFilePath.isEmpty()) {
 		ROS_INFO("No path to open!");
-	}else{
-		try
-		{
+	} else {
+		try {
 			_Scenarios.clear();
 			YAML::Node scenariosFile = YAML::LoadFile(_scenariosFilePath.toStdString());
 			//read scenarios
 			if (!scenariosFile["Scenarios"]) {
 				ROS_INFO("There is no scenarios to load in Scenarios File!");
-			}else if(scenariosFile["Scenarios"].size() == 0){
+			} else if (scenariosFile["Scenarios"].size() == 0) {
 				ROS_INFO("There is no scenarios to load in Scenarios File!");
-			}else{
+			} else {
 				_Scenarios.clear();
-				for (std::size_t i=0 ; i<scenariosFile["Scenarios"].size() ; i++) {
-					if(scenariosFile["Scenarios"][i]["name"] && scenariosFile["Scenarios"][i]["command"]){
-						if(scenariosFile["Scenarios"][i]["uses"]){
-							_Scenarios.push_back(CScenario(QString().fromStdString(scenariosFile["Scenarios"][i]["name"].as<std::string>()), QString().fromStdString(scenariosFile["Scenarios"][i]["command"].as<std::string>()), scenariosFile["Scenarios"][i]["uses"].as<int>()));
-						}else{
-							_Scenarios.push_back(CScenario(QString().fromStdString(scenariosFile["Scenarios"][i]["name"].as<std::string>()), QString().fromStdString(scenariosFile["Scenarios"][i]["command"].as<std::string>())));
+				for (std::size_t i = 0; i < scenariosFile["Scenarios"].size(); i++) {
+					if (scenariosFile["Scenarios"][i]["name"] && scenariosFile["Scenarios"][i]["command"]) {
+						if (scenariosFile["Scenarios"][i]["uses"]) {
+							_Scenarios.push_back(CScenario(
+									QString().fromStdString(scenariosFile["Scenarios"][i]["name"].as<std::string>()),
+									QString().fromStdString(scenariosFile["Scenarios"][i]["command"].as<std::string>()),
+									scenariosFile["Scenarios"][i]["uses"].as<int>()));
+						} else {
+							_Scenarios.push_back(CScenario(
+									QString().fromStdString(scenariosFile["Scenarios"][i]["name"].as<std::string>()),
+									QString().fromStdString(
+											scenariosFile["Scenarios"][i]["command"].as<std::string>())));
 						}
 					}
 				}
 			}
 		}
-		catch (YAML::BadSubscript e)
-		{
+		catch (YAML::BadSubscript e) {
 			ROS_INFO("Bad file subscription!");
 		}
 	}
@@ -153,8 +157,8 @@ void CScenarios::ReloadScenarios(void){
 /**
  * @brief PrintScenarios print all scenarios data in a ROS_INFO
  */
-void CScenarios::PrintScenarios(){
-	for (QList<CScenario>::iterator Scenario = _Scenarios.begin(); Scenario != _Scenarios.end(); Scenario++){
+void CScenarios::PrintScenarios() {
+	for (QList<CScenario>::iterator Scenario = _Scenarios.begin(); Scenario != _Scenarios.end(); Scenario++) {
 		Scenario->printScenario();
 	}
 }
@@ -163,7 +167,7 @@ void CScenarios::PrintScenarios(){
  * @brief getFilePath
  * @return the path selected for the file
  */
-QString CScenarios::getFilePath(){
+QString CScenarios::getFilePath() {
 	return _scenariosFilePath;
 }
 
@@ -172,21 +176,21 @@ QString CScenarios::getFilePath(){
  * @param scenariosFilePath setter for the scenario file path.
  * If the new string is empty, the update is not done.
  */
-void CScenarios::setFilePath(QString scenariosFilePath){
-	if(!scenariosFilePath.isEmpty()){
-		QString strSaveFilePath = QDir::homePath()+"/.sara_ui_data";
+void CScenarios::setFilePath(QString scenariosFilePath) {
+	if (!scenariosFilePath.isEmpty()) {
+		QString strSaveFilePath = QDir::homePath() + "/.sara_ui_data";
 		QFile file(strSaveFilePath);
 		_scenariosFilePath = scenariosFilePath;
-		if(!file.open(QFile::WriteOnly | QFile::Text)){
+		if (!file.open(QFile::WriteOnly | QFile::Text)) {
 			ROS_INFO("Can't read save file.");
-		}else{
+		} else {
 			//read str stream from save file
 			QTextStream out(&file);
-
+			
 			//write yalm path in save
 			out << _scenariosFilePath;
 			file.close();
-
+			
 			//reload scenarios from new file
 			ReloadScenarios();
 		}
@@ -198,12 +202,12 @@ void CScenarios::setFilePath(QString scenariosFilePath){
  * @param strFileLocation
  * @return  if the parameter file is readable by YAML
  */
-bool CScenarios::isReadableFile(QString strFileLocation){
-	try{
+bool CScenarios::isReadableFile(QString strFileLocation) {
+	try {
 		YAML::Node scenariosFile = YAML::LoadFile(strFileLocation.toStdString());
-
+		
 		return true;
-	}catch (YAML::BadSubscript e){
+	} catch (YAML::BadSubscript e) {
 		return false;
 	}
 }
@@ -212,29 +216,31 @@ bool CScenarios::isReadableFile(QString strFileLocation){
  * @brief CScenarios::getNumberOfScenarios
  * @return  the number of load scenarios
  */
-int CScenarios::getNumberOfScenarios(){
+int CScenarios::getNumberOfScenarios() {
 	return _Scenarios.size();
 }
 
-void CScenarios::RunScenario(CScenario *scenario){
+void CScenarios::RunScenario(CScenario *scenario) {
 	scenario->runScenario(_command_publisher);
-
+	
 	//read YAML file
-	if(_scenariosFilePath.isEmpty()){
+	if (_scenariosFilePath.isEmpty()) {
 		ROS_INFO("No path to open!");
-	}else{
-		try
-		{
+	} else {
+		try {
 			YAML::Node scenariosFile = YAML::LoadFile(_scenariosFilePath.toStdString());
 			//read scenarios
 			if (!scenariosFile["Scenarios"]) {
 				ROS_INFO("There is no scenarios to load in Scenarios File!");
-			}else if(scenariosFile["Scenarios"].size() == 0){
+			} else if (scenariosFile["Scenarios"].size() == 0) {
 				ROS_INFO("There is no scenarios to load in Scenarios File!");
-			}else{
-				for (std::size_t i=0 ; i<scenariosFile["Scenarios"].size() ; i++) {
-					if(scenariosFile["Scenarios"][i]["name"] && scenariosFile["Scenarios"][i]["command"]){
-						if(scenariosFile["Scenarios"][i]["name"].as<std::string>() == scenario->getName().toStdString() && scenariosFile["Scenarios"][i]["command"].as<std::string>() == scenario->getCommand().toStdString()){
+			} else {
+				for (std::size_t i = 0; i < scenariosFile["Scenarios"].size(); i++) {
+					if (scenariosFile["Scenarios"][i]["name"] && scenariosFile["Scenarios"][i]["command"]) {
+						if (scenariosFile["Scenarios"][i]["name"].as<std::string>() ==
+						    scenario->getName().toStdString() &&
+						    scenariosFile["Scenarios"][i]["command"].as<std::string>() ==
+						    scenario->getCommand().toStdString()) {
 							scenariosFile["Scenarios"][i]["uses"] = scenario->getNumberOfUse();
 							std::ofstream fout(_scenariosFilePath.toStdString());
 							fout << scenariosFile;
@@ -244,14 +250,13 @@ void CScenarios::RunScenario(CScenario *scenario){
 				}
 			}
 		}
-		catch (YAML::BadSubscript e)
-		{
+		catch (YAML::BadSubscript e) {
 			ROS_INFO("Bad file subscription!");
 		}
 	}
 }
 
-void CScenarios::StopScenario(){
+void CScenarios::StopScenario() {
 	sara_ui::sara_launch newMessage;
 	newMessage.header = header_generate(1);
 	newMessage.strName = "stop";

@@ -1,11 +1,11 @@
 /**
-    Sara_UI
-    helper.h
-    Purpose: Publisher for a few system values for ui print in our robot
-
-    @author:	Lucas Maurice
-	 @contact:	lucas.maurice@outlook.com
-    @version:	1.0 28/04/17
+	Sara_UI
+	helper.h
+	Purpose: Publisher for a few system values for ui print in our robot
+	
+	@author:	Lucas Maurice
+	@contact:	lucas.maurice@outlook.com
+	@version:	1.0 28/04/17
 */
 
 #ifndef HELPER_H
@@ -49,21 +49,21 @@
 //		@members	char strCPU_Usage[]									: String containing total CPU usage
 //					char strTabCPU_Cores_Usage[][FLOAT_CAR_SIZE]	: Strings array containing CPU usage, core by core
 //					int iNumberOfCore										: Number of cores
-typedef struct{
+typedef struct {
 	char strCPU_Usage[FLOAT_CAR_SIZE];
 	char strTabCPU_Cores_Usage[NUM_MAX_CORES][FLOAT_CAR_SIZE];
 	int iNumberOfCore;
-}Type_CPU;
+} Type_CPU;
 //------------------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------------------
 //	Struct for an usage value (with a total capacity and an actually used capacity)
 //		@members		char strTotal[INT_CAR_SIZE]	: string integer for the total capacity of the usage
 //						char strUsed[INT_CAR_SIZE]		: string integer for the actually in use capacity of the usage
-typedef struct{
+typedef struct {
 	char strTotal[INT_CAR_SIZE];
 	char strUsed[INT_CAR_SIZE];
-}Type_Usage;
+} Type_Usage;
 //------------------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------------------
@@ -71,10 +71,10 @@ typedef struct{
 //		@members	char strCPU_Usage[]									: String containing total CPU usage
 //					char strTabCPU_Cores_Usage[][FLOAT_CAR_SIZE]	: Strings array containing CPU usage, core by core
 //					int iNumberOfCore										: Number of cores
-typedef struct{
+typedef struct {
 	std::vector<diagnostic_msgs::KeyValue> valuesVector;
 	int iNumberOfSensors;
-}Type_Temperature;
+} Type_Temperature;
 //------------------------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------------------------------------------
@@ -133,7 +133,7 @@ void readMemoryUsageValues(char *theLine, Type_Usage *enrUsage);
 //--------------------------------------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------------------
-//	Generate a standard header for ros topic publisher
+//	Generate a standard header for ros topic _subscriber
 //		@param	int iSeq				: sequence number for verifications
 //		@return	std_msgs::Header	: return the header
 std_msgs::Header header_generate(int iSeq);
@@ -147,18 +147,20 @@ std_msgs::Header header_generate(int iSeq);
 //					char level															: Level of operation
 //					std::vector<diagnostic_msgs::KeyValue> valuesVector	: Vector of data
 //		@return	diagnostic_msgs::DiagnosticStatus							: return the status
-diagnostic_msgs::DiagnosticStatus status_generate(std::string strName, std::string strMessage, std::string strHardwareID, char level, std::vector<diagnostic_msgs::KeyValue> valuesVector);
+diagnostic_msgs::DiagnosticStatus
+status_generate(std::string strName, std::string strMessage, std::string strHardwareID, char level,
+                std::vector<diagnostic_msgs::KeyValue> valuesVector);
 //------------------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------------------
-//	Generate the status of CPU data for publisher
+//	Generate the status of CPU data for _subscriber
 //		@param	Type_CPU *CPU_data						: pointer to the CPU data
 //		@return	diagnostic_msgs::DiagnosticStatus	: return the status
 diagnostic_msgs::DiagnosticStatus CPUPublisher(Type_CPU *CPU_data);
 //------------------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------------------
-//	Generate the status of Memory data for publisher
+//	Generate the status of Memory data for _subscriber
 //		@param	Type_Usage *enrMemory					: pointer to the memory data
 //					Type_Usage *enrSwap						: pointer to the swap data
 //		@return	diagnostic_msgs::DiagnosticStatus	: return the status
@@ -166,7 +168,7 @@ diagnostic_msgs::DiagnosticStatus MemoryPublisher(Type_Usage *enrMemory, Type_Us
 //------------------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------------------
-//	Generate the status of Memory data for publisher
+//	Generate the status of Memory data for _subscriber
 //		@param	Type_Usage *enrMemory					: pointer to the memory data
 //					Type_Usage *enrSwap						: pointer to the swap data
 //		@return	diagnostic_msgs::DiagnosticStatus	: return the status

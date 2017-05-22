@@ -11,18 +11,27 @@
 
 #include "helper.h"
 
-class CScenario{
+class CScenario {
 
 public:
 	CScenario(QString strName, QString strCommand);
+	
 	CScenario(QString strName, QString strCommand, int iNumberOfUse);
+	
 	void setName(QString strName);
+	
 	void setCommand(QString strCommand);
+	
 	void setNumberOfUse(int iNumberOfUse);
+	
 	QString getName();
+	
 	QString getCommand();
+	
 	int getNumberOfUse();
+	
 	void runScenario(ros::Publisher pub);
+	
 	void printScenario();
 
 private:
