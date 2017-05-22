@@ -1,6 +1,5 @@
 #include "CThreadDiagnostics.h"
 CThreadDiagnostics::~CThreadDiagnostics(){
-	unsubscribeROS();
 	this->exit();
 }
 

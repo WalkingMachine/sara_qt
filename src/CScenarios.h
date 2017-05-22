@@ -2,6 +2,8 @@
 #define CSCENARIOS_H
 
 #include <ros/ros.h>
+#include <sara_ui/sara_launch.h>
+
 #include <yaml-cpp/yaml.h>
 #include <vector>
 #include <string>

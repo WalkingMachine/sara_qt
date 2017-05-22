@@ -48,7 +48,10 @@ add_executable(test_list
 
 add_executable(sara_ui_helper
   src/helper.cpp
-  src/helper_funct.cpp)
+  src/helper_funct.cpp
+  src/CHelper_Launcher.cpp
+  src/CHelper_Thread.cpp
+)
 
 add_executable(sara_ui
     src/main.cpp
@@ -68,4 +71,4 @@ target_link_libraries(test_log ${catkin_LIBRARIES})
 target_link_libraries(test_subscribe ${catkin_LIBRARIES})
 target_link_libraries(test_list ${catkin_LIBRARIES})
 target_link_libraries(sara_ui ${catkin_LIBRARIES} Qt5::Widgets)
-target_link_libraries(sara_ui_helper ${catkin_LIBRARIES} Threads::Threads)
+target_link_libraries(sara_ui_helper ${catkin_LIBRARIES} Threads::Threads Qt5::Widgets)
