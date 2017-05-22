@@ -11,8 +11,22 @@ find_package(Threads REQUIRED)
 find_package(catkin REQUIRED COMPONENTS roscpp)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Core REQUIRED)
+find_package(message_generation REQUIRED
+	CATKIN_DEPENDS message_runtime
+)
+
+add_message_files(
+  FILES
+  sara_launch.msg
+)
+
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
 
 set(CMAKE_CXX_STANDARD 11)
+
 catkin_package()
 
 ## Specify additional locations of header files
@@ -33,8 +47,8 @@ add_executable(test_list
   tests/list_topic.cpp)
 
 add_executable(sara_ui_helper
-  helper/helper.cpp
-  helper/helper_funct.cpp)
+  src/helper.cpp
+  src/helper_funct.cpp)
 
 add_executable(sara_ui
     src/main.cpp
@@ -42,9 +56,9 @@ add_executable(sara_ui
     src/CThreadDiagnostics.cpp
     src/CScenarios.cpp
     src/CScenario.cpp
+    src/helper_funct.cpp
     ${MainWindow_UI})
 qt5_use_modules(sara_ui Widgets)
-
 
 ## For support Yaml CPP
 target_link_libraries(${PROJECT_NAME} yaml-cpp)
