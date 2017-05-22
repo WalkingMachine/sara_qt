@@ -4,7 +4,7 @@
     Purpose: Publisher for a few system values for ui print in our robot
 
     @author:	Lucas Maurice
-	 @contact:	lucas.maurice@outlook.com
+    @contact:	lucas.maurice@outlook.com
     @version:	1.0 28/04/17
 */
 #include "helper.h"

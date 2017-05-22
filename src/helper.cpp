@@ -4,11 +4,13 @@
     Purpose: Publisher for a few system values for ui print in our robot
 
     @author:	Lucas Maurice
-	 @contact:	lucas.maurice@outlook.com
+	@contact:	lucas.maurice@outlook.com
     @version:	1.0 28/04/17
 */
 
 #include "helper.h"
+#include "CHelper_Launcher.h"
+
 int main(int argc, char **argv){
 	//publication message
 	diagnostic_msgs::DiagnosticArray message;
@@ -42,9 +44,14 @@ int main(int argc, char **argv){
 
 	//Create and launch usage refresh threads
 	bool	bRun = true;
+
 	std::thread CPURefreshThread(refreshCPUdata, &CPU_data, &bRun);
 	std::thread MemoryRefreshThread(refreshMemoryData, &enrMemory, &enrSwap, &bRun);
 	std::thread TemperatureRefreshThread(refreshTemperatureData, &temperatures, &bRun);
+
+    CHelper_Launcher LauncherThread;
+    LauncherThread.run();
+
 	//Start publisher loop
 	while(ros::ok()){
 		//clear status
@@ -76,5 +83,6 @@ int main(int argc, char **argv){
 
 	bRun = false;
 	CPURefreshThread.join();
+    LauncherThread.stop();
 	ROS_INFO("END UI helper.");
 }
