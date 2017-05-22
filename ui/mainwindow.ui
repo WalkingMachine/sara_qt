@@ -126,6 +126,13 @@
          </widget>
         </item>
         <item>
+         <widget class="QPushButton" name="launchScenarioBT">
+          <property name="text">
+           <string>Launch Scenario !</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <layout class="QHBoxLayout" name="horizontalLayout_5">
           <item>
            <widget class="QLabel" name="Scenario_Path">

@@ -147,7 +147,6 @@ void MainWindow::on_pushButton_clicked()
  * @brief MainWindow::InitScenarios
  */
 void MainWindow::InitScenarios(){
-
 	if(!_Scenarios.getFilePath().isEmpty()){
 		ui->scenatioTree->clear();
 
@@ -157,6 +156,7 @@ void MainWindow::InitScenarios(){
 				QTreeWidgetItem *item = new QTreeWidgetItem();
 
 				item->setText(0, Scenario->getName());
+				item->setData(0,Qt::UserRole,qVariantFromValue((void *) &_Scenarios._Scenarios[iIndex]));
 
 				item->setData(1, Qt::EditRole, Scenario->getNumberOfUse());
 				item->setData(1, Qt::DisplayRole, QString().number(Scenario->getNumberOfUse()));
@@ -193,5 +193,14 @@ void MainWindow::on_chooseFileButton_clicked(){
 			_Scenarios.setFilePath(newPath);
 			InitScenarios();
 		}
+	}
+}
+
+void MainWindow::on_launchScenarioBT_clicked(){
+	if(!ui->scenatioTree->selectedItems().isEmpty()){
+		CScenario *selectedScenario = (CScenario *)ui->scenatioTree->selectedItems()[0]->data(0,Qt::UserRole).value<void *>();
+		_Scenarios.RunScenario(selectedScenario);
+		ui->scenatioTree->selectedItems()[0]->setData(1, Qt::EditRole, selectedScenario->getNumberOfUse());
+		ui->scenatioTree->selectedItems()[0]->setData(1, Qt::DisplayRole, QString().number(selectedScenario->getNumberOfUse()));
 	}
 }

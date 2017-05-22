@@ -5,8 +5,10 @@
 #include <yaml-cpp/yaml.h>
 #include <vector>
 #include <string>
+#include <fstream>
 
 #include "CScenario.h"
+#include "helper.h"
 
 #include <QString>
 #include <QFile>
@@ -23,6 +25,7 @@ public:
 	//for Scenarios
 	void ReloadScenarios();
 	void PrintScenarios();
+	void RunScenario(CScenario *scenario);
 	int getNumberOfScenarios();
 	QList<CScenario> _Scenarios;
 
@@ -36,7 +39,8 @@ private:
 	QString _scenariosFilePath;
 	bool _fileExist;
 	void UpdatePathFromSave(void);
-
+	ros::NodeHandle _nh;
+	ros::Publisher _command_publisher;
 
 signals:
 

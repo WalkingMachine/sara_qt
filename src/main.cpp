@@ -13,7 +13,6 @@ int main(int argc, char *argv[])
 
 	//Declaring objetcs
 	CThreadDiagnostics Thread;
-	ROS_INFO("Thread");
 
 	QApplication a(argc, argv);
 	MainWindow Window;

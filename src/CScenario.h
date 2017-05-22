@@ -7,6 +7,10 @@
 #include <QTreeWidgetItem>
 #include <stdexcept>      // std::invalid_argument
 
+#include <sara_ui/sara_launch.h>
+
+#include "helper.h"
+
 class CScenario{
 
 public:
@@ -18,7 +22,7 @@ public:
 	QString getName();
 	QString getCommand();
 	int getNumberOfUse();
-	void newUtilisation();
+	void runScenario(ros::Publisher pub);
 	void printScenario();
 
 private:

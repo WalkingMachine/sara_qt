@@ -7,6 +7,9 @@
 CScenarios::CScenarios(QObject *parent){
 	_scenariosFilePath = "";
 	_fileExist = false;
+
+	_command_publisher = _nh.advertise<sara_ui::sara_launch>("sara_launch", 100);
+
 	UpdatePathFromSave();
 	if(!FileExist()){
 		CreateNewFile();
@@ -143,7 +146,8 @@ void CScenarios::ReloadScenarios(void){
 		catch (YAML::BadSubscript e)
 		{
 			ROS_INFO("Bad file subscription!");
-		}}
+		}
+	}
 }
 
 /**
@@ -189,6 +193,11 @@ void CScenarios::setFilePath(QString scenariosFilePath){
 	}
 }
 
+/**
+ * @brief CScenarios::isReadableFile
+ * @param strFileLocation
+ * @return  if the parameter file is readable by YAML
+ */
 bool CScenarios::isReadableFile(QString strFileLocation){
 	try{
 		YAML::Node scenariosFile = YAML::LoadFile(strFileLocation.toStdString());
@@ -199,6 +208,45 @@ bool CScenarios::isReadableFile(QString strFileLocation){
 	}
 }
 
+/**
+ * @brief CScenarios::getNumberOfScenarios
+ * @return  the number of load scenarios
+ */
 int CScenarios::getNumberOfScenarios(){
 	return _Scenarios.size();
+}
+
+void CScenarios::RunScenario(CScenario *scenario){
+	scenario->runScenario(_command_publisher);
+
+	//read YAML file
+	if(_scenariosFilePath.isEmpty()){
+		ROS_INFO("No path to open!");
+	}else{
+		try
+		{
+			YAML::Node scenariosFile = YAML::LoadFile(_scenariosFilePath.toStdString());
+			//read scenarios
+			if (!scenariosFile["Scenarios"]) {
+				ROS_INFO("There is no scenarios to load in Scenarios File!");
+			}else if(scenariosFile["Scenarios"].size() == 0){
+				ROS_INFO("There is no scenarios to load in Scenarios File!");
+			}else{
+				for (std::size_t i=0 ; i<scenariosFile["Scenarios"].size() ; i++) {
+					if(scenariosFile["Scenarios"][i]["name"] && scenariosFile["Scenarios"][i]["command"]){
+						if(scenariosFile["Scenarios"][i]["name"].as<std::string>() == scenario->getName().toStdString() && scenariosFile["Scenarios"][i]["command"].as<std::string>() == scenario->getCommand().toStdString()){
+							scenariosFile["Scenarios"][i]["uses"] = scenario->getNumberOfUse();
+							std::ofstream fout(_scenariosFilePath.toStdString());
+							fout << scenariosFile;
+							break;
+						}
+					}
+				}
+			}
+		}
+		catch (YAML::BadSubscript e)
+		{
+			ROS_INFO("Bad file subscription!");
+		}
+	}
 }

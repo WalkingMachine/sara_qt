@@ -48,8 +48,9 @@ public slots:
 
 private slots:
 	void on_pushButton_clicked();
-
 	void on_chooseFileButton_clicked();
+
+	void on_launchScenarioBT_clicked();
 
 private:
 	Ui::MainWindow *ui;

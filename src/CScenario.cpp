@@ -40,11 +40,13 @@ int CScenario::getNumberOfUse(){
 }
 
 
-
-
-
-void CScenario::newUtilisation(){
-	_iNumberOfUse++;
+void CScenario::runScenario(ros::Publisher pub){
+	sara_ui::sara_launch newMessage;
+	newMessage.header = header_generate(1);
+	newMessage.strName = _strName.toStdString();
+	newMessage.strCommand = _strCommand.toStdString();
+	pub.publish(newMessage);
+	_iNumberOfUse ++;
 }
 
 
