@@ -43,3 +43,10 @@ Scenarios:
     command: roslaunch teleop3.launch
     uses: 10
 ```
+
+# Dependances
+**sysstat** pour la commande *mpstat* :
+```shell
+sudo apt install sysstat
+```
+**lm-sensors** pour reccuperer les temperatures sur le Pc avec *sensors*
