@@ -52,6 +52,8 @@ private slots:
 
 	void on_launchScenarioBT_clicked();
 
+	void on_stopScenarioBT_clicked();
+
 private:
 	Ui::MainWindow *ui;
 	//CPU Usage Box

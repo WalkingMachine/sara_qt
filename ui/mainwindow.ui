@@ -126,11 +126,28 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="launchScenarioBT">
-          <property name="text">
-           <string>Launch Scenario !</string>
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <property name="topMargin">
+           <number>0</number>
           </property>
-         </widget>
+          <item>
+           <widget class="QPushButton" name="stopScenarioBT">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Stop Scenario !</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="launchScenarioBT">
+            <property name="text">
+             <string>Launch Scenario !</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_5">

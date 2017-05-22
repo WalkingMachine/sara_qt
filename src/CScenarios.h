@@ -26,6 +26,7 @@ public:
 	void ReloadScenarios();
 	void PrintScenarios();
 	void RunScenario(CScenario *scenario);
+	void StopScenario();
 	int getNumberOfScenarios();
 	QList<CScenario> _Scenarios;
 

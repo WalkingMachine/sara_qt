@@ -250,3 +250,11 @@ void CScenarios::RunScenario(CScenario *scenario){
 		}
 	}
 }
+
+void CScenarios::StopScenario(){
+	sara_ui::sara_launch newMessage;
+	newMessage.header = header_generate(1);
+	newMessage.strName = "stop";
+	newMessage.strCommand = "stop";
+	_command_publisher.publish(newMessage);
+}
