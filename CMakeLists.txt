@@ -37,15 +37,6 @@ include_directories(${Qt5Widgets_INCLUDE_DIRS})
 ## Add qt5 UI wrapper
 qt5_wrap_ui(MainWindow_UI ui/mainwindow.ui)
 
-add_executable(test_log
-  tests/logs.cpp)
-
-add_executable(test_subscribe
-  tests/subscribe.cpp)
-
-add_executable(test_list
-  tests/list_topic.cpp)
-
 add_executable(sara_ui_helper
   src/helper.cpp
   src/helper_funct.cpp
@@ -71,8 +62,5 @@ add_dependencies(sara_ui_helper ${catkin_EXPORTED_TARGETS})
 target_link_libraries(${PROJECT_NAME} yaml-cpp)
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(test_log ${catkin_LIBRARIES})
-target_link_libraries(test_subscribe ${catkin_LIBRARIES})
-target_link_libraries(test_list ${catkin_LIBRARIES})
 target_link_libraries(sara_ui ${catkin_LIBRARIES} Qt5::Widgets)
 target_link_libraries(sara_ui_helper ${catkin_LIBRARIES} Threads::Threads Qt5::Widgets)
