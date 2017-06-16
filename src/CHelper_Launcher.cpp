@@ -33,9 +33,14 @@ void CHelper_Launcher::callbackMessageReceived(const sara_ui::sara_launch messag
 			ROS_INFO("run - go");
 			bRunning = true;
 
+            //generate command to run
+            char command[500];
+            strcpy(command, message.strCommand.c_str()  );
+            strcat(command, " & echo $!");
+
             //run roslaunch
             int newPID;
-            FILE *fp = popen("roslaunch sara_ui test_ui.launch & echo $!", "r");
+            FILE *fp = popen(command, "r");
 
             //read new PID
             fscanf(fp, "%d", &newPID);
