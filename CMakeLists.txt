@@ -41,8 +41,7 @@ add_executable(sara_ui_helper
   src/helper.cpp
   src/helper_funct.cpp
   src/CHelper_Launcher.cpp
-  src/CHelper_Thread.cpp
-)
+		)
 
 add_executable(sara_ui
     src/main.cpp

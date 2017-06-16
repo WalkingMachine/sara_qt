@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+
+<launch>
+    <node name="test_ui" pkg="sara_ui" type="test.py"></node>
+    <node name="test_ui_2" pkg="sara_ui" type="test2.py"></node>
+</launch>

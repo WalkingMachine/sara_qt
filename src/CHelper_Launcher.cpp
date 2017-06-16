@@ -1,4 +1,4 @@
-//
+    //
 // Created by lucas on 5/22/17.
 //
 
@@ -18,18 +18,31 @@ void CHelper_Launcher::run() {
 }
 
 void CHelper_Launcher::callbackMessageReceived(const sara_ui::sara_launch message) {
-	static CHelper_Thread thread;
-	
+	ROS_INFO("Command reception");
+
 	if (!message.strName.compare("stop")) {
+		ROS_INFO("stop");
 		if (bRunning) {
+			ROS_INFO("stop - go");
 			bRunning = false;
-			thread.terminate();
+			kill(pid, SIGINT);
 		}
 	} else {
+		ROS_INFO("run");
 		if (!bRunning) {
+			ROS_INFO("run - go");
 			bRunning = true;
-			thread.setCommand(message.strCommand);
-			thread.start(QThread::LowPriority);
+
+            //run roslaunch
+            int newPID;
+            FILE *fp = popen("roslaunch sara_ui test_ui.launch & echo $!", "r");
+
+            //read new PID
+            fscanf(fp, "%d", &newPID);
+            pclose(fp);
+
+            //save PID
+            pid = newPID;
 		}
 	}
 }

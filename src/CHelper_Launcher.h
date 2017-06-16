@@ -12,7 +12,9 @@
 
 #include <stdlib.h>
 
-#include "CHelper_Thread.h"
+#include <sys/types.h>
+#include <signal.h>
+
 
 class CHelper_Launcher : public QThread {
 public:
@@ -25,6 +27,7 @@ public:
 private:
 	ros::Subscriber _subscriber;
 	bool bRunning;
+	pid_t pid;
 };
 
 
