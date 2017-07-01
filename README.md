@@ -23,12 +23,12 @@ Il faut lancer le node **sara_ui_helper** sur l'ordinateur qui execute le roscor
 ```shell
 rosrun sara_ui sara_ui_helper
 ```
-- Pour réccuperer les diagnostics du robot le topic */diagnostics* est utilisé.
-- Pour executer les scénarios, c'est le topic */sara_launch* qui est utilisé.
+- Pour récuperer les diagnostics du robot le topic */diagnostics* est utilisé.
+- Pour exécuter les scénarios, c'est le topic */sara_launch* qui est utilisé.
 
-# Lanceur de scenarios
+# Lanceur de scénarios
 Afin de simplifier la compétition et le développement de Sara, il est possible de lancer des scénarios directement depuis cette interface utilisateur.
-Les scénarios sont sauvegarder dans un fichier .scenario utilisant la structure YAML, dont voici un exemple:
+Les scénarios sont sauvegardés dans un fichier `.scenario` utilisant la structure `YAML`, dont voici un exemple:
 ```YAML
 by: Lucas Maurice                       #nom de la dernière personne à avoir modifié le fichier
 date: 2017-05-20                        #date de la dernière modification
@@ -49,4 +49,4 @@ Scenarios:
 ```shell
 sudo apt install sysstat
 ```
-**lm-sensors** pour récupérer les temperatures sur le Pc avec *sensors*
+**lm-sensors** pour récupérer les températures sur le Pc avec *sensors*

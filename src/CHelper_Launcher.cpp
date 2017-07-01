@@ -1,4 +1,4 @@
-    //
+//
 // Created by lucas on 5/22/17.
 //
 
@@ -6,14 +6,14 @@
 
 void CHelper_Launcher::run() {
 	bRunning = false;
-	
+
 	ROS_INFO("Thread START");
-	
+
 	ROS_INFO("Ros Subscription to Diagnostics");
-	
+
 	ROS_INFO("spin");
 	ros::spin();
-	
+
 	ROS_INFO("Thread END");
 }
 
@@ -33,21 +33,21 @@ void CHelper_Launcher::callbackMessageReceived(const sara_ui::sara_launch messag
 			ROS_INFO("run - go");
 			bRunning = true;
 
-            //generate command to run
-            char command[500];
-            strcpy(command, message.strCommand.c_str()  );
-            strcat(command, " & echo $!");
+			//generate command to run
+			char command[500];
+			strcpy(command, message.strCommand.c_str()  );
+			strcat(command, " & echo $!");
 
-            //run roslaunch
-            int newPID;
-            FILE *fp = popen(command, "r");
+			//run roslaunch
+			int newPID;
+			FILE *fp = popen(command, "r");
 
-            //read new PID
-            fscanf(fp, "%d", &newPID);
-            pclose(fp);
+			//read new PID
+			fscanf(fp, "%d", &newPID);
+			pclose(fp);
 
-            //save PID
-            pid = newPID;
+			//save PID
+			pid = newPID;
 		}
 	}
 }
