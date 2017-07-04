@@ -1,0 +1,7 @@
+<launch>
+	<machine	name="local"	address="[LOCAL IP ADDRESS]" />											<!-- Local machine		-->
+	<machine	name="core"	address="[DISTANT IP ADDRESS]"	user="DISTANT USERNAME"	password="[DISTANT PASSWORD (prefere an SSH Key based login)]"	env-loader="/opt/ros/kinetic/sara_core.sh" />	<!-- Core machine		-->
+
+	<node		name="pi_ui"		pkg="sara_ui"	type="sara_ui"		machine="local"	respawn="false"	output="screen"	/>		<!-- Run UI on Raspberry Pi	-->
+	<node		name="core_helper"	pkg="sara_ui"	type="sara_ui_helper"	machine="core"	respawn="false"	output="screen"	/>		<!-- Launch helper on Core	-->
+</launch>

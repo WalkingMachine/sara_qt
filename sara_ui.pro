@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2017-01-31T18:11:02
+# Project created by QtCreator 2017-02-06T13:46:55
 #
 #-------------------------------------------------
 
@@ -8,7 +8,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = sara_qt_test1
+TARGET = sara_ui
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -24,8 +24,23 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    src/main.cpp \
+    src/mainwindow.cpp \
+    src/CThreadDiagnostics.cpp \
+    src/CScenarios.cpp \
+    src/CScenario.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    src/mainwindow.h \
+    src/CThreadDiagnostics.h \
+    src/cscenario.h \
+    src/CScenarios.h \
+    src/CScenario.h \
+    src/roslaunch_message.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    ui/mainwindow.ui
+
+DISTFILES += \
+    CMakeLists.txt

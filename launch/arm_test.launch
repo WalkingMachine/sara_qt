@@ -1,0 +1,4 @@
+<launch>
+	<include file="$(find sara_description)/launch/sara_description.launch"/>
+	<include file="$(find sara_arm)/launch/kinova_driver_test.launch"/>
+</launch>
