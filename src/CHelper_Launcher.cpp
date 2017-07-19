@@ -14,6 +14,8 @@ void CHelper_Launcher::run() {
 	ROS_INFO("spin");
 	ros::spin();
 
+    strLastCMD = "";
+
 	ROS_INFO("Thread END");
 }
 
@@ -25,14 +27,16 @@ void CHelper_Launcher::callbackMessageReceived(const sara_ui::sara_launch messag
 		if (bRunning) {
 			ROS_INFO("stop - go");
 			bRunning = false;
+            FILE *fp = popen(strLastCMD.c_str(), "r");
 			kill(pid, SIGINT);
 		}
 	} else {
 		ROS_INFO("run");
-		if (!bRunning) {
+		//if (!bRunning) {
 			ROS_INFO("run - go");
 			bRunning = true;
 
+            strLastCMD = message.strCommand;
 			//generate command to run
 			char command[500];
 			strcpy(command, message.strCommand.c_str()  );
@@ -48,7 +52,7 @@ void CHelper_Launcher::callbackMessageReceived(const sara_ui::sara_launch messag
 
 			//save PID
 			pid = newPID;
-		}
+		//}
 	}
 }
 

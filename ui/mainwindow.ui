@@ -131,19 +131,9 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="QPushButton" name="stopScenarioBT">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Stop Scenario !</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QPushButton" name="launchScenarioBT">
             <property name="text">
-             <string>Launch Scenario !</string>
+             <string>Run/Stop Scenario !</string>
             </property>
            </widget>
           </item>
