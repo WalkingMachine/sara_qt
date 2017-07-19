@@ -240,7 +240,8 @@ void CScenarios::RunScenario(CScenario *scenario) {
 						if (scenariosFile["Scenarios"][i]["name"].as<std::string>() ==
 						    scenario->getName().toStdString() &&
 						    scenariosFile["Scenarios"][i]["command"].as<std::string>() ==
-						    scenario->getCommand().toStdString()) {
+						    scenario->getCommand().toStdString())
+						{
 							scenariosFile["Scenarios"][i]["uses"] = scenario->getNumberOfUse();
 							std::ofstream fout(_scenariosFilePath.toStdString());
 							fout << scenariosFile;

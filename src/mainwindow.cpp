@@ -213,13 +213,13 @@ void MainWindow::on_launchScenarioBT_clicked() {
 		ui->scenatioTree->selectedItems()[0]->setData(1, Qt::EditRole, selectedScenario->getNumberOfUse());
 		ui->scenatioTree->selectedItems()[0]->setData(1, Qt::DisplayRole,
 		                                              QString().number(selectedScenario->getNumberOfUse()));
-		ui->launchScenarioBT->setEnabled(false);
-		ui->stopScenarioBT->setEnabled(true);
+        //ui->launchScenarioBT->setEnabled(false);
+        //ui->stopScenarioBT->setEnabled(true);
 	}
 }
 
 void MainWindow::on_stopScenarioBT_clicked() {
 	_Scenarios.StopScenario();
-	ui->launchScenarioBT->setEnabled(true);
-	ui->stopScenarioBT->setEnabled(false);
+    //ui->launchScenarioBT->setEnabled(true);
+    //ui->stopScenarioBT->setEnabled(false);
 }

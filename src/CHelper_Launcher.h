@@ -15,6 +15,8 @@
 #include <sys/types.h>
 #include <signal.h>
 
+#include <string>
+
 
 class CHelper_Launcher : public QThread {
 public:
@@ -28,6 +30,8 @@ private:
 	ros::Subscriber _subscriber;
 	bool bRunning;
 	pid_t pid;
+    std::string strLastCMD;
+
 };
 
 
