@@ -9,6 +9,7 @@
 
 #include <diagnostic_msgs/DiagnosticArray.h>
 #include <std_msgs/String.h>
+#include <std_msgs/Bool.h>
 
 #define HARDWARE_ID "MAIN_COMPUTER"
 
@@ -42,11 +43,11 @@ typedef struct TEMPERATURE_SENSORS_STRUCT {
 } TEMPERATURE_SENSORS_TYPE;
 
 
-class CThreadDiagnostics : public QThread {
+class CThreadRos : public QThread {
 Q_OBJECT
 
 public:
-	~CThreadDiagnostics();
+    ~CThreadRos();
 
 protected:
 	void run();
@@ -55,6 +56,7 @@ private:
 	ros::NodeHandle nh;
 	ros::Subscriber subscriber;
     ros::Subscriber logSubscriber;
+    ros::Publisher continuePublisher;
 	CPU_TYPE CPU;
 	MEMORY_TYPE Memory;
 	TEMPERATURE_SENSORS_TYPE Temperature_Sensors;
@@ -70,6 +72,9 @@ signals:
 	void updateMemory(MEMORY_TYPE *Memory);
 	void updateTemperatureSensors(TEMPERATURE_SENSORS_TYPE *Temperature_Sensors);
     void addLog(QString newLog);
+
+public slots:
+    void publishContinue();
 };
 
 #endif // CTHREADTOPICSSUBSCRIBER_H

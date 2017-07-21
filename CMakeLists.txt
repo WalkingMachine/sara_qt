@@ -46,7 +46,7 @@ add_executable(sara_ui_helper
 add_executable(sara_ui
     src/main.cpp
     src/mainwindow.cpp
-    src/CThreadDiagnostics.cpp
+    src/CThreadRos.cpp
     src/CScenarios.cpp
     src/CScenario.cpp
     src/helper_funct.cpp

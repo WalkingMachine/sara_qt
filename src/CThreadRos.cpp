@@ -1,10 +1,10 @@
-#include "CThreadDiagnostics.h"
+#include "CThreadRos.h"
 
-CThreadDiagnostics::~CThreadDiagnostics() {
+CThreadRos::~CThreadRos() {
 	this->exit();
 }
 
-void CThreadDiagnostics::run() {
+void CThreadRos::run(){
 	CPU.enrNumberOfCore = 0;
 	CPU.pCPUCoresUsage = NULL;
 	
@@ -15,14 +15,13 @@ void CThreadDiagnostics::run() {
 	ROS_INFO("Ros Subscription to Diagnostics");
 	
 	while (ros::ok()) {
-		ROS_INFO("spin");
-		ros::spin();
+        ros::spinOnce();
 	}
 	
 	ROS_INFO("Thread END");
 }
 
-void CThreadDiagnostics::callbackMessageReceived(const diagnostic_msgs::DiagnosticArray message) {
+void CThreadRos::callbackMessageReceived(const diagnostic_msgs::DiagnosticArray message) {
 	//if the hardware related data is the main computer of SARA
 	if (!message.status[0].hardware_id.compare(HARDWARE_ID)) {
 		//read all status of the message
@@ -88,17 +87,33 @@ void CThreadDiagnostics::callbackMessageReceived(const diagnostic_msgs::Diagnost
 	}
 }
 
-void CThreadDiagnostics::callbackLogReceived(const std_msgs::String message){
+void CThreadRos::callbackLogReceived(const std_msgs::String message){
     addLog(QString::fromStdString(message.data));
 }
 
-void CThreadDiagnostics::subscribeROS() {
+void CThreadRos::subscribeROS() {
 	ROS_INFO("Subscript");
-	subscriber = nh.subscribe("diagnostics", 1, &CThreadDiagnostics::callbackMessageReceived, this);
-    logSubscriber = nh.subscribe("ui/logs", 1, &CThreadDiagnostics::callbackLogReceived, this);
+    //subscribe to the diagnostics topic
+    subscriber = nh.subscribe("diagnostics", 1, &CThreadRos::callbackMessageReceived, this);
+
+    //subscribe to the logger topic
+    logSubscriber = nh.subscribe("ui/logs", 1, &CThreadRos::callbackLogReceived, this);
+
+    //advertise the Continue button publisher
+    continuePublisher = nh.advertise<std_msgs::Bool>("ui/continue", 5);
 }
 
-void CThreadDiagnostics::unsubscribeROS() {
+void CThreadRos::unsubscribeROS() {
 	subscriber.shutdown();
     logSubscriber.shutdown();
+}
+
+
+void CThreadRos::publishContinue(){
+    //generate boolean standart message
+    std_msgs::Bool message;
+    //write true in the message
+    message.data = true;
+    //pubkish the message
+    continuePublisher.publish(message);
 }

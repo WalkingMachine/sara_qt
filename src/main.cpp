@@ -4,14 +4,14 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "CThreadDiagnostics.h"
+#include "CThreadRos.h"
 
 int main(int argc, char *argv[]) {
 	ros::init(argc, argv, "SARA_QT_USER_INTERFACE");
 	ROS_INFO("Part");
 	
 	//Declaring objetcs
-	CThreadDiagnostics Thread;
+    CThreadRos Thread;
 
 	QApplication a(argc, argv);
 	MainWindow Window;
@@ -29,8 +29,9 @@ int main(int argc, char *argv[]) {
 	QObject::connect(&Thread, SIGNAL(updateMemory(MEMORY_TYPE * )), &Window, SLOT(updateMemory(MEMORY_TYPE * )));
 	QObject::connect(&Thread, SIGNAL(updateTemperatureSensors(TEMPERATURE_SENSORS_TYPE * )), &Window,
 	                 SLOT(updateTemperatureSensors(TEMPERATURE_SENSORS_TYPE * )));
-	
-	//Run Threads and UIs
+
+    QObject::connect(&Window, SIGNAL(publishContinue()), &Thread, SLOT(publishContinue()));
+    //Run Threads and UIs
 	Thread.start();    //thread for diagnostics reading over Diagnostics topic
 	Window.show();        //main windows UI
 	

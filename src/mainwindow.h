@@ -22,7 +22,7 @@
 #include <QThread>
 
 #include "CScenarios.h"
-#include "CThreadDiagnostics.h"
+#include "CThreadRos.h"
 
 #include <ros/ros.h>
 #include <csignal>
@@ -37,9 +37,7 @@ Q_OBJECT
 
 public:
 	explicit MainWindow(QWidget *parent = 0);
-	
 	void setProduction();
-	
 	~MainWindow();
 
 public slots:
@@ -52,11 +50,13 @@ private slots:
     void on_pushButton_clicked();
 	void on_chooseFileButton_clicked();
 	void on_launchScenarioBT_clicked();
+    void on_continueBT_clicked();
 
 private:
 	Ui::MainWindow *ui;
 	//CPU Usage Box
-	QProgressBar **CPU_Usage_Bars;
+    QProgressBar **CPU_Usage_Bars;
+    QMessageBox alertBox;
 	
 	void generateCPU_Usage_Box(int numberOfCores);
 	
@@ -68,12 +68,11 @@ private:
 	
 	void InitScenarios();
 
+
 signals:
-	
 	void subscribeSignal();
-	
 	void unsubscribeSignal();
-	
+    void publishContinue();
 };
 
 #endif // MAINWINDOW_H
