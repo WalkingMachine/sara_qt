@@ -8,6 +8,7 @@
 #include <ros/ros.h>
 
 #include <diagnostic_msgs/DiagnosticArray.h>
+#include <std_msgs/String.h>
 
 #define HARDWARE_ID "MAIN_COMPUTER"
 
@@ -53,25 +54,22 @@ protected:
 private:
 	ros::NodeHandle nh;
 	ros::Subscriber subscriber;
+    ros::Subscriber logSubscriber;
 	CPU_TYPE CPU;
 	MEMORY_TYPE Memory;
 	TEMPERATURE_SENSORS_TYPE Temperature_Sensors;
 	bool bIsSubscribe;
-	
+
 	void callbackMessageReceived(const diagnostic_msgs::DiagnosticArray message);
-	
+    void callbackLogReceived(const std_msgs::String message);
 	void subscribeROS();
-	
-	void unsubscribeROS();
+    void unsubscribeROS();
 
 signals:
-	
 	void updateCPU(CPU_TYPE *CPU);
-	
 	void updateMemory(MEMORY_TYPE *Memory);
-	
 	void updateTemperatureSensors(TEMPERATURE_SENSORS_TYPE *Temperature_Sensors);
-	
+    void addLog(QString newLog);
 };
 
 #endif // CTHREADTOPICSSUBSCRIBER_H
