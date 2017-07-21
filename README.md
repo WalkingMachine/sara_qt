@@ -4,18 +4,22 @@
 Application de l'interface graphique du robot SARA.
 Développé grace au framework Qt (5.8), en C++.
 
-**Pour lancer l'interface graphique:**
+## Pour lancer l'interface graphique:
 ```shell
 rosrun sara_ui sara_ui
 ```
 *Pour fermer la fenêtre en plein écran, il faut ce rendre dans l'onglet "**Power Mode**"*
 
-**Pour lancer l'interface graphique en mode débogage :**
+## Pour lancer l'interface graphique en mode débogage :
 ```shell
 rosrun sara_ui sara_ui --debug
 ```
 
-# Node Principale 
+## Pour envoyer des données dans le logueur:
+
+Publier sur le topic `/ui/logs` des messages `std_msgs::String` pour les afficher dans l'espace log de l'UI.
+
+# Node Principale
 
 **Il faut le lancer sur l'ordinateur qui éxécute Roscore, sans quoi ni le monitoring ni le lancement de scenarios ne fonctionneront**
 
