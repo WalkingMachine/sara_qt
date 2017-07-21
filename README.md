@@ -18,9 +18,9 @@ rosrun sara_ui sara_ui --debug
 ## Checkliste pour la connection avec le roscore distant
 
 * Vérifier si `ROS_MASTER_URI=X.X.X.X:11311` dans le `.bashrc` de S.A.R.A., ou `X.X.X.X` est l'adresse IP du laptop.
-* Vérifier si `ROS_MASTER_URI=[IP_OF_SARA]:11311` dans le `.bashrc` ***ET*** le `.zshrc` du Raspberry Pi de l'UI. 
+* Vérifier si `ROS_MASTER_URI=[IP_OF_SARA]:11311` dans le `.bashrc` ***ET*** le `.zshrc` du Raspberry Pi de l'UI.
 
-# Node Principale 
+# Node Principale
 
 **Il faut le lancer sur l'ordinateur qui exécute Roscore, sans quoi ni le monitoring ni le lancement de scenarios ne fonctionneront**
 
@@ -48,9 +48,13 @@ Scenarios:
     command: roslaunch teleop3.launch
     uses: 10
 ```
-## Envoyer des données dans le logueur:
+## Bouton continuer:
 
-Publier sur le topic `/ui/logs` des messages `std_msgs::String` pour les afficher dans l'espace log de l'UI.
+Le bouton **continuer** du lanceur de scenarios publie sur le topic `/ui/continue` un message [`std_msgs::Bool`](http://docs.ros.org/api/std_msgs/html/msg/Bool.html) avec `data=true`
+
+# Envoyer des données dans le logueur:
+
+Publier sur le topic `/ui/logs` des messages [`std_msgs::String`](http://docs.ros.org/api/std_msgs/html/msg/String.html) pour les afficher dans l'espace log de l'UI.
 
 # Dependances
 **sysstat** pour la commande *mpstat* :
