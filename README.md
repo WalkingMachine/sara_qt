@@ -4,18 +4,18 @@
 Application de l'interface graphique du robot SARA.
 Développé grace au framework Qt (5.8), en C++.
 
-**Pour lancer l'interface graphique:**
+## Pour lancer l'interface graphique:
 ```shell
 rosrun sara_ui sara_ui
 ```
 *Pour fermer la fenêtre en plein écran, il faut ce rendre dans l'onglet "**Power Mode**"*
 
-**Pour lancer l'interface graphique en mode débogage :**
+## Pour lancer l'interface graphique en mode débogage :
 ```shell
 rosrun sara_ui sara_ui --debug
 ```
 
-**Checkliste pour la connection avec le roscore distant**
+## Checkliste pour la connection avec le roscore distant
 
 * Vérifier si `ROS_MASTER_URI=X.X.X.X:11311` dans le `.bashrc` de S.A.R.A., ou `X.X.X.X` est l'adresse IP du laptop.
 * Vérifier si `ROS_MASTER_URI=[IP_OF_SARA]:11311` dans le `.bashrc` ***ET*** le `.zshrc` du Raspberry Pi de l'UI. 
@@ -48,6 +48,9 @@ Scenarios:
     command: roslaunch teleop3.launch
     uses: 10
 ```
+## Envoyer des données dans le logueur:
+
+Publier sur le topic `/ui/logs` des messages `std_msgs::String` pour les afficher dans l'espace log de l'UI.
 
 # Dependances
 **sysstat** pour la commande *mpstat* :

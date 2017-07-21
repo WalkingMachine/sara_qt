@@ -1,6 +1,6 @@
 date: 2017-05-20
-by: Lucas Maurice
 Scenarios:
-  - uses: 0
+  - command: rosrun flexbe_widget be_launcher -b 'Say_Hello'
+    uses: 41
     name: Say Hello
-    command: rosrun flexbe_widget be_launcher -b 'Say_Hello'
+by: Lucas Maurice

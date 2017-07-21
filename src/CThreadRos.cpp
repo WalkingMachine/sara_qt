@@ -88,11 +88,17 @@ void CThreadDiagnostics::callbackMessageReceived(const diagnostic_msgs::Diagnost
 	}
 }
 
+void CThreadDiagnostics::callbackLogReceived(const std_msgs::String message){
+    addLog(QString::fromStdString(message.data));
+}
+
 void CThreadDiagnostics::subscribeROS() {
 	ROS_INFO("Subscript");
 	subscriber = nh.subscribe("diagnostics", 1, &CThreadDiagnostics::callbackMessageReceived, this);
+    logSubscriber = nh.subscribe("ui/logs", 1, &CThreadDiagnostics::callbackLogReceived, this);
 }
 
 void CThreadDiagnostics::unsubscribeROS() {
 	subscriber.shutdown();
+    logSubscriber.shutdown();
 }

@@ -17,7 +17,7 @@
 #include <QMessageBox>
 #include <QLabel>
 #include <QSizePolicy>
-
+#include <QDateTime>
 
 #include <QThread>
 
@@ -43,22 +43,15 @@ public:
 	~MainWindow();
 
 public slots:
-	
 	void updateCPU(CPU_TYPE *CPU);
-	
 	void updateMemory(MEMORY_TYPE *Memory);
-	
-	void updateTemperatureSensors(TEMPERATURE_SENSORS_TYPE *Temperature_Sensors);
+    void updateTemperatureSensors(TEMPERATURE_SENSORS_TYPE *Temperature_Sensors);
+    void addLog(QString newLog);
 
 private slots:
-	
-	void on_pushButton_clicked();
-	
+    void on_pushButton_clicked();
 	void on_chooseFileButton_clicked();
-	
 	void on_launchScenarioBT_clicked();
-	
-	void on_stopScenarioBT_clicked();
 
 private:
 	Ui::MainWindow *ui;
