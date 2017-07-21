@@ -27,17 +27,19 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     src/main.cpp \
     src/mainwindow.cpp \
-    src/CThreadDiagnostics.cpp \
     src/CScenarios.cpp \
-    src/CScenario.cpp
+    src/CScenario.cpp \
+    src/CThreadLogs.cpp \
+    src/CThreadRos.cpp
 
 HEADERS  += mainwindow.h \
     src/mainwindow.h \
-    src/CThreadDiagnostics.h \
     src/cscenario.h \
     src/CScenarios.h \
     src/CScenario.h \
-    src/roslaunch_message.h
+    src/roslaunch_message.h \
+    src/CThreadLogs.h \
+    src/CThreadRos.h
 
 FORMS    += mainwindow.ui \
     ui/mainwindow.ui
