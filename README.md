@@ -17,8 +17,17 @@ rosrun sara_ui sara_ui --debug
 
 ## Checkliste pour la connection avec le roscore distant
 
+### Sur le main PC:
+
 * Vérifier si `ROS_MASTER_URI=X.X.X.X:11311` dans le `.bashrc` de S.A.R.A., ou `X.X.X.X` est l'adresse IP du laptop.
-* Vérifier si `ROS_MASTER_URI=[IP_OF_SARA]:11311` dans le `.bashrc` ***ET*** le `.zshrc` du Raspberry Pi de l'UI.
+
+* Vérifier si `ROS_IP=X.X.X.X` dans le `.bashrc` de S.A.R.A., ou `X.X.X.X` est l'adresse IP du laptop.
+
+### Sur le ui PC:
+
+* Vérifier si `ROS_MASTER_URI=X.X.X.X:11311` dans le `.bashrc` ***ET*** le `.zshrc` du Raspberry Pi de l'UI, ou `X.X.X.X` est l'adresse IP du laptop.
+
+* Vérifier si `ROS_IP=X.X.X.X:11311` dans le `.bashrc` ***ET*** le `.zshrc` du Raspberry Pi de l'UI, ou `X.X.X.X` est l'adresse IP du ***Raspberry***.
 
 # Node Principale
 
