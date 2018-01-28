@@ -27,7 +27,6 @@
 #include <ros/ros.h>
 #include <csignal>
 
-
 namespace Ui {
 	class MainWindow;
 }
@@ -47,16 +46,19 @@ public slots:
     void addLog(QString newLog);
 
 private slots:
-    void on_pushButton_clicked();
 	void on_chooseFileButton_clicked();
-	void on_launchScenarioBT_clicked();
-    void on_continueBT_clicked();
+    void on_launchScenarioBT_clicked();
+    void on_continueBTTrue_clicked();
+    void on_continueBTFalse_clicked();
+    void on_quit_clicked();
+    void on_powerOff_clicked();
 
 private:
 	Ui::MainWindow *ui;
 	//CPU Usage Box
     QProgressBar **CPU_Usage_Bars;
-    QMessageBox alertBox;
+    QMessageBox alertBoxLaunch;
+    QMessageBox alertBoxShutdown;
 	
 	void generateCPU_Usage_Box(int numberOfCores);
 	
@@ -72,7 +74,7 @@ private:
 signals:
 	void subscribeSignal();
 	void unsubscribeSignal();
-    void publishContinue();
+    void publishContinue(bool bValue);
 };
 
 #endif // MAINWINDOW_H

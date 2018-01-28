@@ -12,11 +12,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->scenatioTree->setSortingEnabled(true);
 
     //For initialise AlertBox
+    alertBoxLaunch.setText("Launch Scenario");
+    alertBoxLaunch.setInformativeText("Do you really want to launch the scenario?");
+    alertBoxLaunch.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    alertBoxLaunch.setDefaultButton(QMessageBox::No);
 
-    alertBox.setText("Launch Scenario");
-    alertBox.setInformativeText("Do you really want to launch the scenario?");
-    alertBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-    alertBox.setDefaultButton(QMessageBox::No);
+    //For initialise AlertBox
+    alertBoxShutdown.setText("Power Off System");
+    alertBoxShutdown.setInformativeText("Do you really want to launch power off the system?");
+    alertBoxShutdown.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    alertBoxShutdown.setDefaultButton(QMessageBox::No);
 }
 
 /**
@@ -146,10 +151,6 @@ void MainWindow::updateTemperatureSensors(TEMPERATURE_SENSORS_TYPE *Temperature_
     }
 }
 
-void MainWindow::on_pushButton_clicked() {
-    this->~MainWindow();
-}
-
 /**
  * Initialise scenarios page
  * @brief MainWindow::InitScenarios
@@ -214,7 +215,7 @@ void MainWindow::on_chooseFileButton_clicked() {
 
 void MainWindow::on_launchScenarioBT_clicked() {
     if (!ui->scenatioTree->selectedItems().isEmpty()) {
-        if(alertBox.exec() == QMessageBox::Yes){
+        if(alertBoxLaunch.exec() == QMessageBox::Yes){
             CScenario *selectedScenario = (CScenario *) ui->scenatioTree->selectedItems()[0]->data(0,
                                                                                                    Qt::UserRole).value<void *>();
             _Scenarios.RunScenario(selectedScenario);
@@ -229,6 +230,34 @@ void MainWindow::addLog(QString newLog){
     ui->logText->append("<b>" + QDateTime::currentDateTime().toString("HH:mm:ss.zzz") + ": </b>" + newLog);
 }
 
-void MainWindow::on_continueBT_clicked(){
-    publishContinue();
+void MainWindow::on_continueBTTrue_clicked(){
+    publishContinue(true);
+}
+
+void MainWindow::on_continueBTFalse_clicked(){
+    publishContinue(false);
+}
+
+void MainWindow::on_quit_clicked(){
+    this->~MainWindow();
+}
+
+void MainWindow::on_powerOff_clicked(){
+    QMessageBox msgBox;
+    msgBox.setText(tr("Confirm?"));
+    QAbstractButton* pButtonShutdown = msgBox.addButton(tr("Power Off"), QMessageBox::YesRole);
+    QAbstractButton* pButtonReboot = msgBox.addButton(tr("Reboot"), QMessageBox::NoRole);
+    msgBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
+
+    msgBox.exec();
+
+    if(msgBox.clickedButton() == pButtonShutdown){
+        ROS_INFO("Shutdown.");
+        system("shutdown -P now");
+    }else if(msgBox.clickedButton() == pButtonReboot){
+        ROS_INFO("Reboot.");
+        system("shutdown -r now");
+    }else{
+        ROS_INFO("Cancel.");
+    }
 }

@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
 	QObject::connect(&Thread, SIGNAL(updateTemperatureSensors(TEMPERATURE_SENSORS_TYPE * )), &Window,
 	                 SLOT(updateTemperatureSensors(TEMPERATURE_SENSORS_TYPE * )));
 
-    QObject::connect(&Window, SIGNAL(publishContinue()), &Thread, SLOT(publishContinue()));
+    QObject::connect(&Window, SIGNAL(publishContinue(bool)), &Thread, SLOT(publishContinue(bool)));
     //Run Threads and UIs
 	Thread.start();    //thread for diagnostics reading over Diagnostics topic
 	Window.show();        //main windows UI
