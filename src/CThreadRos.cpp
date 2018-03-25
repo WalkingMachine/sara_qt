@@ -108,12 +108,11 @@ void CThreadRos::unsubscribeROS() {
     logSubscriber.shutdown();
 }
 
-
-void CThreadRos::publishContinue(){
+void CThreadRos::publishContinue(bool bMessage){
     //generate boolean standart message
     std_msgs::Bool message;
     //write true in the message
-    message.data = true;
+    message.data = bMessage;
     //pubkish the message
     continuePublisher.publish(message);
 }

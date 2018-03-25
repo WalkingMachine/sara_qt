@@ -21,7 +21,7 @@
        <enum>QTabWidget::West</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tab_monitor">
        <attribute name="title">
@@ -131,15 +131,28 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="QPushButton" name="continueBT">
+           <widget class="QPushButton" name="continueBTFalse">
             <property name="minimumSize">
              <size>
-              <width>300</width>
-              <height>50</height>
+              <width>200</width>
+              <height>40</height>
              </size>
             </property>
             <property name="text">
-             <string>Continue</string>
+             <string>Continuer (NON)</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="continueBTTrue">
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Continuer (OUI)</string>
             </property>
            </widget>
           </item>
@@ -160,8 +173,8 @@
            <widget class="QPushButton" name="launchScenarioBT">
             <property name="minimumSize">
              <size>
-              <width>300</width>
-              <height>50</height>
+              <width>250</width>
+              <height>40</height>
              </size>
             </property>
             <property name="text">
@@ -208,25 +221,32 @@
        <attribute name="title">
         <string>Power Mode</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="quit">
             <property name="text">
              <string>Quit UI</string>
             </property>
            </widget>
           </item>
           <item>
-           <spacer name="verticalSpacer_2">
+           <widget class="QPushButton" name="powerOff">
+            <property name="text">
+             <string>Power Off System</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
             <property name="orientation">
-             <enum>Qt::Vertical</enum>
+             <enum>Qt::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>20</width>
-              <height>40</height>
+              <width>40</width>
+              <height>20</height>
              </size>
             </property>
            </spacer>
@@ -234,14 +254,14 @@
          </layout>
         </item>
         <item>
-         <spacer name="horizontalSpacer">
+         <spacer name="verticalSpacer_2">
           <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+           <enum>Qt::Vertical</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>40</width>
-            <height>20</height>
+            <width>20</width>
+            <height>40</height>
            </size>
           </property>
          </spacer>

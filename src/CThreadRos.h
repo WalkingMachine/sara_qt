@@ -74,7 +74,7 @@ signals:
     void addLog(QString newLog);
 
 public slots:
-    void publishContinue();
+    void publishContinue(bool bMessage);
 };
 
 #endif // CTHREADTOPICSSUBSCRIBER_H
