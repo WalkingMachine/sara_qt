@@ -178,6 +178,9 @@ void MainWindow::InitScenarios() {
             }
         }
 
+        ui->scenatioTree->setColumnHidden(2,true);
+        ui->scenatioTree->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+
         if (_Scenarios.getNumberOfScenarios() < 2) {
             ui->Scenario_Path->setText(
                         _Scenarios.getFilePath() + " - " + QString::number(_Scenarios.getNumberOfScenarios()) +

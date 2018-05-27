@@ -1,6 +1,6 @@
-by: Lucas Maurice
-date: 2017-05-20
 Scenarios:
-  - uses: 43
-    name: Say Hello
+  - uses: 52
+    name: Coucou les coucous !
     command: rosrun flexbe_widget be_launcher -b 'Say_Hello'
+date: 2017-05-20
+by: Lucas Maurice
